@@ -1,23 +1,23 @@
 # Test Effectiveness
 
-## 1. Goal
-TODO: Research the concept of Test Effectiveness.
+## 1. Mục tiêu
+CẦN BỔ SUNG: Nghiên cứu khái niệm Test Effectiveness.
 
-## 2. Key Questions
-- What makes a test suite effective?
-- Why are assertions important?
-- How do boundary cases and negative cases improve test quality?
-- What is the difference between weak tests and strong tests?
+## 2. Câu hỏi chính
+- Điều gì làm cho một test suite hiệu quả?
+- Vì sao assertion quan trọng?
+- Boundary case và negative case cải thiện chất lượng test như thế nào?
+- Sự khác nhau giữa test yếu và test mạnh là gì?
 
-## 3. Main Notes
-TODO
+## 3. Ghi chú chính
+CẦN BỔ SUNG
 
-## 4. Example
-TODO: Weak assertion vs strong assertion.
+## 4. Ví dụ
+CẦN BỔ SUNG: Assertion yếu và assertion mạnh.
 
-## 5. Key Takeaways
-TODO
+## 5. Ý chính cần ghi nhớ
+CẦN BỔ SUNG
 
-## 6. References
-TODO
+## 6. Tài liệu tham khảo
+CẦN BỔ SUNG
 

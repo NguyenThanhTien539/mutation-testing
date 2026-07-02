@@ -1,26 +1,26 @@
 # Mutation Operators
 
-## 1. Goal
-TODO: Research common mutation operators used by mutation testing tools.
+## 1. Mục tiêu
+CẦN BỔ SUNG: Nghiên cứu các Mutation Operators phổ biến được dùng bởi các công cụ Mutation Testing.
 
-## 2. Key Questions
-- What code changes are created by mutation testing tools?
-- What are common mutation operators?
-- How do mutation operators reveal weak test cases?
+## 2. Câu hỏi chính
+- Các công cụ Mutation Testing tạo ra những thay đổi code nào?
+- Các Mutation Operators phổ biến là gì?
+- Mutation Operators giúp phát hiện test case yếu như thế nào?
 
-## 3. Main Notes
-TODO
+## 3. Ghi chú chính
+CẦN BỔ SUNG
 
-## 4. Example
-TODO:
-- `>=` changed to `>`
-- `&&` changed to `||`
-- `true` changed to `false`
-- Return value changed
+## 4. Ví dụ
+CẦN BỔ SUNG:
+- `>=` đổi thành `>`
+- `&&` đổi thành `||`
+- `true` đổi thành `false`
+- Giá trị return bị thay đổi
 
-## 5. Key Takeaways
-TODO
+## 5. Ý chính cần ghi nhớ
+CẦN BỔ SUNG
 
-## 6. References
-TODO
+## 6. Tài liệu tham khảo
+CẦN BỔ SUNG
 

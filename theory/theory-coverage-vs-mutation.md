@@ -1,23 +1,23 @@
-# Code Coverage vs Mutation Testing
+# Code Coverage và Mutation Testing
 
-## 1. Goal
-TODO: Compare code coverage and mutation testing.
+## 1. Mục tiêu
+CẦN BỔ SUNG: So sánh Code Coverage và Mutation Testing.
 
-## 2. Key Questions
-- What does code coverage measure?
-- What does mutation testing measure?
-- Why can coverage be high but tests still weak?
-- Why is mutation testing useful for evaluating test effectiveness?
+## 2. Câu hỏi chính
+- Code Coverage đo lường điều gì?
+- Mutation Testing đo lường điều gì?
+- Vì sao coverage có thể cao nhưng test vẫn yếu?
+- Vì sao Mutation Testing hữu ích khi đánh giá Test Effectiveness?
 
-## 3. Main Notes
-TODO
+## 3. Ghi chú chính
+CẦN BỔ SUNG
 
-## 4. Example
-TODO: A test that executes code but has no assertion.
+## 4. Ví dụ
+CẦN BỔ SUNG: Một test có chạy qua code nhưng không có assertion.
 
-## 5. Key Takeaways
-TODO
+## 5. Ý chính cần ghi nhớ
+CẦN BỔ SUNG
 
-## 6. References
-TODO
+## 6. Tài liệu tham khảo
+CẦN BỔ SUNG
 

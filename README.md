@@ -1,32 +1,32 @@
-# Mutation Testing Seminar
+# Seminar về Mutation Testing
 
-## Topic
+## Chủ đề
 Mutation Testing & Test Effectiveness
 
-## Group Information
-TODO
+## Thông tin nhóm
+CẦN BỔ SUNG: Bổ sung mã nhóm, tên nhóm và danh sách thành viên.
 
-## Repository Structure
+## Cấu trúc repository
 
-| Path | Purpose |
+| Đường dẫn | Mục đích |
 |---|---|
-| `docs/` | General outlines and references |
-| `theory/` | Theory research note templates |
-| `tool-survey/` | Mutation testing and coverage tool survey templates |
-| `reports/week-04/` | Week 4 report templates |
-| `evidence/week-04/` | Week 4 evidence, Jira task list, screenshots, and output files |
-| `slides/` | Future presentation slide materials |
-| `demo/` | Future demo project materials |
+| `docs/` | Lưu dàn ý chung và tài liệu tham khảo |
+| `theory/` | Lưu ghi chú nghiên cứu lý thuyết |
+| `tool-survey/` | Lưu ghi chú khảo sát các công cụ Mutation Testing và Code Coverage |
+| `reports/week-04/` | Lưu báo cáo tuần 04 |
+| `evidence/week-04/` | Lưu minh chứng tuần 04, danh sách công việc Jira, ảnh chụp màn hình và file kết quả |
+| `slides/` | Lưu tài liệu slide thuyết trình trong các tuần sau |
+| `demo/` | Lưu demo project trong các tuần sau |
 
-## Week 4 Focus
-TODO
+## Trọng tâm tuần 04
+CẦN BỔ SUNG: Tóm tắt trọng tâm công việc tuần 04.
 
-## Task Summary
+## Bảng tóm tắt công việc
 
-| Task | Owner | Output | Status |
+| Công việc | Người phụ trách | Kết quả đầu ra | Trạng thái |
 |---|---|---|---|
-| Theory research | TODO | TODO | TODO |
-| Tool survey | TODO | TODO | TODO |
-| Seminar outline | TODO | TODO | TODO |
-| Weekly report | TODO | TODO | TODO |
+| Nghiên cứu lý thuyết | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| Khảo sát công cụ | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| Tổng hợp dàn ý seminar | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| Báo cáo tuần | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
 

@@ -1,51 +1,51 @@
-# Mutation Testing Overview
+# Tổng quan về Mutation Testing
 
-## 1. Goal
+## 1. Mục tiêu
 
-This section explains the basic idea of mutation testing and why it is used to evaluate the quality of a test suite.
+Phần này giải thích ý tưởng cơ bản của Mutation Testing và lý do kỹ thuật này được dùng để đánh giá chất lượng của một test suite.
 
-Mutation testing focuses on one main question:
+Mutation Testing tập trung vào một câu hỏi chính:
 
-> If the source code is changed slightly in a wrong way, can the existing tests detect that change?
+> Nếu source code bị thay đổi nhẹ theo hướng sai, các test hiện tại có phát hiện được thay đổi đó không?
 
-## 2. Key Questions
+## 2. Câu hỏi chính
 
-### What is mutation testing?
+### Mutation Testing là gì?
 
-Mutation testing is a software testing technique used to evaluate test effectiveness. It works by creating small artificial changes in the source code. Each changed version is called a **mutant**.
+Mutation Testing là một kỹ thuật software testing dùng để đánh giá Test Effectiveness. Kỹ thuật này tạo ra các thay đổi nhỏ có chủ ý trong source code. Mỗi phiên bản code đã bị thay đổi được gọi là một **mutant**.
 
-After mutants are created, the test suite is executed again. If the tests fail, the mutant is considered **killed**. If the tests still pass, the mutant **survives**.
+Sau khi các mutant được tạo ra, test suite sẽ được chạy lại. Nếu test thất bại, mutant đó được xem là **killed**. Nếu test vẫn pass, mutant đó được xem là **survived**.
 
-### What problem does it solve?
+### Mutation Testing giải quyết vấn đề gì?
 
-Mutation testing helps identify weak test cases. A project may have high code coverage, but the tests may still be poor if they do not contain strong assertions or important boundary cases.
+Mutation Testing giúp phát hiện các test case yếu. Một project có thể có Code Coverage cao, nhưng test vẫn có chất lượng thấp nếu thiếu assertion mạnh hoặc thiếu các boundary case quan trọng.
 
-Mutation testing solves this problem by checking whether the test suite can detect small logic changes in the code.
+Mutation Testing giải quyết vấn đề này bằng cách kiểm tra xem test suite có phát hiện được các thay đổi logic nhỏ trong code hay không.
 
-## 3. Main Notes
+## 3. Ghi chú chính
 
-Mutation testing is not mainly used to find bugs in production code. Instead, it is used to measure how strong the test suite is.
+Mutation Testing không chủ yếu dùng để tìm bug trong production code. Thay vào đó, nó được dùng để đo độ mạnh của test suite.
 
-The basic idea is:
+Ý tưởng cơ bản:
 
-1. Start with original source code.
-2. Make a small change to the code.
-3. Run the existing tests.
-4. Check whether the tests detect the change.
+1. Bắt đầu từ source code gốc.
+2. Tạo một thay đổi nhỏ trong code.
+3. Chạy các test hiện có.
+4. Kiểm tra xem test có phát hiện được thay đổi đó không.
 
-Common small changes include:
+Một số thay đổi nhỏ thường gặp:
 
-- Changing `>` to `>=`
-- Changing `+` to `-`
-- Changing `true` to `false`
-- Changing `&&` to `||`
-- Changing a return value
+- Đổi `>` thành `>=`
+- Đổi `+` thành `-`
+- Đổi `true` thành `false`
+- Đổi `&&` thành `||`
+- Đổi giá trị return
 
-If many mutants are killed, the test suite is stronger. If many mutants survive, the test suite may be missing important test cases or assertions.
+Nếu nhiều mutant bị killed, test suite mạnh hơn. Nếu nhiều mutant survived, test suite có thể đang thiếu test case quan trọng hoặc thiếu assertion.
 
-## 4. Example
+## 4. Ví dụ
 
-Original code:
+Code gốc:
 
 ```js
 function isAdult(age) {
@@ -53,7 +53,7 @@ function isAdult(age) {
 }
 ```
 
-Mutant version:
+Phiên bản mutant:
 
 ```js
 function isAdult(age) {
@@ -61,40 +61,41 @@ function isAdult(age) {
 }
 ```
 
-In this mutant, the operator `>=` is changed to `>`.
+Trong mutant này, toán tử `>=` được đổi thành `>`.
 
-If the test suite only checks this case:
+Nếu test suite chỉ kiểm tra trường hợp sau:
 
 ```js
 expect(isAdult(20)).toBe(true);
 ```
 
-The mutant may survive because both versions return `true` for `age = 20`.
+Mutant có thể survived vì cả hai phiên bản đều trả về `true` với `age = 20`.
 
-But if the test suite checks the boundary value:
+Nhưng nếu test suite kiểm tra boundary value:
 
 ```js
 expect(isAdult(18)).toBe(true);
 ```
 
-The mutant will be killed because:
+Mutant sẽ bị killed vì:
 
-- Original code: `18 >= 18` returns `true`
-- Mutant code: `18 > 18` returns `false`
+- Code gốc: `18 >= 18` trả về `true`
+- Code mutant: `18 > 18` trả về `false`
 
-This shows that mutation testing can reveal missing boundary tests.
+Điều này cho thấy Mutation Testing có thể phát hiện các boundary test bị thiếu.
 
-## 5. Key Takeaways
+## 5. Ý chính cần ghi nhớ
 
-- Mutation testing evaluates the quality of test cases.
-- A mutant is a small changed version of the original code.
-- A killed mutant means the test suite detected the change.
-- A survived mutant means the test suite did not detect the change.
-- Mutation testing is useful because high code coverage does not always mean strong tests.
-- It helps testers find missing assertions, missing boundary cases, and weak test logic.
+- Mutation Testing đánh giá chất lượng của test case.
+- Mutant là một phiên bản code được thay đổi nhỏ từ code gốc.
+- Mutant bị killed nghĩa là test suite phát hiện được thay đổi.
+- Mutant survived nghĩa là test suite không phát hiện được thay đổi.
+- Mutation Testing hữu ích vì Code Coverage cao không luôn đồng nghĩa với test mạnh.
+- Kỹ thuật này giúp tester tìm assertion bị thiếu, boundary case bị thiếu và logic test yếu.
 
-## 6. References
+## 6. Tài liệu tham khảo
 
 - https://stryker-mutator.io/docs/
 - https://stryker-mutator.io/docs/mutation-testing-elements/supported-mutators/
 - https://testrigor.com/blog/understanding-mutation-testing-a-comprehensive-guide/
+

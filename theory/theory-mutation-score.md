@@ -1,22 +1,22 @@
-# Mutation Score and Report Terms
+# Mutation Score và các thuật ngữ trong báo cáo
 
-## 1. Goal
-TODO: Research mutation score and common report terms.
+## 1. Mục tiêu
+CẦN BỔ SUNG: Nghiên cứu Mutation Score và các thuật ngữ phổ biến trong mutation report.
 
-## 2. Key Questions
-- What is mutation score?
-- How is mutation score calculated?
-- What do killed, survived, timeout, no coverage, and equivalent mutant mean?
+## 2. Câu hỏi chính
+- Mutation Score là gì?
+- Mutation Score được tính như thế nào?
+- Các thuật ngữ killed, survived, timeout, no coverage và equivalent mutant có nghĩa là gì?
 
-## 3. Main Notes
-TODO
+## 3. Ghi chú chính
+CẦN BỔ SUNG
 
-## 4. Example
-TODO: Formula and sample mutation score calculation.
+## 4. Ví dụ
+CẦN BỔ SUNG: Công thức và ví dụ tính Mutation Score.
 
-## 5. Key Takeaways
-TODO
+## 5. Ý chính cần ghi nhớ
+CẦN BỔ SUNG
 
-## 6. References
-TODO
+## 6. Tài liệu tham khảo
+CẦN BỔ SUNG
 

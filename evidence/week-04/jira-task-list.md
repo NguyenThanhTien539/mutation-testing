@@ -1,19 +1,19 @@
-# Jira Task List - Week 04
+# Danh sách công việc Jira - Tuần 04
 
-| Jira ID | Task | Assignee | Status | Output |
+| Jira ID | Công việc | Người phụ trách | Trạng thái | Kết quả đầu ra |
 |---|---|---|---|---|
-| TODO | Research Mutation Testing overview | TODO | TODO | TODO |
-| TODO | Research Mutation Testing workflow | TODO | TODO | TODO |
-| TODO | Research Mutation score and report terms | TODO | TODO | TODO |
-| TODO | Research Test Effectiveness | TODO | TODO | TODO |
-| TODO | Research Code Coverage vs Mutation Testing | TODO | TODO | TODO |
-| TODO | Research Mutation operators | TODO | TODO | TODO |
-| TODO | Research Equivalent mutants and limitations | TODO | TODO | TODO |
-| TODO | Combine theory notes into seminar outline | TODO | TODO | TODO |
-| TODO | Survey StrykerJS and Jest Coverage | TODO | TODO | TODO |
-| TODO | Survey Stryker.NET and PIT | TODO | TODO | TODO |
-| TODO | Survey Mutmut and Cosmic Ray | TODO | TODO | TODO |
-| TODO | Survey Infection PHP and Major | TODO | TODO | TODO |
-| TODO | Survey Istanbul/nyc and JaCoCo | TODO | TODO | TODO |
-| TODO | Prepare Week 4 weekly report | TODO | TODO | TODO |
+| CẦN BỔ SUNG | Nghiên cứu tổng quan về Mutation Testing | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| CẦN BỔ SUNG | Nghiên cứu quy trình Mutation Testing | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| CẦN BỔ SUNG | Nghiên cứu Mutation Score và các thuật ngữ trong báo cáo | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| CẦN BỔ SUNG | Nghiên cứu Test Effectiveness | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| CẦN BỔ SUNG | Nghiên cứu Code Coverage và Mutation Testing | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| CẦN BỔ SUNG | Nghiên cứu Mutation Operators | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| CẦN BỔ SUNG | Nghiên cứu Equivalent Mutants và các giới hạn | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| CẦN BỔ SUNG | Tổng hợp ghi chú lý thuyết thành dàn ý seminar | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| CẦN BỔ SUNG | Khảo sát StrykerJS và Jest Coverage | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| CẦN BỔ SUNG | Khảo sát Stryker.NET và PIT | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| CẦN BỔ SUNG | Khảo sát Mutmut và Cosmic Ray | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| CẦN BỔ SUNG | Khảo sát Infection PHP và Major | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| CẦN BỔ SUNG | Khảo sát Istanbul/nyc và JaCoCo | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
+| CẦN BỔ SUNG | Chuẩn bị báo cáo tuần 04 | CẦN BỔ SUNG | CẦN BỔ SUNG | CẦN BỔ SUNG |
 

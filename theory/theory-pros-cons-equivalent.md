@@ -1,23 +1,23 @@
-# Equivalent Mutants and Limitations
+# Equivalent Mutants và các giới hạn
 
-## 1. Goal
-TODO: Research equivalent mutants and limitations of mutation testing.
+## 1. Mục tiêu
+CẦN BỔ SUNG: Nghiên cứu Equivalent Mutants và các giới hạn của Mutation Testing.
 
-## 2. Key Questions
-- What is an equivalent mutant?
-- Why can some survived mutants not be killed?
-- What are the limitations of mutation testing?
-- Why can mutation testing be expensive or slow?
+## 2. Câu hỏi chính
+- Equivalent mutant là gì?
+- Vì sao một số mutant survived nhưng không thể bị killed?
+- Các giới hạn của Mutation Testing là gì?
+- Vì sao Mutation Testing có thể tốn kém hoặc chạy chậm?
 
-## 3. Main Notes
-TODO
+## 3. Ghi chú chính
+CẦN BỔ SUNG
 
-## 4. Example
-TODO: `a + b` changed to `b + a`.
+## 4. Ví dụ
+CẦN BỔ SUNG: `a + b` đổi thành `b + a`.
 
-## 5. Key Takeaways
-TODO
+## 5. Ý chính cần ghi nhớ
+CẦN BỔ SUNG
 
-## 6. References
-TODO
+## 6. Tài liệu tham khảo
+CẦN BỔ SUNG
 

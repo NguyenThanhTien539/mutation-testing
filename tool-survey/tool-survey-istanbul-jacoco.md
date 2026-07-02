@@ -1,86 +1,86 @@
-# Tool Survey: Istanbul/nyc and JaCoCo
+# Khảo sát công cụ: Istanbul/nyc và JaCoCo
 
-## 1. Goal
+## 1. Mục tiêu
 
-TODO: Research the background, purpose, and usage of Istanbul/nyc and JaCoCo for the seminar Mutation Testing & Test Effectiveness.
+CẦN BỔ SUNG: Nghiên cứu bối cảnh, mục đích và cách sử dụng Istanbul/nyc và JaCoCo cho seminar Mutation Testing & Test Effectiveness.
 
 ## 2. Istanbul/nyc
 
-### 2.1 Tool Overview
-TODO
+### 2.1 Tổng quan công cụ
+CẦN BỔ SUNG
 
-### 2.2 Main Purpose
-TODO
+### 2.2 Mục đích chính
+CẦN BỔ SUNG
 
-### 2.3 Supported Language/Platform
-TODO
+### 2.3 Ngôn ngữ/Nền tảng hỗ trợ
+CẦN BỔ SUNG
 
-### 2.4 How the Tool Works
-TODO
+### 2.4 Cách công cụ hoạt động
+CẦN BỔ SUNG
 
-### 2.5 Main Features
-TODO
+### 2.5 Tính năng chính
+CẦN BỔ SUNG
 
-### 2.6 Typical Use Cases
-TODO
+### 2.6 Trường hợp sử dụng phổ biến
+CẦN BỔ SUNG
 
-### 2.7 Strengths
-TODO
+### 2.7 Điểm mạnh
+CẦN BỔ SUNG
 
-### 2.8 Limitations
-TODO
+### 2.8 Giới hạn
+CẦN BỔ SUNG
 
-### 2.9 Pricing/License
-TODO
+### 2.9 Chi phí/Giấy phép
+CẦN BỔ SUNG
 
-### 2.10 AI Support, If Any
-TODO
+### 2.10 Hỗ trợ AI, nếu có
+CẦN BỔ SUNG
 
-### 2.11 Demo Potential
-TODO
+### 2.11 Tiềm năng demo
+CẦN BỔ SUNG
 
-### 2.12 References
-TODO
+### 2.12 Tài liệu tham khảo
+CẦN BỔ SUNG
 
 ## 3. JaCoCo
 
-### 3.1 Tool Overview
-TODO
+### 3.1 Tổng quan công cụ
+CẦN BỔ SUNG
 
-### 3.2 Main Purpose
-TODO
+### 3.2 Mục đích chính
+CẦN BỔ SUNG
 
-### 3.3 Supported Language/Platform
-TODO
+### 3.3 Ngôn ngữ/Nền tảng hỗ trợ
+CẦN BỔ SUNG
 
-### 3.4 How the Tool Works
-TODO
+### 3.4 Cách công cụ hoạt động
+CẦN BỔ SUNG
 
-### 3.5 Main Features
-TODO
+### 3.5 Tính năng chính
+CẦN BỔ SUNG
 
-### 3.6 Typical Use Cases
-TODO
+### 3.6 Trường hợp sử dụng phổ biến
+CẦN BỔ SUNG
 
-### 3.7 Strengths
-TODO
+### 3.7 Điểm mạnh
+CẦN BỔ SUNG
 
-### 3.8 Limitations
-TODO
+### 3.8 Giới hạn
+CẦN BỔ SUNG
 
-### 3.9 Pricing/License
-TODO
+### 3.9 Chi phí/Giấy phép
+CẦN BỔ SUNG
 
-### 3.10 AI Support, If Any
-TODO
+### 3.10 Hỗ trợ AI, nếu có
+CẦN BỔ SUNG
 
-### 3.11 Demo Potential
-TODO
+### 3.11 Tiềm năng demo
+CẦN BỔ SUNG
 
-### 3.12 References
-TODO
+### 3.12 Tài liệu tham khảo
+CẦN BỔ SUNG
 
-## 4. Summary Notes
+## 4. Ghi chú tổng kết
 
-TODO: Add short notes about what was learned from researching both tools.
+CẦN BỔ SUNG: Thêm ghi chú ngắn về những điều rút ra sau khi nghiên cứu cả hai công cụ.
 

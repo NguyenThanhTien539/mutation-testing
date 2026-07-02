@@ -2,7 +2,7 @@
 
 ## 1. Mục tiêu
 
-Phần này giải thích ý tưởng cơ bản của Mutation Testing và lý do kỹ thuật này được dùng để đánh giá chất lượng của một test suite.
+Phần này giải thích ý tưởng cơ bản của Mutation Testing và lý do kỹ thuật này được dùng để đánh giá chất lượng của một bộ kiểm thử
 
 Mutation Testing tập trung vào một câu hỏi chính:
 
@@ -24,7 +24,7 @@ Mutation Testing giải quyết vấn đề này bằng cách kiểm tra xem tes
 
 ## 3. Ghi chú chính
 
-Mutation Testing không chủ yếu dùng để tìm bug trong production code. Thay vào đó, nó được dùng để đo độ mạnh của test suite.
+Mutation Testing không chủ yếu dùng để tìm bug trong production code. Thay vào đó, nó được dùng để đo độ mạnh của bộ kiểm th
 
 Ý tưởng cơ bản:
 
@@ -98,4 +98,3 @@ Mutant sẽ bị killed vì:
 - https://stryker-mutator.io/docs/
 - https://stryker-mutator.io/docs/mutation-testing-elements/supported-mutators/
 - https://testrigor.com/blog/understanding-mutation-testing-a-comprehensive-guide/
-

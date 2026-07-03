@@ -80,6 +80,6 @@ _Lưu ý mở rộng:_ Phép toán này có thể KHÔNG tương đương nếu 
 
 ## 6. Tài liệu tham khảo
 
-- Offutt, A. J., & Pan, J. (1997). _Automatically detecting equivalent mutants_. Software Testing, Verification and Reliability.
-- Jia, Y., & Harman, M. (2011). _An analysis and survey of mutation testing_. IEEE Transactions on Software Engineering.
-- Pitest (State of the art mutation testing system for Java) Documentation - _The Equivalent Mutant Problem_.
+- Offutt, A. J., & Pan, J. (1997). _Automatically detecting equivalent mutants_. Software Testing, Verification and Reliability, 7(3), 165-192. [DOI: 10.1002/...3.0.CO;2-U](<https://doi.org/10.1002/(SICI)1099-1689(199709)7:3%3C165::AID-STVR143%3E3.0.CO;2-U>)
+- Jia, Y., & Harman, M. (2011). _An analysis and survey of mutation testing_. IEEE Transactions on Software Engineering, 37(5), 649-678. [DOI: 10.1109/TSE.2010.62](https://doi.org/10.1109/TSE.2010.62)
+- Pitest Documentation. _Basic Concepts - Equivalent Mutations_. [Truy cập tại pitest.org](https://pitest.org/quickstart/basic_concepts/#equivalent-mutations)

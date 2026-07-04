@@ -46,7 +46,7 @@
 
 #### Task 1: Tìm hiểu 2 công cụ Stryker.NET và PIT
 
-- **Mô tả:** Tìm hiểu hai công cụ hỗ trợ đánh giá test suite cho các phần mềm sử dụng Dotnet(gồm Stryker.NET) và Java(gồm PIT).  
+- **Mô tả:** Tìm hiểu hai công cụ hỗ trợ đánh giá test suite cho các phần mềm sử dụng Dotnet(gồm Stryker.NET) và Java(gồm PIT).
 - **Trạng thái:** Hoàn thành
 - **Minh chứng:**
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-10)
@@ -54,17 +54,15 @@
   - [Prompt log - ChatGPT](https://chatgpt.com/share/6a48c9ad-2850-83ec-b2c9-961b38058468)
 - **Mục đích sử dụng AI:** Sử dụng để tóm tắt và lọc thông tin từ các nguồn tìm được.
 
-
 #### Task 2: Tìm hiểu về quy trình của mutation testing
 
-- **Mô tả:** Tìm hiểu workflow của mutation testing thế nào, các bước để từ code ứng dụng có thể thiết kế mutation test case và cuối cùng là mutation report.  
+- **Mô tả:** Tìm hiểu workflow của mutation testing thế nào, các bước để từ code ứng dụng có thể thiết kế mutation test case và cuối cùng là mutation report.
 - **Trạng thái:** Hoàn thành
 - **Minh chứng:**
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-6)
   - [Output file](https://drive.google.com/file/d/1A3HIndE16dEJcUuo6oFSserve2w6UQxK/view?usp=drive_link)
   - [Prompt log - ChatGPT](https://chatgpt.com/share/6a48c9ad-2850-83ec-b2c9-961b38058468)
 - **Mục đích sử dụng AI:** Sử dụng để tóm tắt thông tin từ các nguồn tìm được, giải thích các ý tưởng liên quan đến workflow.
-
 
 #### Task 3: Tìm hiểu về các toán tử trong mutation testing
 
@@ -75,7 +73,6 @@
   - [Output file](https://drive.google.com/file/d/1NiIPcCuhR1lwQnNpBpnduuV4_oT2HJ_b/view?usp=drive_link)
   - [Prompt log - ChatGPT](https://chatgpt.com/share/6a48c9ad-2850-83ec-b2c9-961b38058468)
 - **Mục đích sử dụng AI:** Sử dụng để tóm tắt thông tin từ các nguồn tìm được, giải thích các ý tưởng liên quan đến mutation operator.
-
 
 ### [23127404] - Lê Tuấn Lộc
 
@@ -119,9 +116,9 @@
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-12)
   - [Output file](https://drive.google.com/file/d/14nAh1may_3u3orLBETlufUFh249kWzcA/view?usp=drive_link)
   - [Prompt log - Google Gemini](https://share.gemini.google/F1SpZ4v4T3kP)
+- **Mục đích sử dụng AI:** Tìm chính xác mục đích và nguồn gốc của 2 công cụ.
 
 ---
-- **Mục đích sử dụng AI:** Tìm chính xác mục đích và nguồn gốc của 2 công cụ.
 
 ### [MSSV] - Ngô An Bình
 
@@ -134,6 +131,7 @@
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-5)
   - [Output file](https://drive.google.com/file/d/1QcDfYtiuaeo0NkU1mmYzFVGbbX7T1qZR/view?usp=drive_link)
   - [Prompt log - Google Gemini](https://share.gemini.google/mrSCTjru0v2l)
+- **Mục đích sử dụng AI:** Giải thích sâu khái niệm "ranh giới dưới/trên" và verify (xác nhận) lại tính logic của ví dụ api homestay
 
 #### Task 2: Khảo sát công cụ đo lường độ bao phủ Istanbul/nyc và JaCoCo
 
@@ -144,6 +142,7 @@
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-13)
   - [Output file](https://drive.google.com/file/d/1AdJXLuHB3mXHclpPadZJqm_8y-7JzkB8/view?usp=drive_link)
   - [Prompt log - Google Gemini](https://share.gemini.google/6P4Dbu726WGF)
+- **Mục đích sử dụng AI:** Tóm tắt nhanh khác biệt kỹ thuật lõi (AST vs Bytecode) của Istanbul/JaCoCo và xác nhận giới hạn "ảo giác an toàn" khi ép coverage trên CI/CD.
 
 #### Task 3: Tìm hiểu Equivalent Mutants và các giới hạn của Mutation Testing
 
@@ -154,6 +153,7 @@
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-7)
   - [Output file](https://drive.google.com/file/d/1OyMoSfDo1dJH1FqVqkQLCwTS8q37fyZQ/view?usp=drive_link)
   - [Prompt log - Google Gemini](https://share.gemini.google/LKT4sLwBuEbd)
+- **Mục đích sử dụng AI:** Xác nhận hạn chế của equivalent mutant (việc phải rà soát thủ công) và giải thích khái niệm "bùng nổ tổ hợp" gây ngốn tài nguyên khi chạy trên dự án lớn.
 
 ---
 

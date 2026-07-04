@@ -121,8 +121,6 @@ Một số giới hạn của StrykerJS:
 
 Stryker là công cụ open-source và được phát hành dưới giấy phép **Apache 2.0**.
 
-Vì vậy, nhóm có thể sử dụng miễn phí cho học tập, nghiên cứu và demo seminar.
-
 ### 2.10 Hỗ trợ AI, nếu có
 
 StrykerJS không phải là công cụ AI và tài liệu chính thức không thể hiện tính năng AI tích hợp sẵn.
@@ -134,27 +132,7 @@ Tuy nhiên, AI có thể hỗ trợ khi dùng StrykerJS ở các bước:
 - Phân tích vì sao mutant survived.
 - Viết thêm boundary test hoặc negative test.
 
-### 2.11 Tiềm năng demo
-
-StrykerJS có tiềm năng demo rất cao.
-
-Lý do:
-
-- Dễ tạo ví dụ nhỏ bằng JavaScript.
-- Dễ tạo mutant liên quan đến toán tử so sánh như `>=` thành `>`.
-- Có thể minh họa rõ ràng khái niệm killed mutant và survived mutant.
-- Có thể kết hợp với Jest để cho thấy coverage cao chưa chắc test mạnh.
-- Phù hợp với chủ đề Mutation Testing & Test Effectiveness.
-
-Kịch bản demo đề xuất:
-
-1. Tạo một hàm đơn giản như `isAdult(age)`.
-2. Viết test chưa đủ mạnh.
-3. Chạy StrykerJS và cho thấy có survived mutant.
-4. Bổ sung boundary test.
-5. Chạy lại và cho thấy mutant bị killed.
-
-### 2.12 Tài liệu tham khảo
+### 2.11 Tài liệu tham khảo
 
 - https://stryker-mutator.io/docs/
 - https://stryker-mutator.io/docs/stryker-js/introduction/
@@ -311,8 +289,6 @@ Vì vậy, coverage cao chỉ cho biết test đã chạy qua code, không đả
 
 Jest là công cụ open-source và được phát hành dưới giấy phép **MIT**.
 
-Do đó, Jest Coverage có thể được sử dụng miễn phí trong học tập, nghiên cứu và dự án thực tế.
-
 ### 3.10 Hỗ trợ AI, nếu có
 
 Jest Coverage không có tính năng AI tích hợp trực tiếp trong phần coverage.
@@ -324,38 +300,9 @@ Tuy nhiên, AI có thể hỗ trợ khi dùng Jest Coverage:
 - Gợi ý branch hoặc edge case cần test.
 - Viết thêm unit test dựa trên uncovered lines.
 
-### 3.11 Tiềm năng demo
-
-Jest Coverage có tiềm năng demo cao, đặc biệt khi dùng để so sánh với StrykerJS.
-
-Kịch bản demo đề xuất:
-
-1. Viết một hàm JavaScript đơn giản.
-2. Viết test làm coverage đạt cao.
-3. Cho thấy coverage report có thể tốt.
-4. Nhưng test vẫn thiếu boundary case hoặc assertion mạnh.
-5. Chạy StrykerJS để cho thấy mutant vẫn survived.
-6. Kết luận: coverage là cần thiết nhưng chưa đủ để đánh giá test effectiveness.
-
-### 3.12 Tài liệu tham khảo
+### 3.11 Tài liệu tham khảo
 
 - https://jestjs.io/docs/getting-started
 - https://jestjs.io/docs/configuration
 - https://jestjs.io/docs/cli
 - https://raw.githubusercontent.com/jestjs/jest/main/LICENSE
-
-## 4. Ghi chú tổng kết
-
-StrykerJS và Jest Coverage đều liên quan đến đánh giá chất lượng test, nhưng chúng đo hai khía cạnh khác nhau.
-
-- **Jest Coverage** cho biết test đã chạy qua phần nào của code.
-- **StrykerJS** cho biết test có phát hiện được lỗi logic khi code bị thay đổi hay không.
-
-Vì vậy, Jest Coverage phù hợp để kiểm tra mức độ bao phủ cơ bản, còn StrykerJS phù hợp để đánh giá sâu hơn về test effectiveness.
-
-Trong seminar, hai công cụ này có thể kết hợp rất tốt:
-
-1. Dùng Jest Coverage để cho thấy coverage có thể cao.
-2. Dùng StrykerJS để cho thấy test vẫn có thể yếu.
-3. Bổ sung test case tốt hơn.
-4. Chạy lại mutation testing để chứng minh test suite đã được cải thiện.

@@ -58,7 +58,6 @@ $$\text{Mutation Score} = \left( \frac{80 + 5}{120} \right) \times 100\% = \left
 - Mục tiêu tối thượng của kiểm thử đột biến là nâng cao Mutation Score càng gần 100% càng tốt.
 - Các công cụ phổ biến: Pitest (Java), Stryker (JS/TS, C#, Scala), MutPy (Python).
 
----
 
 ---
 

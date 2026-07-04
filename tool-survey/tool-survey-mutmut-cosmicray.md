@@ -2,7 +2,7 @@
 
 ## 1. Mục tiêu
 
-Nghiên cứu bối cảnh, mục đích, cách hoạt động và tính năng của hai công cụ kiểm thử đột biến (Mutation Testing) phổ biến nhất trong hệ sinh thái Python là **Mutmut** và **Cosmic Ray**. Khảo sát này đóng vai trò làm tài liệu tham khảo cho seminar *Mutation Testing & Test Effectiveness*, giúp so sánh và lựa chọn công cụ phù hợp tùy theo quy mô dự án và mục tiêu kiểm thử.
+Nghiên cứu bối cảnh, mục đích, cách hoạt động và tính năng của hai công cụ kiểm thử đột biến (Mutation Testing) phổ biến nhất trong hệ sinh thái Python là **Mutmut** và **Cosmic Ray**. Khảo sát này đóng vai trò làm tài liệu tham khảo cho seminar _Mutation Testing & Test Effectiveness_, giúp so sánh và lựa chọn công cụ phù hợp tùy theo quy mô dự án và mục tiêu kiểm thử.
 
 ---
 
@@ -71,17 +71,7 @@ Mutmut hoạt động theo quy trình AST-based (Abstract Syntax Tree):
   - Tự động sinh ra các unit test bổ sung để tiêu diệt (kill) mutant đó.
   - Phân tích và dự đoán xem một mutant sống sót có phải là mutant tương đương (equivalent mutant) hay không.
 
-### 2.11 Tiềm năng demo
-
-- **Rất cao và thích hợp cho seminar:** CLI của Mutmut rất sinh động và thực thi nhanh gọn.
-- **Kịch bản demo đề xuất:**
-  1. Tạo file `calculator.py` có chứa một hàm điều kiện đơn giản (ví dụ: kiểm tra năm nhuận hoặc tính thuế).
-  2. Viết file test phủ 100% dòng lệnh bằng `pytest` nhưng bỏ sót assert trường hợp biên đặc biệt.
-  3. Chạy `mutmut run` để thấy kết quả có mutant sống sót.
-  4. Chạy `mutmut browse` để chỉ ra điểm đột biến làm thay đổi logic (ví dụ: thay đổi toán tử `<` thành `<=`).
-  5. Thêm test case để tiêu diệt mutant, chạy lại và chứng minh điểm số kiểm thử đột biến đạt 100%.
-
-### 2.2 Tài liệu tham khảo
+### 2.11 Tài liệu tham khảo
 
 - Tài liệu chính thức (Read the Docs): [https://mutmut.readthedocs.io/](https://mutmut.readthedocs.io/)
 - Mã nguồn GitHub: [https://github.com/boxed/mutmut](https://github.com/boxed/mutmut)
@@ -151,26 +141,7 @@ Cosmic Ray hoạt động dựa trên quy trình quản lý phiên làm việc (
 - Cosmic Ray không tích hợp sẵn bất kỳ module AI nào.
 - **Ứng dụng phối hợp AI:** Cấu trúc dữ liệu lưu trong file SQLite của Cosmic Ray rất tường minh và chi tiết. Lập trình viên hoặc các hệ thống CI/CD tự động có thể sử dụng AI để đọc trực tiếp schema SQLite này, thực hiện các phân tích thống kê tự động và đề xuất viết code/test hiệu quả hơn cho những file có tỉ lệ đột biến sống sót cao.
 
-### 3.11 Tiềm năng demo
-
-- **Trung bình:** Thích hợp để demo kiến trúc quản lý bằng cơ sở dữ liệu và khả năng phân tán công việc hơn là demo tốc độ phát triển nhanh.
-- **Kịch bản demo đề xuất:**
-  1. Trình bày cách tạo file cấu hình TOML bằng lệnh `cosmic-ray new-config`.
-  2. Khởi tạo một phiên làm việc thông qua `cosmic-ray init` để sinh ra file `session.sqlite`.
-  3. Mở file SQLite bằng một công cụ DB Browser để cho người nghe thấy cách Cosmic Ray lập kế hoạch làm việc (work plan) chi tiết dưới dạng bảng dữ liệu.
-  4. Chạy `cosmic-ray baseline` để xác nhận test ban đầu vượt qua.
-  5. Chạy `cosmic-ray exec` và hiển thị kết quả báo cáo bằng lệnh `cr-report`.
-
-### 3.12 Tài liệu tham khảo
+### 3.11 Tài liệu tham khảo
 
 - Tài liệu chính thức (Read the Docs): [https://cosmic-ray.readthedocs.io/](https://cosmic-ray.readthedocs.io/)
 - Mã nguồn GitHub: [https://github.com/sixty-north/cosmic-ray](https://github.com/sixty-north/cosmic-ray)
-
----
-
-## 4. Ghi chú tổng kết
-
-Cả Mutmut và Cosmic Ray đều là những giải pháp hàng đầu để thực hiện kiểm thử đột biến (Mutation Testing) trong hệ sinh thái Python, giúp khắc phục nhược điểm "phủ dòng nhưng không kiểm tra logic" của chỉ số code coverage truyền thống. Tuy nhiên, chúng đi theo hai triết lý hoàn toàn khác biệt:
-
-1. **Mutmut (Khuyên dùng cho hầu hết lập trình viên):** Tập trung vào trải nghiệm của nhà phát triển (Developer Experience). Rất dễ tiếp cận, cấu hình tối giản, và có tốc độ thực thi rất nhanh trên máy cá nhân nhờ vào cơ chế incremental cache thông minh.
-2. **Cosmic Ray (Khuyên dùng cho nghiên cứu hoặc dự án lớn):** Tập trung vào kiến trúc hệ thống và khả năng mở rộng. Nó cung cấp sự bền vững thông qua việc quản lý phiên làm việc bằng SQLite và cho phép phân tán tải kiểm thử đột biến sang nhiều máy chủ qua Celery. Tuy nhiên, đi kèm với đó là cấu hình phức tạp và thời gian thiết lập ban đầu lớn hơn.

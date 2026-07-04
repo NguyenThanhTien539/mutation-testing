@@ -14,13 +14,13 @@ Mutation Testing tập trung vào một câu hỏi chính:
 
 Mutation Testing là một kỹ thuật software testing dùng để đánh giá Test Effectiveness. Kỹ thuật này tạo ra các thay đổi nhỏ có chủ ý trong source code. Mỗi phiên bản code đã bị thay đổi được gọi là một **mutant**.
 
-Sau khi các mutant được tạo ra, test suite sẽ được chạy lại. Nếu test thất bại, mutant đó được xem là **killed**. Nếu test vẫn pass, mutant đó được xem là **survived**.
+Sau khi các mutant được tạo ra, bộ test kiểm thử sẽ được chạy lại. Nếu test thất bại, mutant đó được xem là **killed**. Nếu test vẫn pass, mutant đó được xem là **survived**.
 
 ### Mutation Testing giải quyết vấn đề gì?
 
 Mutation Testing giúp phát hiện các test case yếu. Một project có thể có Code Coverage cao, nhưng test vẫn có chất lượng thấp nếu thiếu assertion mạnh hoặc thiếu các boundary case quan trọng.
 
-Mutation Testing giải quyết vấn đề này bằng cách kiểm tra xem test suite có phát hiện được các thay đổi logic nhỏ trong code hay không.
+Mutation Testing giải quyết vấn đề này bằng cách kiểm tra xem bộ kiểm thử có phát hiện được các thay đổi logic nhỏ trong code hay không.
 
 ## 3. Ghi chú chính
 
@@ -84,17 +84,7 @@ Mutant sẽ bị killed vì:
 
 Điều này cho thấy Mutation Testing có thể phát hiện các boundary test bị thiếu.
 
-## 5. Ý chính cần ghi nhớ
-
-- Mutation Testing đánh giá chất lượng của test case.
-- Mutant là một phiên bản code được thay đổi nhỏ từ code gốc.
-- Mutant bị killed nghĩa là test suite phát hiện được thay đổi.
-- Mutant survived nghĩa là test suite không phát hiện được thay đổi.
-- Mutation Testing hữu ích vì Code Coverage cao không luôn đồng nghĩa với test mạnh.
-- Kỹ thuật này giúp tester tìm assertion bị thiếu, boundary case bị thiếu và logic test yếu.
-
-## 6. Tài liệu tham khảo
+## 5. Tài liệu tham khảo
 
 - https://stryker-mutator.io/docs/
-- https://stryker-mutator.io/docs/mutation-testing-elements/supported-mutators/
 - https://testrigor.com/blog/understanding-mutation-testing-a-comprehensive-guide/

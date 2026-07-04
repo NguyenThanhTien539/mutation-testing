@@ -22,7 +22,8 @@
 - **Minh chứng:**
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-1)
   - [Output file](https://drive.google.com/file/d/1UqWLLBKc2Xh-WgJSZ8pTu1EH08TFkgxT/view?usp=sharing)
-  - [Prompt log - Gemini Pro](https://share.gemini.google/kpuxB82iBSXg)
+  - [Prompt log - Gemini Pro](https://share.gemini.google/kpuxB82iBSXg):
+- **Mục đích sử dụng AI:** Giúp hiểu nhanh các khái niệm và thuật ngữ liên quan đến Mutation Testing, cung cấp ví dụ minh họa và giải thích các bước trong quy trình Mutation Testing.
 
 #### Task 2: Khảo sát công cụ StrykerJS và Jest Coverage
 
@@ -32,6 +33,7 @@
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-9)
   - [Output file](https://drive.google.com/file/d/1f9IyWCEoYnu-qVDD9kxV9VaylxxkGD4W/view?usp=sharing)
   - [Prompt log - Gemini Pro](https://share.gemini.google/soNe4SVL71Ff)
+- **Mục đích sử dụng AI:** Hỗ trợ tìm kiếm thông tin về các công cụ, cung cấp hướng dẫn cài đặt và cấu hình, cũng như giải thích các tính năng và cách sử dụng của StrykerJS và Jest Coverage.
 
 #### Task 3: Chuẩn bị cấu trúc báo cáo tuần 4
 

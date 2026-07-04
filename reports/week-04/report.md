@@ -44,7 +44,38 @@
 
 ### [MSSV] - Nguyễn Thành Luân
 
----
+#### Task 1: Tìm hiểu 2 công cụ Stryker.NET và PIT
+
+- **Mô tả:** Tìm hiểu hai công cụ hỗ trợ đánh giá test suite cho các phần mềm sử dụng Dotnet(gồm Stryker.NET) và Java(gồm PIT).  
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-10)
+  - [Output file](https://drive.google.com/file/d/1f9IyWCEoYnu-qVDD9kxV9VaylxxkGD4W/view?usp=drive_link)
+  - [Prompt log - ChatGPT](https://chatgpt.com/share/6a48c9ad-2850-83ec-b2c9-961b38058468)
+- **Mục đích sử dụng AI:** Sử dụng để tóm tắt và lọc thông tin từ các nguồn tìm được.
+
+
+#### Task 2: Tìm hiểu về quy trình của mutation testing
+
+- **Mô tả:** Tìm hiểu workflow của mutation testing thế nào, các bước để từ code ứng dụng có thể thiết kế mutation test case và cuối cùng là mutation report.  
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-6)
+  - [Output file](https://drive.google.com/file/d/1A3HIndE16dEJcUuo6oFSserve2w6UQxK/view?usp=drive_link)
+  - [Prompt log - ChatGPT](https://chatgpt.com/share/6a48c9ad-2850-83ec-b2c9-961b38058468)
+- **Mục đích sử dụng AI:** Sử dụng để tóm tắt thông tin từ các nguồn tìm được, giải thích các ý tưởng liên quan đến workflow.
+
+
+#### Task 3: Tìm hiểu về các toán tử trong mutation testing
+
+- **Mô tả:** Tìm hiểu cách các công cụ mutation testing tạo ra các mutant.
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-2)
+  - [Output file](https://drive.google.com/file/d/1NiIPcCuhR1lwQnNpBpnduuV4_oT2HJ_b/view?usp=drive_link)
+  - [Prompt log - ChatGPT](https://chatgpt.com/share/6a48c9ad-2850-83ec-b2c9-961b38058468)
+- **Mục đích sử dụng AI:** Sử dụng để tóm tắt thông tin từ các nguồn tìm được, giải thích các ý tưởng liên quan đến mutation operator.
+
 
 ### [23127404] - Lê Tuấn Lộc
 #### Task 1: Tìm hiểu về các khái niệm mutation score và report terms.

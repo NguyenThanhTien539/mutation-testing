@@ -50,7 +50,7 @@
 - **Trạng thái:** Hoàn thành
 - **Minh chứng:**
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-10)
-  - [Output file](https://drive.google.com/file/d/1f9IyWCEoYnu-qVDD9kxV9VaylxxkGD4W/view?usp=drive_link)
+  - [Output file](https://drive.google.com/file/d/1UrndJVyXxUFZUULTNzV-_QIZ9E4xLFin/view?usp=drive_link)
   - [Prompt log - ChatGPT](https://chatgpt.com/share/6a48c9ad-2850-83ec-b2c9-961b38058468)
 - **Mục đích sử dụng AI:** Sử dụng để tóm tắt và lọc thông tin từ các nguồn tìm được.
 

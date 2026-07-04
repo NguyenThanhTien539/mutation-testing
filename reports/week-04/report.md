@@ -44,12 +44,45 @@
 
 ---
 
-### [MSSV] - Lê Tuấn Lộc
+### [23127404] - Lê Tuấn Lộc
+#### Task 1: 
 
+- **Mô tả:** 
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-3)
+  - [Output file]()
+  - [Prompt log - Google Gemini]()
+
+#### Task 2:
+
+- **Mô tả:** 
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-11)
+  - [Output file]()
+  - [Prompt log - Google Gemini]()
 ---
 
-### [MSSV] - Trương Lý Khải
+### [23127061] - Trương Lý Khải
 
+#### Task 1: Tìm hiểu các tiêu chí về Test Effectiveness và cách hoạt động của Assertion Testing
+
+- **Mô tả:** Nghiên cứu khái niệm, tiêu chí và cách đạt Test Effectiveness và cách ứng dụng Assertion Testing cùng với Mutation Testing.
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-4)
+  - [Output file](https://drive.google.com/file/d/1xpagS4rD4Wxr3YmV2LES8Y3Tph4_tQLT/view?usp=drive_link)
+  - [Prompt log - Google Gemini](https://share.gemini.google/3bY2hdckGn5z)
+
+#### Task 2: Khảo sát công cụ Infection PHP và Major
+
+- **Mô tả:** Tìm hiểu hai công cụ hỗ trợ về mutation testing dưới nền tảng PHP và Java: Infection PHP và Major cùng các feature của từng công cụ.
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-9)
+  - [Output file](https://drive.google.com/file/d/14nAh1may_3u3orLBETlufUFh249kWzcA/view?usp=drive_link)
+  - [Prompt log - Google Gemini](https://share.gemini.google/F1SpZ4v4T3kP)
 ---
 
 ### [MSSV] - Ngô An Bình

@@ -47,6 +47,7 @@
 ---
 
 ### [23127404] - Lê Tuấn Lộc
+
 #### Task 1: Tìm hiểu về các khái niệm mutation score và report terms.
 
 - **Mô tả:** Tìm hiểu về các dạng và khái niệm về mutation score và report terms để áp dụng và đánh giá mutation test suite.
@@ -64,6 +65,7 @@
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-11)
   - [Output file]()
   - [Prompt log - Google Gemini]()
+
 ---
 
 ### [23127061] - Trương Lý Khải
@@ -85,9 +87,40 @@
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-9)
   - [Output file](https://drive.google.com/file/d/14nAh1may_3u3orLBETlufUFh249kWzcA/view?usp=drive_link)
   - [Prompt log - Google Gemini](https://share.gemini.google/F1SpZ4v4T3kP)
+
 ---
 
 ### [MSSV] - Ngô An Bình
+
+#### Task 1: So sánh Code Coverage và Mutation Testing
+
+- **Mô tả:** Nghiên cứu các yếu tố cốt lõi phân định giữa số lượng và chất lượng của bộ kiểm thử (Test Suite) thông qua việc so sánh Code Coverage và Mutation Testing. Nhận diện rủi ro (như thiếu assertions) khi chỉ phụ thuộc vào chỉ số bao phủ, và làm rõ lý do Mutation Testing đóng vai trò như ranh giới trên (Upper Bound) giúp đánh giá chính xác Test Effectiveness.
+
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-5)
+  - [Output file](https://drive.google.com/file/d/1QcDfYtiuaeo0NkU1mmYzFVGbbX7T1qZR/view?usp=drive_link)
+  - [Prompt log - Google Gemini](https://share.gemini.google/mrSCTjru0v2l)
+
+#### Task 2: Khảo sát công cụ đo lường độ bao phủ Istanbul/nyc và JaCoCo
+
+- **Mô tả:** Nghiên cứu bối cảnh, mục đích và cách hoạt động của Istanbul/nyc dành cho hệ sinh thái JavaScript/TypeScript và JaCoCo dành cho Java. Phân tích cơ chế đo lường bao phủ mã nguồn thông qua AST instrumentation và Bytecode instrumentation, đồng thời đánh giá tính năng, ưu nhược điểm, và vai trò của các công cụ này trong quy trình CI/CD.
+
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-13)
+  - [Output file](https://drive.google.com/file/d/1AdJXLuHB3mXHclpPadZJqm_8y-7JzkB8/view?usp=drive_link)
+  - [Prompt log - Google Gemini](https://share.gemini.google/6P4Dbu726WGF)
+
+#### Task 3: Tìm hiểu Equivalent Mutants và các giới hạn của Mutation Testing
+
+- **Mô tả:** Nghiên cứu sâu về khái niệm Equivalent Mutants và giải thích nguyên nhân các mutant này không thể bị tiêu diệt do có hành vi ngữ nghĩa trùng khớp với mã gốc. Phân tích các giới hạn cốt lõi của phương pháp Mutation Testing bao gồm bài toán không thể giải quyết bằng máy tính (Undecidable Problem), sự bùng nổ tổ hợp, và lý do phương pháp này đòi hỏi chi phí tài nguyên cũng như thời gian thực thi khổng lồ.
+
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-7)
+  - [Output file](https://drive.google.com/file/d/1OyMoSfDo1dJH1FqVqkQLCwTS8q37fyZQ/view?usp=drive_link)
+  - [Prompt log - Google Gemini](https://share.gemini.google/LKT4sLwBuEbd)
 
 ---
 

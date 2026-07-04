@@ -2,12 +2,12 @@
 
 ## 1. Thông Tin Chung
 
-| Mục                 | Thông tin                                                                |
-| ------------------- | ------------------------------------------------------------------------ |
-| Mã nhóm             | 02                                                                       |
-| Tên đề tài          | Mutation Testing & Test Effectiveness                                    |
-| Thời gian thực hiện | 2026-06-29 - 2026-07-04                                                  |
-| GitHub Repository   | [[Link GitHub] ](https://github.com/NguyenThanhTien539/mutation-testing) |
+| Mục                 | Thông tin                                                                      |
+| ------------------- | ------------------------------------------------------------------------------ |
+| Mã nhóm             | 02                                                                             |
+| Tên đề tài          | Mutation Testing & Test Effectiveness                                          |
+| Thời gian thực hiện | 2026-06-29 - 2026-07-04                                                        |
+| GitHub Repository   | [[GitHub Repository] ](https://github.com/NguyenThanhTien539/mutation-testing) |
 
 ---
 
@@ -42,7 +42,7 @@
 
 ---
 
-### [MSSV] - Nguyễn Thành Luân
+### [23127296] - Nguyễn Thành Luân
 
 #### Task 1: Tìm hiểu 2 công cụ Stryker.NET và PIT
 
@@ -120,7 +120,7 @@
 
 ---
 
-### [MSSV] - Ngô An Bình
+### [23127330] - Ngô An Bình
 
 #### Task 1: So sánh Code Coverage và Mutation Testing
 

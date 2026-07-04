@@ -85,8 +85,8 @@
 - **Trạng thái:** Hoàn thành
 - **Minh chứng:**
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-3)
-  - [Output file]()
-  - [Prompt log - Google Gemini]()
+  - [Output file](https://drive.google.com/file/d/1EKzMwK0CrlTHyegKNPLZLD-7m2y7dm9k/view?usp=drive_link)
+  - Prompt log - None
 
 #### Task 2: Tìm hiểu về các công cụ Mutmut và Cosmic Ray
 
@@ -94,8 +94,8 @@
 - **Trạng thái:** Hoàn thành
 - **Minh chứng:**
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-11)
-  - [Output file]()
-  - [Prompt log - Google Gemini]()
+  - [Output file](https://drive.google.com/file/d/1JFUgMwbnkb3Pf5LpvEIwWbXDKi2EqN5o/view?usp=drive_link)
+  - Prompt log - None
 
 ---
 

@@ -47,18 +47,18 @@
 ---
 
 ### [23127404] - Lê Tuấn Lộc
-#### Task 1: 
+#### Task 1: Tìm hiểu về các khái niệm mutation score và report terms.
 
-- **Mô tả:** 
+- **Mô tả:** Tìm hiểu về các dạng và khái niệm về mutation score và report terms để áp dụng và đánh giá mutation test suite.
 - **Trạng thái:** Hoàn thành
 - **Minh chứng:**
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-3)
   - [Output file]()
   - [Prompt log - Google Gemini]()
 
-#### Task 2:
+#### Task 2: Tìm hiểu về các công cụ Mutmut và Cosmic Ray
 
-- **Mô tả:** 
+- **Mô tả:** Tìm hiểu hai công cụ hỗ trợ đánh giá test suite gồm Mutmut và Cosmic Ray.
 - **Trạng thái:** Hoàn thành
 - **Minh chứng:**
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-11)

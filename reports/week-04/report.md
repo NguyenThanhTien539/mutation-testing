@@ -76,16 +76,18 @@
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-4)
   - [Output file](https://drive.google.com/file/d/1xpagS4rD4Wxr3YmV2LES8Y3Tph4_tQLT/view?usp=drive_link)
   - [Prompt log - Google Gemini](https://share.gemini.google/3bY2hdckGn5z)
+- **Mục đích sử dụng AI:** Tạo template dàn ý nội dung từ kiến thức thu thập được qua các tài liêu.
 
 #### Task 2: Khảo sát công cụ Infection PHP và Major
 
 - **Mô tả:** Tìm hiểu hai công cụ hỗ trợ về mutation testing dưới nền tảng PHP và Java: Infection PHP và Major cùng các feature của từng công cụ.
 - **Trạng thái:** Hoàn thành
 - **Minh chứng:**
-  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-9)
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-12)
   - [Output file](https://drive.google.com/file/d/14nAh1may_3u3orLBETlufUFh249kWzcA/view?usp=drive_link)
   - [Prompt log - Google Gemini](https://share.gemini.google/F1SpZ4v4T3kP)
 ---
+- **Mục đích sử dụng AI:** Tìm chính xác mục đích và nguồn gốc của 2 công cụ.
 
 ### [MSSV] - Ngô An Bình
 

@@ -49,11 +49,13 @@
 
 #### Task 1: Tổng hợp nội dung để làm dàn ý cho slides
 
-- Mực tiêu: Tổng hợp nội dung chính từ các file theory và survey để xây dựng cấu trúc slides rõ ràng, logic
-- Minh chứng:
-- [Output file](https://drive.google.com/file/d/1gq9aOauWe9g0EIiRobiyyZBfJpsmJm4n/view?usp=sharing)
-- Sử dụng AI: Gợi ý cấu trúc slide (tiêu đề, nội dung chính, speak notes, đồ họa gợi ý), trích các ý chính và tóm tắt nội dung.
-- [AI prompt](https://notebooklm.google.com/notebook/196bb9da-9e82-4795-a1e3-c6accd7c74da)
+- **Mô tả:** Tổng hợp nội dung chính từ các file theory và survey để xây dựng cấu trúc slides rõ ràng, logic
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-19)
+  - [Output file](https://drive.google.com/file/d/1gq9aOauWe9g0EIiRobiyyZBfJpsmJm4n/view?usp=sharing)
+  - [AI prompt](https://notebooklm.google.com/notebook/196bb9da-9e82-4795-a1e3-c6accd7c74da)
+- **Mục đích sử dụng AI:** Gợi ý cấu trúc slide (tiêu đề, nội dung chính, speak notes, đồ họa gợi ý), trích các ý chính và tóm tắt nội dung.
 
 ---
 

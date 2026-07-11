@@ -27,16 +27,26 @@
 
 #### Task 1: Tổng hợp và so sánh 10 công cụ đã tìm hiểu
 
-- Mục tiêu: tổng hợp lại các thông tin cơ bản về 10 công cụ và so sánh trên các tiêu chí như giá, ngôn ngữ, khả năng tích hợp AI,...
-- Minh chứng: https://drive.google.com/file/d/1Z6vYNinCl4vHMbrB1FATlUNdTcvVVD5h/view?usp=drive_link
-- Sử dụng AI: sử dụng AI để kiểm tra tính thống nhất của file tổng hợp so với từng file tìm hiểu cụ thể từ tuần trước.
-- Prompt: "Hãy kiểm tra nội dung cùa file tool-comparison-final.md và so sánh với nội dung của các file tìm hiểu tôi gửi xem có thống nhất không. Nếu không thì hãy báo cáo lại những sai sót."
+- **Mô tả:** tổng hợp lại các thông tin cơ bản về 10 công cụ và so sánh trên các tiêu chí như giá, ngôn ngữ, khả năng tích hợp AI,...
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-20)
+  - [Output file](https://drive.google.com/file/d/1Z6vYNinCl4vHMbrB1FATlUNdTcvVVD5h/view?usp=drive_link)
+  - Prompt - Claude: "Hãy kiểm tra nội dung của file tool-comparison-final.md và so sánh với nội dung của các file tìm hiểu tôi gửi xem có thống nhất không. Nếu không thì hãy báo cáo lại những sai sót."
+- **Mục đích sử dụng AI:** Sử dụng AI để làm rõ và chỉnh sửa các lỗi nhất thống phiên bản do Mutmut đã được thay đổi nhiều so với phiên bản cũ
 
 #### Task 2: Setup StrykerJS trên hệ thống Eshop
 
-- Mục tiêu: ghi lại các bước cài đặt dependency, tạo file test và các file cấu hình trước khi chạy mutation test bằng StrykerJS trên đồ án.
-- Minh chứng: https://drive.google.com/file/d/1jwxs2WFO6jxWLUkhn9L1NMf6A8Sfmiyq/view?usp=drive_link
+- Mục tiêu: 
+- Minh chứng: 
 - Sử dụng AI: không
+
+- **Mô tả:** ghi lại các bước cài đặt dependency, tạo file test và các file cấu hình trước khi chạy mutation test bằng StrykerJS trên đồ án.
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-15)
+  - [Output file](https://drive.google.com/file/d/1jwxs2WFO6jxWLUkhn9L1NMf6A8Sfmiyq/view?usp=drive_link)
+- **Sử dụng AI:** không
 
 ---
 
@@ -67,10 +77,13 @@
 
 ### [23127539] - Nguyễn Thanh Tiến
 
-- Mục tiêu: tạo kịch bản và chạy mutation test dùng StrykerJS trên 2 tính năng của hệ thống EShop, phân tích kết quả khi test có độ coverage cao và thấp.
-- Minh chứng: https://drive.google.com/drive/folders/1RNXJ9ZGJWnlLi14UoCDs-S7T12CyFNyJ?usp=drive_link (note: thư mục gồm report chứa phân tích kết quả và source code đã bao gồm test case và cấu hình StrykerJS)
-- Sử dụng AI: phân tích các tính năng của EShop có thể thực hiện mutation testing, hỗ trợ tạo test case để phân tích độ hiệu quả của mutation test khi test có độ coverage cao và thấp.
-- Prompt: "Hãy đọc file README.md và phân tích những chức năng có thể thực hiện mutation test. Đề xuất cách thiết kế test case cho mutation test để thấy được tầm quan trọng của coverage."
+- **Mô tả:** tạo kịch bản và chạy mutation test dùng StrykerJS trên 2 tính năng của hệ thống EShop, phân tích kết quả khi test có độ coverage cao và thấp.
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-16)
+  - [Output file](https://drive.google.com/drive/folders/1RNXJ9ZGJWnlLi14UoCDs-S7T12CyFNyJ?usp=drive_link) (note: thư mục gồm report chứa phân tích kết quả và source code đã bao gồm test case và cấu hình StrykerJS)
+  - Prompt-Claude: "Hãy đọc file README.md và phân tích những chức năng có thể thực hiện mutation test. Đề xuất cách thiết kế test case cho mutation test để thấy được tầm quan trọng của coverage."
+- **Mục đích sử dụng AI:** phân tích các tính năng của EShop có thể thực hiện mutation testing, hỗ trợ tạo test case để phân tích độ hiệu quả của mutation test khi test có độ coverage cao và thấp.
 
 ---
 

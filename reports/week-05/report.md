@@ -56,9 +56,12 @@
 ### [23127404] - Lê Tuấn Lộc
 
 #### Task: Viết kịch bản chạy Mutmut trên 1 demo mẫu code Python
-- Mục tiêu: sử dụng hướng dẫn cài Mutmut và tạo kịch bản và lưu kết quả chạy demo Mutmut trên 1 hệ thống calculator mẫu bằng python
-- Minh chứng: folder và md
-- Sử dụng AI: không
+- **Mô tả:** Sử dụng hướng dẫn cài Mutmut và tạo kịch bản và lưu kết quả chạy demo Mutmut trên 1 hệ thống calculator mẫu bằng python
+- **Trạng thái:** Hoàn thành
+- **Minh chứng:**
+  - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-18)
+  - [Output file](https://drive.google.com/drive/folders/1i-taG_P859i85rQyT78xsuGpUl7aiJ-7?usp=drive_link)
+- **Mục đích sử dụng AI:** Không có
 ---
 
 ### [23127539] - Nguyễn Thanh Tiến

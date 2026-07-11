@@ -34,7 +34,7 @@
 - **Minh chứng:**
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-20)
   - [Output file](https://drive.google.com/file/d/1Z6vYNinCl4vHMbrB1FATlUNdTcvVVD5h/view?usp=drive_link)
-  - Prompt - Claude: "Hãy kiểm tra nội dung của file tool-comparison-final.md và so sánh với nội dung của các file tìm hiểu tôi gửi xem có thống nhất không. Nếu không thì hãy báo cáo lại những sai sót."
+  - Prompt - Claude (visual studio code): "Hãy kiểm tra nội dung của file tool-comparison-final.md và so sánh với nội dung của các file tìm hiểu tôi gửi xem có thống nhất không. Nếu không thì hãy báo cáo lại những sai sót."
 - **Mục đích sử dụng AI:** Sử dụng AI để làm rõ và chỉnh sửa các lỗi nhất thống phiên bản do Mutmut đã được thay đổi nhiều so với phiên bản cũ
 
 #### Task 2: Setup StrykerJS trên hệ thống Eshop
@@ -81,8 +81,8 @@
 - **Trạng thái:** Hoàn thành
 - **Minh chứng:**
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-16)
-  - [Output file](https://drive.google.com/drive/folders/1RNXJ9ZGJWnlLi14UoCDs-S7T12CyFNyJ?usp=drive_link) (note: thư mục gồm report chứa phân tích kết quả và source code đã bao gồm test case và cấu hình StrykerJS)
-  - Prompt-Claude: "Hãy đọc file README.md và phân tích những chức năng có thể thực hiện mutation test. Đề xuất cách thiết kế test case cho mutation test để thấy được tầm quan trọng của coverage."
+  - [Output file](https://docs.google.com/document/d/1muhH2U5mpxiLKfO-vvynbVDmptMsbntyjf7lYFPnbJo/edit?usp=sharing) (note: thư mục gồm report chứa phân tích kết quả và source code đã bao gồm test case và cấu hình StrykerJS)
+  - Prompt-Claude (Visual studio code): "Hãy đọc file README.md và phân tích những chức năng có thể thực hiện mutation test. Đề xuất cách thiết kế test case cho mutation test để thấy được tầm quan trọng của coverage."
 - **Mục đích sử dụng AI:** phân tích các tính năng của EShop có thể thực hiện mutation testing, hỗ trợ tạo test case để phân tích độ hiệu quả của mutation test khi test có độ coverage cao và thấp.
 
 ---
@@ -95,6 +95,4 @@ Trong tuần 6, nhóm dự kiến thực hiện các công việc sau:
 - Phân tích so sánh Test Effectiveness giữa StrykerJS và Mutmut.
 - Mở rộng kịch bản test thêm các tình huống khó (equivalent mutant, logic phức tạp).
 - Chuẩn bị demo project ổn định cho cả 2 công cụ.
-- Quay video backup cho phần demo.
 - Review chéo slide và nội dung giữa các thành viên.
-- Thu thập ảnh chụp màn hình, command output và bằng chứng demo.

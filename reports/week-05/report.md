@@ -50,7 +50,8 @@
 #### Task 1: Tổng hợp nội dung để làm dàn ý cho slides
 
 - Mực tiêu: Tổng hợp nội dung chính từ các file theory và survey để xây dựng cấu trúc slides rõ ràng, logic
-- Minh chứng: outline-slides.md
+- Minh chứng:
+- [Output file](https://drive.google.com/file/d/1gq9aOauWe9g0EIiRobiyyZBfJpsmJm4n/view?usp=drive_link)
 - Sử dụng AI: Gợi ý cấu trúc slide (tiêu đề, nội dung chính, speak notes, đồ họa gợi ý), trích các ý chính và tóm tắt nội dung.
 
 ---

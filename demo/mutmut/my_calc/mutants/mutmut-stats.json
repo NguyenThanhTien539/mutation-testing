@@ -1,0 +1,57 @@
+{
+    "tests_by_mangled_function_name": {
+        "calculator.core.x_multiply": [
+            "tests/test_core.py::test_arithmetic",
+            "tests/test_core.py::test_complex_combination"
+        ],
+        "calculator.core.x_exponentiate": [
+            "tests/test_core.py::test_arithmetic"
+        ],
+        "calculator.core.x_add": [
+            "tests/test_core.py::test_arithmetic"
+        ],
+        "calculator.core.x_subtract": [
+            "tests/test_core.py::test_arithmetic"
+        ],
+        "calculator.core.x_divide": [
+            "tests/test_core.py::test_divide_by_zero",
+            "tests/test_core.py::test_arithmetic"
+        ],
+        "calculator.core.x_solve_linear_equation": [
+            "tests/test_core.py::test_solve_linear_equation",
+            "tests/test_core.py::test_complex_combination",
+            "tests/test_core.py::test_solve_linear_equation_full_iterations"
+        ]
+    },
+    "duration_by_test": {
+        "tests/test_core.py::test_arithmetic": 0.005145702999925561,
+        "tests/test_core.py::test_divide_by_zero": 0.0006017859998337372,
+        "tests/test_core.py::test_solve_linear_equation": 0.0005809430001590954,
+        "tests/test_core.py::test_complex_combination": 0.0007696000000123604,
+        "tests/test_core.py::test_solve_linear_equation_full_iterations": 0.0005238960000042425
+    },
+    "stats_time": 0.45936489999999985,
+    "function_hashes": {
+        "calculator.core.x_add": "0bb596aeee44",
+        "calculator.core.x_subtract": "9eea683c8f24",
+        "calculator.core.x_multiply": "12a8dccc7ee9",
+        "calculator.core.x_divide": "d9d243fe69d8",
+        "calculator.core.x_exponentiate": "93bdb10ab02a",
+        "calculator.core.x_solve_linear_equation": "67157cb2c851"
+    },
+    "function_dependencies": {
+        "calculator.core.x_multiply": [
+            "calculator.core.x_solve_linear_equation"
+        ]
+    },
+    "config_fingerprint": {
+        "test_execution": "2e38e77b22c3",
+        "test_selection": "5955b66c0091",
+        "timeout": "d3052321fdc3",
+        "type_check": "2e38e77b22c3"
+    },
+    "watched_file_hashes": {
+        "pyproject.toml": "632fe2e4e33e"
+    },
+    "git_commit": null
+}

@@ -19,7 +19,7 @@
 - **Trạng thái:** Hoàn thành
 - **Minh chứng:**
   - [Jira task](https://mutation-testing-seminar.atlassian.net/browse/KAN-17)
-  - [Output file](https://drive.google.com/drive/folders/1Tpst2Td0uSt_cp24yk3E5YA23-Q8Za9j?usp=sharing)
+  - [Output file](https://drive.google.com/drive/folders/1Tpst2Td0uSt_cp24yk3E5YA23-Q8Za9j?usp=drive_link)
   - [Prompt log - Google Gemini](https://share.gemini.google/oi4aLPR73o6c)
 - **Mục đích sử dụng AI:** Sử dụng AI để làm rõ và chỉnh sửa các lỗi nhất thống phiên bản do Mutmut đã được thay đổi nhiều so với phiên bản cũ
 

@@ -39,10 +39,6 @@
 
 #### Task 2: Setup StrykerJS trên hệ thống Eshop
 
-- Mục tiêu: 
-- Minh chứng: 
-- Sử dụng AI: không
-
 - **Mô tả:** ghi lại các bước cài đặt dependency, tạo file test và các file cấu hình trước khi chạy mutation test bằng StrykerJS trên đồ án.
 - **Trạng thái:** Hoàn thành
 - **Minh chứng:**

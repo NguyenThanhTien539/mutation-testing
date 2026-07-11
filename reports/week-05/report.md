@@ -6,7 +6,7 @@
 | ------------------- | ------------------------------------------------------------------------------ |
 | Mã nhóm             | 02                                                                             |
 | Tên đề tài          | Mutation Testing & Test Effectiveness                                          |
-| Thời gian thực hiện | 2026-06-29 - 2026-07-04                                                        |
+| Thời gian thực hiện | 2026-07-06 - 2026-07-11                                                        |
 | GitHub Repository   | [[GitHub Repository] ](https://github.com/NguyenThanhTien539/mutation-testing) |
 
 ---
@@ -69,3 +69,13 @@
 ---
 
 ## 3. Công Việc Dự Kiến Cho Tuần Sau
+
+Trong tuần 6, nhóm dự kiến thực hiện các công việc sau:
+
+- Làm slide seminar trên Canva dựa theo outline đã có.
+- Phân tích so sánh Test Effectiveness giữa StrykerJS và Mutmut.
+- Mở rộng kịch bản test thêm các tình huống khó (equivalent mutant, logic phức tạp).
+- Chuẩn bị demo project ổn định cho cả 2 công cụ.
+- Quay video backup cho phần demo.
+- Review chéo slide và nội dung giữa các thành viên.
+- Thu thập ảnh chụp màn hình, command output và bằng chứng demo.

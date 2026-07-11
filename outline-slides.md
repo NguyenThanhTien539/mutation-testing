@@ -1,7 +1,6 @@
----
 # DÀN Ý BÀI THUYẾT TRÌNH: MUTATION TESTING - KIỂM THỬ CỦA KIỂM THỬ
 
-*   **Tổng thời lượng:** ~25-30 phút.
+- **Tổng thời lượng:** ~25-30 phút.
 
 ---
 

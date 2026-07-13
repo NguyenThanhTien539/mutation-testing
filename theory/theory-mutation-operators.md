@@ -429,7 +429,24 @@ test("non-premium user below minimum total gets no discount", () => {
 | `if (true)` | Negative cases phát hiện discount bị áp dụng sai. |
 | `return 0` | Tất cả tests assert exact output. |
 
-## 5. Ý chính cần ghi nhớ
+## 5. Công cụ hỗ trợ lý thuyết này
+
+| Nhóm mutation operator (mục 3.4) | Công cụ hỗ trợ | Bằng chứng cụ thể |
+|---|---|---|
+| Arithmetic | PIT (`MATH`), Stryker.NET, StrykerJS | PIT liệt kê `MATH` trong nhóm `DEFAULTS`; StrykerJS/Stryker.NET có nhóm arithmetic mutator riêng (`tool-survey-strykernet-pit.md`). |
+| Relational boundary | PIT (`CONDITIONALS_BOUNDARY`) | Ví dụ chính thức của PIT là `i >= 0` → `i > 0` — trùng khớp 100% với ví dụ lý thuyết ở mục 3.6. |
+| Equality | PIT (`NEGATE_CONDITIONALS`) | Đổi `==` thành `!=`, `<=` thành `>` — đúng bảng mục 3.6. |
+| Logical | StrykerJS `LogicalOperator` | **Đã quan sát thực tế**: khi demo StrykerJS trên `Register.jsx`, mutant đổi `error && <div>` thành `error \|\| <div>` xuất hiện trong report thật (`demo/strykerjs-setup/mutation-report/`), đúng ví dụ mục 3.7. |
+| Boolean literal / Return value | PIT (`TRUE_RETURNS`, `FALSE_RETURNS`, `NULL_RETURNS`, `PRIMITIVE_RETURNS`) | PIT có 4 mutator riêng biệt cho từng kiểu return value, chi tiết hơn cả bảng lý thuyết mục 3.8–3.9. |
+| Statement / Method call removal | PIT (`VOID_METHOD_CALLS`) | Xoá lời gọi tới void method, đúng mục 3.10–3.11. |
+| Constant/value | StrykerJS `StringLiteral` | **Đã quan sát thực tế**: mutant đổi `useState('')` thành `useState("Stryker was here!")` xuất hiện trong report thật, đúng ví dụ mục 3.12. |
+| Conditional | StrykerJS `ConditionalExpression` | **Đã quan sát thực tế**: mutant đổi `if (!regex.test(password))` thành `if (true)` xuất hiện trong report thật, đúng ví dụ mục 3.13. |
+| Collection | StrykerJS `ArrayDeclaration` | **Đã quan sát thực tế**: mutant đổi `const newCart = [...cart]` thành `const newCart = []` xuất hiện khi mutate `CartContext.jsx`, đúng ví dụ mục 3.14. |
+| Regex | StrykerJS `Regex` | **Đã quan sát thực tế và là ví dụ rõ nhất trong toàn bộ demo**: mutate regex kiểm tra mật khẩu trong `Register.jsx` sinh ra 18 mutant `Regex` khác nhau (đảo lookahead, đổi anchor, đổi quantifier), khớp chính xác mục 3.16. |
+
+Toàn bộ các dòng "Đã quan sát thực tế" ở trên lấy từ lần chạy StrykerJS thật của nhóm trên `demo/eshop-sut/frontend-web`, không phải suy đoán lý thuyết — xem chi tiết đầy đủ (kèm số liệu killed/survived) tại `demo/strykerjs-setup/setup-steps.md`.
+
+## 6. Ý chính cần ghi nhớ
 
 - Mutation tools tạo code changes nhỏ, có hệ thống, gọi là `mutation operators`.
 - Mỗi `mutation operator` mô phỏng một lỗi lập trình có khả năng xảy ra trong thực tế.
@@ -443,9 +460,10 @@ test("non-premium user below minimum total gets no discount", () => {
 - Khi đọc mutation report, không nên chỉ nhìn mutation score; cần xem loại code change nào survived để biết nên viết thêm test gì.
 - Một số mutants có thể là `equivalent mutants`, nghĩa là behavior không đổi. Những trường hợp này cần được review hoặc document cẩn thận.
 
-## 6. Tài liệu tham khảo
+## 7. Tài liệu tham khảo
 
 - [testRigor - Understanding Mutation Testing: A Comprehensive Guide](https://testrigor.com/blog/understanding-mutation-testing-a-comprehensive-guide/)
 - [Stryker.NET mutations](https://stryker-mutator.io/docs/stryker-net/mutations/)
 - [Stryker supported mutators](https://stryker-mutator.io/docs/mutation-testing-elements/supported-mutators/)
 - [PIT mutation operators](https://pitest.org/quickstart/mutators/)
+- `demo/strykerjs-setup/setup-steps.md` — nhật ký chạy StrykerJS thật của nhóm trên `eshop-sut`.

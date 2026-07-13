@@ -11,6 +11,10 @@ Nghiên cứu sâu về khái niệm **Equivalent Mutants** (Mutant tương đư
 - **Các giới hạn của Mutation Testing là gì?**
 - **Vì sao Mutation Testing có thể tốn kém hoặc chạy chậm?**
 
+Trả lời ngắn gọn:
+
+Equivalent mutant là mutant có cú pháp khác nhưng hành vi giống hệt code gốc, nên không test nào có thể killed nó. Ngoài equivalent mutant, mutant còn có thể survived do dead code hoặc do thiếu khả năng quan sát trạng thái nội bộ. Giới hạn lớn nhất của Mutation Testing là bài toán equivalent mutant không thể giải quyết tổng quát (undecidable), kéo theo sự bùng nổ tổ hợp và chi phí thực thi rất lớn khi số lượng mutant nhân với số lượng test case.
+
 ## 3. Ghi chú chính
 
 ### 3.1. Khái niệm Equivalent Mutant (Mutant tương đương)
@@ -71,15 +75,30 @@ Do đó, sự thay đổi từ `a + b` sang `b + a` đối với kiểu số là
 
 _Lưu ý mở rộng:_ Phép toán này có thể KHÔNG tương đương nếu `a` và `b` là kiểu chuỗi (String) ở một số ngôn ngữ (vì `"A" + "B"` = `"AB"`, trong khi `"B" + "A"` = `"BA"`), hoặc nếu việc đánh giá `a` hoặc `b` sinh ra hiệu ứng phụ (Side Effect) theo thứ tự gọi hàm. Nhưng trong ngữ cảnh toán học thuần túy, chúng hoàn toàn tương đương.
 
-## 5. Ý chính cần ghi nhớ
+## 5. Công cụ hỗ trợ lý thuyết này
+
+| Giới hạn/thách thức (mục 3.3/3.4) | Công cụ hỗ trợ | Ghi chú |
+|---|---|---|
+| Loại trừ Equivalent Mutant tường minh | Major (`suppressing equivalent mutants`) | Duy nhất trong số các tool khảo sát có tính năng này ở cấp công cụ (`tool-survey-infection-major.md`). |
+| Giảm bùng nổ tổ hợp bằng coverage-guided execution | PIT (coverage-guided test selection), Mutmut (coverage-guided mutation), StrykerJS/Stryker.NET (`coverageAnalysis: perTest`) | Chỉ chạy các test có khả năng chạm tới mutant thay vì toàn bộ suite × toàn bộ mutant — nhóm đã áp dụng trực tiếp trong demo `frontend-web` (`demo/strykerjs-setup/setup-steps.md`). |
+| Giảm bùng nổ tổ hợp bằng phân tán (distributed execution) | Cosmic Ray (tích hợp Celery, chạy song song nhiều worker/máy trạm) | Giải pháp cho hệ thống rất lớn, đánh đổi bằng độ phức tạp cấu hình (`tool-survey-mutmut-cosmicray.md`). |
+| Incremental mutation testing (chỉ mutate phần code thay đổi) | Stryker.NET (`since`, `with-baseline`), PIT (incremental analysis), Mutmut (`.mutmut-cache`) | Giảm chi phí lặp lại khi chạy trên mỗi pull request. |
+| Giảm chi phí nhân lực khi rà soát mutant sống sót | Mutmut (`mutmut browse` — dashboard tương tác), StrykerJS/Stryker.NET (HTML report liệt kê survived mutant kèm dòng code cụ thể) | Nhóm đã trực tiếp dùng HTML report của StrykerJS để rà soát và phân loại 27 mutant survived trên `Register.jsx` (`demo/strykerjs-setup/setup-steps.md`, mục 6). |
+| Phụ thuộc công cụ theo ngôn ngữ (Tooling Dependency) | Infection (PHP), Major/PIT (Java), Mutmut/Cosmic Ray (Python), StrykerJS (JS/TS), Stryker.NET (C#) | Minh hoạ trực tiếp giới hạn "mỗi ngôn ngữ cần công cụ riêng" nêu ở mục 3.3 — không có công cụ đa ngôn ngữ nào trong 7 tool mutation testing đã khảo sát (`tool-comparison-final.md`). |
+
+**Áp dụng thực tế của nhóm**: khi setup StrykerJS cho `eshop-sut`, nhóm chủ động giới hạn `mutate` chỉ trong 1–2 file thay vì toàn bộ project, và với backend phải chuyển `coverageAnalysis` sang `"off"` (đánh đổi tốc độ lấy tính đúng đắn, vì test chạy qua HTTP tới process con khiến coverage tracking qua ranh giới process không đáng tin cậy) — đây chính là ví dụ thực tế cho chiến lược "risk-based, giới hạn phạm vi" nhằm đối phó với chi phí thực thi khổng lồ đã nêu ở mục 3.4.
+
+## 6. Ý chính cần ghi nhớ
 
 1. **Equivalent Mutant** đổi cú pháp nhưng giữ nguyên ngữ nghĩa. Nó không bao giờ bị giết bởi bất kỳ test case nào.
 2. Việc nhận diện Equivalent Mutant là một bài toán **Undecidable**, hiện tại vẫn phải dựa nhiều vào nhân lực để thẩm định thủ công.
 3. **Mutation Testing chậm** vì nó nhân số lượng mutant với số lượng test case, đòi hỏi năng lực máy tính cực kỳ lớn.
 4. Để tối ưu Mutation Testing trong thực tế, người ta áp dụng các kỹ thuật như **Tối ưu hóa Bytecode**, **Đột biến cấp cao (Extreme Mutation)**, và chỉ chạy Mutation Testing trên các nhánh mã nguồn thay đổi (Incremental Mutation Testing) thay vì toàn bộ hệ thống.
+5. Các công cụ thực tế (Major, Cosmic Ray, Mutmut, PIT, Stryker) đều có ít nhất một cơ chế giảm nhẹ các giới hạn này — nhưng không công cụ nào giải quyết triệt để bài toán equivalent mutant.
 
-## 6. Tài liệu tham khảo
+## 7. Tài liệu tham khảo
 
 - Offutt, A. J., & Pan, J. (1997). _Automatically detecting equivalent mutants_. Software Testing, Verification and Reliability, 7(3), 165-192. [DOI: 10.1002/...3.0.CO;2-U](<https://doi.org/10.1002/(SICI)1099-1689(199709)7:3%3C165::AID-STVR143%3E3.0.CO;2-U>)
 - Jia, Y., & Harman, M. (2011). _An analysis and survey of mutation testing_. IEEE Transactions on Software Engineering, 37(5), 649-678. [DOI: 10.1109/TSE.2010.62](https://doi.org/10.1109/TSE.2010.62)
 - Pitest Documentation. _Basic Concepts - Equivalent Mutations_. [Truy cập tại pitest.org](https://pitest.org/quickstart/basic_concepts/#equivalent-mutations)
+- `demo/strykerjs-setup/setup-steps.md` — ví dụ thật về giới hạn phạm vi mutate và đánh đổi coverageAnalysis.

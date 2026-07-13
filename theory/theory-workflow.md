@@ -54,29 +54,29 @@ flowchart TD
 
 ### 3.3 Giải thích từng bước
 
-| Step | Tên bước | Việc xảy ra | Output |
-|---|---|---|---|
-| 1 | Chọn `source code gốc` | Chọn phần code quan trọng như business rules, validation logic, security conditions, hoặc core algorithms. | Target code để mutation testing |
-| 2 | Generate mutants | Mutation tool áp dụng `mutation operators`, ví dụ đổi operator, negate condition, đổi return value, hoặc remove statement. | Một hoặc nhiều `mutants` |
-| 3 | Run existing test suite | Unit tests, integration tests, hoặc end-to-end tests hiện có được chạy trên từng mutant. | Test result cho từng mutant |
-| 4 | Phân loại mutant result | Nếu ít nhất một test fail, mutant là `killed`. Nếu toàn bộ test pass, mutant là `survived`. | Killed/survived status |
-| 5 | Analyze survivors | Xem xét `survived mutants` để xác định đó là missing test, weak assertion, hay `equivalent mutant`. | Danh sách test gaps |
-| 6 | Improve tests | Thêm assertion mạnh hơn, thêm boundary cases, negative cases, hoặc kiểm tra business rule rõ hơn. | Test suite được cải thiện |
-| 7 | Re-run mutation testing | Chạy lại mutation testing để kiểm tra mutant trước đó survived đã bị killed chưa. | Mutation report mới |
-| 8 | Calculate mutation score | Tính phần trăm mutants bị killed bởi test suite. | `mutation score` |
+| Step | Tên bước                 | Việc xảy ra                                                                                                                | Output                          |
+| ---- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| 1    | Chọn `source code gốc`   | Chọn phần code quan trọng như business rules, validation logic, security conditions, hoặc core algorithms.                 | Target code để mutation testing |
+| 2    | Generate mutants         | Mutation tool áp dụng `mutation operators`, ví dụ đổi operator, negate condition, đổi return value, hoặc remove statement. | Một hoặc nhiều `mutants`        |
+| 3    | Run existing test suite  | Unit tests, integration tests, hoặc end-to-end tests hiện có được chạy trên từng mutant.                                   | Test result cho từng mutant     |
+| 4    | Phân loại mutant result  | Nếu ít nhất một test fail, mutant là `killed`. Nếu toàn bộ test pass, mutant là `survived`.                                | Killed/survived status          |
+| 5    | Analyze survivors        | Xem xét `survived mutants` để xác định đó là missing test, weak assertion, hay `equivalent mutant`.                        | Danh sách test gaps             |
+| 6    | Improve tests            | Thêm assertion mạnh hơn, thêm boundary cases, negative cases, hoặc kiểm tra business rule rõ hơn.                          | Test suite được cải thiện       |
+| 7    | Re-run mutation testing  | Chạy lại mutation testing để kiểm tra mutant trước đó survived đã bị killed chưa.                                          | Mutation report mới             |
+| 8    | Calculate mutation score | Tính phần trăm mutants bị killed bởi test suite.                                                                           | `mutation score`                |
 
 ### 3.4 Mutant được tạo ra như thế nào?
 
 Mutant được tạo ra bằng cách áp dụng `mutation operators` lên code gốc. Một số thay đổi phổ biến:
 
-| Mutation operator | Ví dụ thay đổi |
-|---|---|
-| Relational operator | `>=` thành `>` |
-| Logical operator | `&&` thành `||` |
-| Boolean value | `true` thành `false` |
-| Return value | `return value` thành `return null` hoặc `return 0` |
-| Statement mutation | Xóa một statement hoặc một branch |
-| Value mutation | Đổi constant như `0.2` thành `0.05` |
+| Mutation operator   | Ví dụ thay đổi                                     |
+| ------------------- | -------------------------------------------------- | --- | --- |
+| Relational operator | `>=` thành `>`                                     |
+| Logical operator    | `&&` thành `                                       |     | `   |
+| Boolean value       | `true` thành `false`                               |
+| Return value        | `return value` thành `return null` hoặc `return 0` |
+| Statement mutation  | Xóa một statement hoặc một branch                  |
+| Value mutation      | Đổi constant như `0.2` thành `0.05`                |
 
 Ví dụ:
 
@@ -128,13 +128,13 @@ Mutation score càng cao thì test suite thường càng mạnh. Tuy nhiên, 100
 
 ### 3.7 Mutation report cho biết điều gì?
 
-| Report finding | Interpretation | Recommended action |
-|---|---|---|
-| Nhiều killed mutants | Tests có assertion tốt cho các behavior đó. | Giữ tests và theo dõi regression. |
-| Survived mutant trong business logic | Code có thể đã được execute nhưng behavior chưa được assert đủ mạnh. | Thêm assertion hoặc missing cases. |
-| No coverage mutant | Mutated code không được test nào execute. | Thêm test chạm tới code path đó. |
-| Timeout mutant | Mutant có thể tạo infinite loop hoặc làm test chạy quá chậm. | Review loop logic và timeout setting. |
-| Equivalent mutant | Mutant behavior giống source code gốc. | Document hoặc exclude cẩn thận. |
+| Report finding                       | Interpretation                                                       | Recommended action                    |
+| ------------------------------------ | -------------------------------------------------------------------- | ------------------------------------- |
+| Nhiều killed mutants                 | Tests có assertion tốt cho các behavior đó.                          | Giữ tests và theo dõi regression.     |
+| Survived mutant trong business logic | Code có thể đã được execute nhưng behavior chưa được assert đủ mạnh. | Thêm assertion hoặc missing cases.    |
+| No coverage mutant                   | Mutated code không được test nào execute.                            | Thêm test chạm tới code path đó.      |
+| Timeout mutant                       | Mutant có thể tạo infinite loop hoặc làm test chạy quá chậm.         | Review loop logic và timeout setting. |
+| Equivalent mutant                    | Mutant behavior giống source code gốc.                               | Document hoặc exclude cẩn thận.       |
 
 ### 3.8 Workflow thực tế cho team
 
@@ -169,11 +169,11 @@ function checkCredentials(username, password) {
 
 Expected behavior:
 
-| Input | Expected output |
-|---|---|
-| username = `"admin"`, password = `"password"` | `true` |
-| username = `"wrong"`, password = `"password"` | `false` |
-| username = `"admin"`, password = `"wrong"` | `false` |
+| Input                                         | Expected output |
+| --------------------------------------------- | --------------- |
+| username = `"admin"`, password = `"password"` | `true`          |
+| username = `"wrong"`, password = `"password"` | `false`         |
+| username = `"admin"`, password = `"wrong"`    | `false`         |
 
 ### 4.2 Existing Test Suite
 
@@ -199,9 +199,9 @@ function checkCredentials(username, password) {
 
 Chạy existing test suite:
 
-| Test case | Source code gốc result | Mutant result | Test phát hiện khác biệt? |
-|---|---:|---:|---|
-| `checkCredentials("admin", "password")` | `true` | `true` | Không |
+| Test case                               | Source code gốc result | Mutant result | Test phát hiện khác biệt? |
+| --------------------------------------- | ---------------------: | ------------: | ------------------------- |
+| `checkCredentials("admin", "password")` |                 `true` |        `true` | Không                     |
 
 Kết quả:
 
@@ -229,11 +229,11 @@ test("wrong password should not login", () => {
 
 Chạy lại mutation testing.
 
-| Test case | Source code gốc result | Mutant A result | Test phát hiện khác biệt? |
-|---|---:|---:|---|
-| `checkCredentials("admin", "password")` | `true` | `true` | Không |
-| `checkCredentials("wrong", "password")` | `false` | `true` | Có |
-| `checkCredentials("admin", "wrong")` | `false` | `true` | Có |
+| Test case                               | Source code gốc result | Mutant A result | Test phát hiện khác biệt? |
+| --------------------------------------- | ---------------------: | --------------: | ------------------------- |
+| `checkCredentials("admin", "password")` |                 `true` |          `true` | Không                     |
+| `checkCredentials("wrong", "password")` |                `false` |          `true` | Có                        |
+| `checkCredentials("admin", "wrong")`    |                `false` |          `true` | Có                        |
 
 Kết quả:
 
@@ -261,11 +261,11 @@ function checkCredentials(username, password) {
 
 Mutant này nguy hiểm vì nó cho phép login khi chỉ một trong hai field đúng.
 
-| Test case | Source code gốc result | Mutant B result | Test phát hiện khác biệt? |
-|---|---:|---:|---|
-| `checkCredentials("admin", "password")` | `true` | `true` | Không |
-| `checkCredentials("wrong", "password")` | `false` | `true` | Có |
-| `checkCredentials("admin", "wrong")` | `false` | `true` | Có |
+| Test case                               | Source code gốc result | Mutant B result | Test phát hiện khác biệt? |
+| --------------------------------------- | ---------------------: | --------------: | ------------------------- |
+| `checkCredentials("admin", "password")` |                 `true` |          `true` | Không                     |
+| `checkCredentials("wrong", "password")` |                `false` |          `true` | Có                        |
+| `checkCredentials("admin", "wrong")`    |                `false` |          `true` | Có                        |
 
 Kết quả:
 
@@ -307,12 +307,12 @@ Giải thích:
 
 Sau khi chạy mutation testing, tool có thể tạo report như sau:
 
-| Mutant ID | Mutation operator | Code change | Status | Meaning |
-|---|---|---|---|---|
-| M1 | Return value mutation | Thay login logic bằng `return true` | Killed | Negative tests phát hiện invalid login behavior |
-| M2 | Logical operator mutation | Đổi `&&` thành `||` | Killed | Tests phát hiện chỉ một field đúng là chưa đủ |
-| M3 | Statement mutation | Remove `else` branch | Killed | Tests phát hiện missing false path |
-| M4 | Equivalent mutation | Thêm `=== true` quanh cùng condition | Survived / Equivalent | Behavior gần như không đổi |
+| Mutant ID | Mutation operator         | Code change                          | Status                | Meaning                                         |
+| --------- | ------------------------- | ------------------------------------ | --------------------- | ----------------------------------------------- | ------ | --------------------------------------------- |
+| M1        | Return value mutation     | Thay login logic bằng `return true`  | Killed                | Negative tests phát hiện invalid login behavior |
+| M2        | Logical operator mutation | Đổi `&&` thành `                     |                       | `                                               | Killed | Tests phát hiện chỉ một field đúng là chưa đủ |
+| M3        | Statement mutation        | Remove `else` branch                 | Killed                | Tests phát hiện missing false path              |
+| M4        | Equivalent mutation       | Thêm `=== true` quanh cùng condition | Survived / Equivalent | Behavior gần như không đổi                      |
 
 Summary:
 
@@ -341,7 +341,7 @@ Adjusted mutation score: 100%
 - `Mutation report` cuối cùng cho biết killed, survived, no coverage, timeout, và đôi khi equivalent mutants.
 - `Mutation score` tóm tắt mức độ hiệu quả của test suite.
 - Mutation score cần được diễn giải cẩn thận vì có thể tồn tại `equivalent mutants` và vì mutation testing có chi phí execution cao hơn normal unit testing.
-- Workflow nên được lặp lại: chạy mutation testing, đọc survived mutants, thêm test, rồi chạy lại.
+- Workflow nên được lặp lại: chạy mutation testing, đọc survived mutants, thêm test, rồi chạy lại — nhóm đã tái hiện đúng vòng lặp này trong demo StrykerJS (xem mục 5).
 
 ## 6. Tài liệu tham khảo
 

@@ -198,9 +198,9 @@ Trái ngược với cách tiếp cận phức tạp của StrykerJS, **Mutmut**
 
 ### 9.3. Istanbul/nyc — Kỹ thuật Source-level Instrumentation
 
-Istanbul thực hiện đo lường tỷ lệ bao phủ mã bằng phương pháp **chèn trực tiếp các bộ đếm (counters) vào mã nguồn**. Cụ thể, công cụ này phân tích mã nguồn thành Cây Cú pháp Trừu tượng (AST - Abstract Syntax Tree) thông qua `istanbul-lib-instrument` hoặc `babel-plugin-istanbul`. Sau đó, nó tự động cấy ghép các biến đếm (như `cov.s[N]++` cho câu lệnh, `cov.f[N]++` cho hàm, và `cov.b[N][0/1]++` cho các nhánh logic như `if/else`, toán tử ba ngôi). Mã nguồn sau khi được "nội sinh" (instrumented) sẽ được biên dịch lại để thay thế bản gốc trong quá trình kiểm thử. Khi các test cases thực thi, các bộ đếm này sẽ tự động cập nhật giá trị vào một đối tượng toàn cục (`global.__coverage__` trên Node.js hoặc `window.__coverage__` trên trình duyệt). Cuối cùng, công cụ CLI `nyc` sẽ đóng vai trò điều phối quá trình nội sinh, thu thập dữ liệu và xuất báo cáo dưới nhiều định dạng (text, HTML, LCOV, JSON).
+Istanbul đo lường Code Coverage bằng cách **chèn trực tiếp các bộ đếm vào mã nguồn**. Công cụ này phân tích mã thông qua AST bằng `istanbul-lib-instrument` hoặc `babel-plugin-istanbul`, sau đó thêm các counter như `cov.s[N]++` (statement), `cov.f[N]++` (function) và `cov.b[N][0/1]++` (branch). Khi test được thực thi, các bộ đếm sẽ cập nhật dữ liệu vào đối tượng coverage (`global.__coverage__` trên Node.js hoặc `window.__coverage__` trên trình duyệt). Công cụ `nyc` chịu trách nhiệm điều phối quá trình instrument, thu thập dữ liệu và xuất báo cáo (text, HTML, LCOV, JSON).
 
-Nhờ việc can thiệp trực tiếp trên AST gốc trước quá trình chuyển đổi (transformation), Istanbul duy trì độ chính xác cực kỳ cao đối với tỷ lệ bao phủ nhánh (branch coverage), ngay cả khi xử lý các cấu trúc logic lồng nhau phức tạp. Đây là lý do cốt lõi khiến các dự án đặt nặng tính chính xác vẫn ưu tiên sử dụng Istanbul. Mặc dù nó có thể chậm hơn so với các công cụ thế hệ mới áp dụng phương pháp _engine-native_ (như `c8` - sử dụng cơ chế coverage tích hợp sẵn của V8 engine trong Node.js), `c8` lại có nhược điểm là phải ánh xạ ngược thông qua _source map_, dễ dẫn đến sai lệch khi đo lường các mã nguồn đã qua quá trình bundle/transpile phức tạp.
+Do can thiệp trực tiếp vào AST trước khi mã được transform, Istanbul có độ chính xác cao, đặc biệt với branch coverage trong các cấu trúc logic phức tạp. Tuy nhiên, phương pháp này có thể chậm hơn so với các công cụ dựa trên coverage tích hợp của V8 như `c8`, vốn có nguy cơ sai lệch khi phải ánh xạ lại bằng source map sau quá trình bundle hoặc transpile.
 
 ### 9.4. Coverage.py — Kỹ thuật Engine-native Instrumentation
 
@@ -210,7 +210,7 @@ Trái ngược hoàn toàn với phương pháp của Istanbul, Coverage.py **kh
 - **`pytrace`:** Áp dụng cùng cơ chế `sys.settrace()` nhưng được triển khai hoàn toàn bằng Python thuần. Lõi này thường hoạt động như một phương án dự phòng (fallback) khi hệ thống không hỗ trợ C extension tương ứng, đi kèm với tốc độ thực thi chậm hơn đáng kể.
 - **`sysmon` (Từ Python 3.12+):** Tận dụng tối đa API `sys.monitoring` thế hệ mới. Lõi này mang lại hiệu suất vượt trội so với cơ chế `sys.settrace()` truyền thống (vốn ban đầu được thiết kế chủ yếu cho mục đích gỡ lỗi - debugging).
 
-Toàn bộ dữ liệu thu thập sẽ được lưu trữ vào tệp `.coverage`. Về bản chất, đây là một **cơ sở dữ liệu SQLite**, thiết kế này cho phép hệ thống dễ dàng tổng hợp (`coverage combine`) kết quả kiểm thử từ nhiều tiến trình chạy song song (ví dụ: qua `pytest-xdist`) hoặc từ nhiều môi trường ảo khác nhau (như `tox`). Hơn nữa, Coverage.py còn cung cấp tính năng **Dynamic Context** (Ngữ cảnh Động), tự động gắn nhãn dữ liệu theo tên của từng kịch bản kiểm thử (test case) đang chạy. Nhờ đó, nó không chỉ trả lời được câu hỏi định lượng _"Dòng code này có được thực thi hay không?"_, mà còn giải quyết được bài toán truy vết: _"Dòng code này đã được kích hoạt bởi test case cụ thể nào?"_.
+Toàn bộ dữ liệu thu thập sẽ được lưu trữ vào tệp `.coverage`. Về bản chất, đây là một cơ sở dữ liệu SQLite, thiết kế này cho phép hệ thống dễ dàng tổng hợp (`coverage combine`) kết quả kiểm thử từ nhiều tiến trình chạy song song (ví dụ: qua `pytest-xdist`) hoặc từ nhiều môi trường ảo khác nhau (như `tox`). Hơn nữa, Coverage.py còn cung cấp tính năng Dynamic Context, tự động gắn nhãn dữ liệu theo tên của từng kịch bản kiểm thử (test case) đang chạy. Nhờ đó, nó không chỉ trả lời được câu hỏi định lượng _"Dòng code này có được thực thi hay không?"_, mà còn giải quyết được bài toán truy vết: _"Dòng code này đã được kích hoạt bởi test case cụ thể nào?"_.
 
 ### 9.5. Đối chiếu chéo
 
@@ -255,7 +255,7 @@ Bộ test baseline ban đầu chỉ có 2 test case, cả hai chỉ gọi `rende
 | `Checkout.jsx` — `{couponError && (...)}`                    | Covered                                   | **Survived** (mutant đổi `&&`/giá trị điều kiện) | JSX conditional render "chạy qua" ở mọi lần render dù giá trị điều kiện không đổi                                         |
 | `AuthContext.jsx` — `value={{ user, token, login, logout }}` | Covered (object luôn được tạo mỗi render) | **Survived** (mutant `value={{}}`)               | Object literal được tạo ra nhưng không có test nào đọc field bên trong nó → coverage xanh, hành vi sai vẫn lọt qua        |
 
-Khoảng cách giữa coverage (40.32%) và mutation score (20.18%, hoặc chỉ 3.67% nếu tính khắt khe) minh hoạ đúng luận điểm lý thuyết ở Mục 6: coverage đo việc code có được **thực thi**, còn mutation testing đo việc test có **khẳng định đúng hành vi** của code đó hay không.
+Khoảng cách giữa coverage (40.32%) và mutation score (20.18%, hoặc chỉ 3.67% nếu tính khắt khe) minh hoạ đúng luận điểm lý thuyết ở Mục 6: coverage đo việc code có được thực thi, còn mutation testing đo việc test có khẳng định đúng hành vi của code đó hay không.
 
 #### Sau integrate: hai chỉ số hội tụ
 

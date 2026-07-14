@@ -84,7 +84,7 @@ Mutant sẽ bị killed vì code gốc `18 >= 18` trả về `true`, còn code m
 | Mutmut / Cosmic Ray | Python | Mutate AST bằng `parso`, chạy `pytest`/`unittest` (`tool-survey-mutmut-cosmicray.md`). |
 | Infection / Major | PHP / Java | Mutate AST hoặc nhúng vào bước biên dịch (`tool-survey-infection-major.md`). |
 
-Ngược lại, **Istanbul/nyc, JaCoCo và Jest Coverage** (khảo sát ở `tool-survey-istanbul-jacoco.md` và `tool-survey-strykerjs-jest.md`) **không** triển khai nguyên lý này — các công cụ đó chỉ đo dòng code có được chạy qua hay không, không tạo mutant và không phân loại killed/survived. Đây chính là ranh giới phân biệt hai nhóm công cụ đã khảo sát trong đề tài.
+Ngược lại, **Istanbul/nyc, JaCoCo, Jest Coverage và Coverage.py** (khảo sát ở `tool-survey-istanbul-jacoco.md`, `tool-survey-strykerjs-jest.md` và `tool-survey-coveragepy.md`) **không** triển khai nguyên lý này — các công cụ đó chỉ đo dòng code có được chạy qua hay không, không tạo mutant và không phân loại killed/survived. Đây chính là ranh giới phân biệt hai nhóm công cụ đã khảo sát trong đề tài.
 
 ## 6. Ý chính cần ghi nhớ
 
@@ -92,7 +92,7 @@ Ngược lại, **Istanbul/nyc, JaCoCo và Jest Coverage** (khảo sát ở `too
 - Mutant được tạo bằng cách thay đổi nhỏ, có chủ ý trong source code.
 - `Killed` nghĩa là test phát hiện được thay đổi; `survived` nghĩa là test không phát hiện được.
 - Boundary test (ví dụ `age = 18`) thường là yếu tố quyết định một mutant bị killed hay survived.
-- Mọi công cụ mutation testing (StrykerJS, Stryker.NET, PIT, Mutmut, Cosmic Ray, Infection, Major) đều triển khai đúng nguyên lý này; các công cụ đo coverage thuần tuý (Istanbul/nyc, JaCoCo, Jest Coverage) thì không.
+- Mọi công cụ mutation testing (StrykerJS, Stryker.NET, PIT, Mutmut, Cosmic Ray, Infection, Major) đều triển khai đúng nguyên lý này; các công cụ đo coverage thuần tuý (Istanbul/nyc, JaCoCo, Jest Coverage, Coverage.py) thì không.
 
 ## 7. Tài liệu tham khảo
 

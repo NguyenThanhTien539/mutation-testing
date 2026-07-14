@@ -1,4 +1,4 @@
-# So sánh 10 công cụ Mutation Testing & Code Coverage
+# So sánh 11 công cụ Mutation Testing & Code Coverage
 
 ---
 
@@ -9,6 +9,7 @@
 **Pricing:** Miễn phí hoàn toàn (BSD-3-Clause)
 
 **Strengths:**
+
 - Sử dụng AST (Abstract Syntax Tree) để đột biến mã nguồn, giúp đột biến chính xác và dễ bảo trì
 - Dễ viết các Mutator mới
 - Xử lý tốt false-positives và các trường hợp biên
@@ -16,6 +17,7 @@
 - Hỗ trợ nhiều framework: PHPUnit, PhpSpec, Codeception, Testo
 
 **Weaknesses:**
+
 - Yêu cầu PHP 8.3+ và phải bật Xdebug/phpdbg/pcov
 - Các đột biến phải xảy ra khi CodeCoverage đã bắt đầu, nếu không sẽ không được báo cáo
 - Không hỗ trợ multiprocessing trên Windows
@@ -31,12 +33,14 @@
 **Pricing:** Miễn phí
 
 **Strengths:**
+
 - Framework phân tích đột biến linh hoạt và hiệu quả
 - Các đột biến có thể được kích hoạt trong thời gian chạy mà không cần biên dịch lại
 - Ngôn ngữ MML (Major Mutation Language) hỗ trợ cấu hình cực kỳ chi tiết cho quá trình tạo đột biến
 - Tính toán mutant-test detection matrix hoàn chỉnh
 
 **Weaknesses:**
+
 - Tính năng xuất đột biến thành tệp mã nguồn riêng lẻ bị vô hiệu hóa theo mặc định
 - Yêu cầu Java-8 compiler
 - Ít thông tin tài liệu so với các tool khác
@@ -53,6 +57,7 @@
 **Pricing:** Miễn phí hoàn toàn (ISC License)
 
 **Strengths:**
+
 - Cài đặt và sử dụng cực kỳ đơn giản (chỉ cần thêm `nyc` trước lệnh test)
 - Báo cáo HTML trực quan, chi tiết
 - Tiêu chuẩn công nghiệp (de-facto standard) cho JavaScript
@@ -60,6 +65,7 @@
 - Đo lường 4 chỉ số: Statements, Branches, Functions, Lines
 
 **Weaknesses:**
+
 - Quá trình instrumentation có thể làm tăng thời gian thực thi test suite ở dự án lớn
 - Cấu hình source-map phức tạp trong Monorepo hoặc dự án build nhiều bước
 - Không phải mutation testing tool - chỉ đo code coverage
@@ -75,6 +81,7 @@
 **Pricing:** Miễn phí hoàn toàn (Eclipse Public License - EPL)
 
 **Strengths:**
+
 - Không cần sửa đổi mã nguồn gốc (làm việc trực tiếp dưới mức bytecode)
 - Tích hợp chuẩn hóa với Maven/Gradle chỉ với vài dòng XML
 - Nhẹ, nhanh, overhead cực thấp
@@ -84,6 +91,7 @@
 - Gộp báo cáo cho dự án đa module
 
 **Weaknesses:**
+
 - Kết quả ở cấp bytecode có thể khác biệt so với source gốc
 - On-the-fly agent có thể bị xung đột với framework tự động chỉnh sửa bytecode
 - Coverage cao tạo ra "ảo giác an toàn" - không xác minh assertion có đúng không
@@ -100,6 +108,7 @@
 **Pricing:** Miễn phí hoàn toàn (BSD 3-Clause License)
 
 **Strengths:**
+
 - Cực kỳ dễ sử dụng, cài đặt nhanh qua `pip install mutmut`, cấu hình tối giản
 - Tốc độ nhanh nhờ bộ nhớ đệm SQLite và coverage-guided mutation
 - Kiểm thử tăng dần (incremental) - chỉ chạy lại mutant liên quan đến code mới sửa
@@ -108,6 +117,7 @@
 - Báo cáo HTML trực quan
 
 **Weaknesses:**
+
 - Chạy tuần tự đơn tiến trình theo mặc định, chậm ở dự án lớn
 - Vẫn tạo ra equivalent mutants
 - Hỗ trợ multiprocessing trên Windows gặp vấn đề
@@ -124,6 +134,7 @@
 **Pricing:** Miễn phí hoàn toàn (BSD 2-Clause License)
 
 **Strengths:**
+
 - Khả năng mở rộng cực tốt với kiến trúc phân tán (Celery, HTTP distributor)
 - Quản lý phiên làm việc bền vững qua SQLite - chạy tác vụ dài ngày không sợ mất dữ liệu
 - Dừng và tiếp tục bất kỳ lúc nào (pause/resume)
@@ -132,6 +143,7 @@
 - Độ chính xác cao với parser `parso`
 
 **Weaknesses:**
+
 - Độ phức tạp cấu hình cao - nhiều lệnh tuần tự (new-config → init → baseline → exec)
 - Chi phí thiết lập phân tán lớn (cần Celery, Redis/RabbitMQ)
 - Tốc độ chạy đơn nhân chậm hơn Mutmut
@@ -149,6 +161,7 @@
 **Pricing:** Miễn phí hoàn toàn (Apache 2.0 License)
 
 **Strengths:**
+
 - Đánh giá test suite sâu hơn code coverage - kiểm tra test có phát hiện lỗi logic không
 - Hỗ trợ nhiều framework và test runner (Jest, Mocha, Jasmine, Karma, Vitest)
 - Báo cáo rõ ràng, trực quan với nhiều dạng report (HTML, dashboard)
@@ -156,6 +169,7 @@
 - Dễ demo trực quan
 
 **Weaknesses:**
+
 - Chạy chậm hơn test thông thường
 - Cần test suite ban đầu ổn định
 - Có thể sinh ra equivalent mutants
@@ -173,6 +187,7 @@
 **Pricing:** Miễn phí hoàn toàn (MIT License)
 
 **Strengths:**
+
 - Dễ bật và dễ chạy (`jest --coverage`)
 - Tích hợp trực tiếp trong Jest
 - Report dễ đọc
@@ -180,6 +195,7 @@
 - Có thể dùng nhanh trong demo
 
 **Weaknesses:**
+
 - Chỉ đo việc code có được chạy qua hay không
 - Không kiểm tra assertion có đúng và đủ mạnh không
 - Không kiểm tra test có phát hiện lỗi logic không
@@ -197,6 +213,7 @@
 **Pricing:** Miễn phí hoàn toàn (open-source)
 
 **Strengths:**
+
 - Native với .NET/C# ecosystem
 - Chạy đơn giản bằng `dotnet stryker`
 - Report trực quan với HTML report
@@ -206,6 +223,7 @@
 - Dễ trình bày trong demo
 
 **Weaknesses:**
+
 - Chạy lâu với solution lớn
 - Cấu hình nhiều test projects có thể phức tạp
 - Một số behavior đặc thù của xUnit/NUnit theories có thể ảnh hưởng
@@ -223,6 +241,7 @@
 **Pricing:** Miễn phí (open-source). PIT core miễn phí; các phần nâng cao như Arcmutate có thể thuộc dạng commercial/pro.
 
 **Strengths:**
+
 - Mature và phổ biến trong Java/JVM ecosystem
 - Tích hợp Maven tốt qua `pitest-maven`
 - Bytecode mutation giúp chạy nhanh và phù hợp với build pipeline
@@ -232,6 +251,7 @@
 - Hệ thống mutator phong phú (CONDITIONALS_BOUNDARY, MATH, INCREMENTS, VOID_METHOD_CALLS...)
 
 **Weaknesses:**
+
 - Bytecode mutation khó giải thích hơn source-level mutation
 - Report map bytecode-level mutation về source line đôi khi không trực quan
 - JUnit 5 cần plugin, không hỗ trợ trực tiếp out of the box
@@ -243,4 +263,26 @@
 
 ---
 
-**Nhận xét:** Không có công cụ nào trong 10 tool trên tích hợp AI trực tiếp. Tuy nhiên, tất cả đều có thể kết hợp với AI ở bên ngoài (AI coding assistants, AI testing agents) để phân tích kết quả, gợi ý test case, và cải thiện chất lượng test suite.
+## 11. Coverage.py
+
+**Ngôn ngữ:** Python
+
+**Pricing:** Miễn phí hoàn toàn (Apache License 2.0)
+
+**Strengths:**
+
+- Tiêu chuẩn công nghiệp (de-facto standard) cho hệ sinh thái Python, duy trì liên tục hơn 20 năm
+- Tích hợp liền mạch với `pytest` qua `pytest-cov`
+- Hỗ trợ cả Statement và Branch coverage
+- Report HTML trực quan, có highlight từng dòng
+- Từ Python 3.12, overhead giảm mạnh nhờ `sys.monitoring` (PEP 669)
+- Là nền tảng dữ liệu để Mutmut chạy coverage-guided mutation hiệu quả hơn
+
+**Weaknesses:**
+
+- Chỉ đo dòng code có chạy qua hay không, không xác minh assertion có đúng logic
+- Branch coverage không bật mặc định, dễ gây ngộ nhận nếu quên cấu hình `branch = True`
+- Chạy đa tiến trình cần thêm bước `coverage combine` thủ công, dễ bị bỏ sót
+- Không phải mutation testing tool - chỉ đo code coverage
+
+**AI Support:** Không có tính năng AI tích hợp trực tiếp. Dữ liệu XML/JSON có thể làm đầu vào cho SonarQube/Codecov; dữ liệu `.coverage` cũng chính là thứ Mutmut đọc để tối ưu phạm vi mutate tự động.

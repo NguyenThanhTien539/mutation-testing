@@ -50,13 +50,13 @@ Assertion testing là chiến lược sử dụng các biểu thức (assertions
 
 ### 3.5 Phân loại Assertion Testing theo phạm vi
 
-| Loại kiểm thử | Mục đích | Ví dụ |
-|---|---|---|
-| **Unit Testing** | Kiểm tra logic nhỏ, độc lập | Kiểm tra kết quả trả về của hàm tính thuế |
-| **Integration** | Kiểm tra tương tác giữa các phần | Kiểm tra số dư tài khoản sau khi trừ tiền thanh toán |
-| **E2E Testing** | Kiểm tra quy trình người dùng cuối | Kiểm tra luồng đặt hàng và xác nhận email |
-| **API Testing** | Kiểm tra cấu trúc data phản hồi | Kiểm tra định dạng JSON và status code |
-| **System** | Kiểm tra toàn bộ hệ thống & logs | Xác nhận DB, log event và trạng thái đơn hàng |
+| Loại kiểm thử    | Mục đích                           | Ví dụ                                                |
+| ---------------- | ---------------------------------- | ---------------------------------------------------- |
+| **Unit Testing** | Kiểm tra logic nhỏ, độc lập        | Kiểm tra kết quả trả về của hàm tính thuế            |
+| **Integration**  | Kiểm tra tương tác giữa các phần   | Kiểm tra số dư tài khoản sau khi trừ tiền thanh toán |
+| **E2E Testing**  | Kiểm tra quy trình người dùng cuối | Kiểm tra luồng đặt hàng và xác nhận email            |
+| **API Testing**  | Kiểm tra cấu trúc data phản hồi    | Kiểm tra định dạng JSON và status code               |
+| **System**       | Kiểm tra toàn bộ hệ thống & logs   | Xác nhận DB, log event và trạng thái đơn hàng        |
 
 ### 3.6 Kỹ thuật Hard vs. Soft Assertions
 
@@ -103,11 +103,11 @@ public void testEdgeCases() {
 
 Test Effectiveness và Assertion Testing là khái niệm ở tầng phương pháp luận, không gắn với một công cụ cụ thể để "viết" assertion — nhưng **mutation testing chính là công cụ để đo lường** một test suite có đang tuân thủ nguyên lý assertion testing hay không:
 
-| Khái niệm lý thuyết | Công cụ liên quan | Ghi chú |
-|---|---|---|
-| Assertion checkpoint có đủ mạnh không | StrykerJS, Stryker.NET, PIT, Mutmut, Cosmic Ray, Infection, Major | Mọi tool mutation testing đều gián tiếp kiểm tra sức mạnh assertion: nếu assertion yếu, mutant sẽ `survived` dù code path đã được chạy qua. |
-| Phản ví dụ: công cụ chỉ đo "đã chạy qua", không đo "assertion có đúng" | Jest Coverage, Istanbul/nyc, JaCoCo | Ba công cụ này đo coverage thuần tuý, không phát hiện được test thiếu assertion — đúng giới hạn đã nêu ở `tool-survey-strykerjs-jest.md` mục 3.8 ("test có assertion tốt hay không thì coverage không biết"). |
-| Thiếu Negative Cases / Boundary Conditions (mục 4.1) | StrykerJS `Regex`, PIT `CONDITIONALS_BOUNDARY` | Đây chính là các mutation operators mô tả ở `theory-mutation-operators.md` mục 3.6 và 3.16 — mutation testing phát hiện đúng loại thiếu sót này bằng số liệu, không chỉ bằng nguyên lý suông. |
+| Khái niệm lý thuyết                                                    | Công cụ liên quan                                                 | Ghi chú                                                                                                                                                                                                       |
+| ---------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Assertion checkpoint có đủ mạnh không                                  | StrykerJS, Stryker.NET, PIT, Mutmut, Cosmic Ray, Infection, Major | Mọi tool mutation testing đều gián tiếp kiểm tra sức mạnh assertion: nếu assertion yếu, mutant sẽ `survived` dù code path đã được chạy qua.                                                                   |
+| Phản ví dụ: công cụ chỉ đo "đã chạy qua", không đo "assertion có đúng" | Jest Coverage, Istanbul/nyc, JaCoCo                               | Ba công cụ này đo coverage thuần tuý, không phát hiện được test thiếu assertion — đúng giới hạn đã nêu ở `tool-survey-strykerjs-jest.md` mục 3.8 ("test có assertion tốt hay không thì coverage không biết"). |
+| Thiếu Negative Cases / Boundary Conditions (mục 4.1)                   | StrykerJS `Regex`, PIT `CONDITIONALS_BOUNDARY`                    | Đây chính là các mutation operators mô tả ở `theory-mutation-operators.md` mục 3.6 và 3.16 — mutation testing phát hiện đúng loại thiếu sót này bằng số liệu, không chỉ bằng nguyên lý suông.                 |
 
 **Bằng chứng thực nghiệm của nhóm**: khi demo StrykerJS trên `Register.jsx` (`demo/strykerjs-setup/setup-steps.md`), bộ test ban đầu chỉ có 1 test case với 1 assertion duy nhất ("hiện thông báo lỗi khi password yếu") — đúng dạng "assertion nghèo nàn" mà lý thuyết mục 3.4 cảnh báo. Kết quả đo được là 27/35 mutant có coverage vẫn `survived` (mutation score phần covered chỉ 22.86%). Sau khi bổ sung assertion theo đúng nguyên lý Hard/Soft assertion và bao phủ thêm boundary/negative cases (mục 3.5–3.6), mutation score tăng lên 76.09% — một minh chứng số liệu trực tiếp cho toàn bộ lý thuyết Test Effectiveness trong file này.
 
@@ -124,4 +124,3 @@ Test Effectiveness và Assertion Testing là khái niệm ở tầng phương ph
 
 - [Inimfon Willie (2026). What is assertion testing?](https://www.tricentis.com/learn/assertion-testing)
 - [ISTQB Certified Tester - Foundation Level Syllabus v4.0](https://istqb.org/wp-content/uploads/2024/11/ISTQB_CTFL_Syllabus_v4.0.1.pdf)
-- `demo/strykerjs-setup/setup-steps.md` — số liệu thật minh hoạ tác động của việc cải thiện assertion lên mutation score.

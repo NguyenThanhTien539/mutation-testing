@@ -61,20 +61,20 @@ Dưới đây là ví dụ minh họa bằng Node.js. Chú ý cấu trúc thiế
 **Mã nguồn API (routes/booking.js) - Quản lý đặt phòng Homestay:**
 
 ```javascript
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-router.post('/booking', (req, res) => {
-    const { roomType, days } = req.body;
+router.post("/booking", (req, res) => {
+  const { roomType, days } = req.body;
 
-    if (days <= 0) {
-        return res.status(400).json({ error: "Số ngày thuê không hợp lệ" });
-    }
+  if (days <= 0) {
+    return res.status(400).json({ error: "Số ngày thuê không hợp lệ" });
+  }
 
-    // Logic tính giá: Phòng VIP giá 1000, phòng thường giá 500
-    let totalPrice = roomType === 'VIP' ? 1000 * days : 500 * days;
+  // Logic tính giá: Phòng VIP giá 1000, phòng thường giá 500
+  let totalPrice = roomType === "VIP" ? 1000 * days : 500 * days;
 
-    return res.status(200).json({ status: "success", total: totalPrice });
+  return res.status(200).json({ status: "success", total: totalPrice });
 });
 
 module.exports = router;
@@ -83,25 +83,25 @@ module.exports = router;
 **Bộ Test 100% Coverage nhưng vô dụng (booking.test.js):**
 
 ```javascript
-const request = require('supertest');
-const app = require('../app'); // Ứng dụng Express đã mount router
+const request = require("supertest");
+const app = require("../app"); // Ứng dụng Express đã mount router
 
 describe("Homestay Booking Route - Coverage Test", () => {
-    it("Thực thi nhánh đặt phòng VIP", async () => {
-        // Gọi API với phòng VIP (Đạt coverage nhánh True của toán tử ba ngôi)
-        await request(app).post('/booking').send({ roomType: 'VIP', days: 2 });
-        // LỖI NGHIÊM TRỌNG: Không có lệnh `expect()` nào kiểm tra kết quả!
-    });
+  it("Thực thi nhánh đặt phòng VIP", async () => {
+    // Gọi API với phòng VIP (Đạt coverage nhánh True của toán tử ba ngôi)
+    await request(app).post("/booking").send({ roomType: "VIP", days: 2 });
+    // LỖI NGHIÊM TRỌNG: Không có lệnh `expect()` nào kiểm tra kết quả!
+  });
 
-    it("Thực thi nhánh đặt phòng Thường", async () => {
-        // Gọi API với phòng Normal (Đạt coverage nhánh False)
-        await request(app).post('/booking').send({ roomType: 'Normal', days: 3 });
-    });
+  it("Thực thi nhánh đặt phòng Thường", async () => {
+    // Gọi API với phòng Normal (Đạt coverage nhánh False)
+    await request(app).post("/booking").send({ roomType: "Normal", days: 3 });
+  });
 
-    it("Thực thi nhánh lỗi ngày <= 0", async () => {
-        // Đạt coverage nhánh If
-        await request(app).post('/booking').send({ roomType: 'VIP', days: -1 });
-    });
+  it("Thực thi nhánh lỗi ngày <= 0", async () => {
+    // Đạt coverage nhánh If
+    await request(app).post("/booking").send({ roomType: "VIP", days: -1 });
+  });
 });
 ```
 
@@ -118,16 +118,16 @@ Một lập trình viên viết một bộ kiểm thử gọi hàm tính tiền 
 
 ## 5. Công cụ hỗ trợ lý thuyết này
 
-Đây là chủ đề mà việc khảo sát tool của nhóm ánh xạ trực tiếp và rõ ràng nhất: 10 công cụ đã khảo sát chia thành đúng hai nhóm của lý thuyết này.
+Đây là chủ đề mà việc khảo sát tool của nhóm ánh xạ trực tiếp và rõ ràng nhất: 11 công cụ đã khảo sát chia thành đúng hai nhóm của lý thuyết này.
 
-| Nhóm | Công cụ | Đo lường gì | Vai trò theo lý thuyết mục 5 |
-|---|---|---|---|
-| **Code Coverage (Lower Bound)** | Istanbul/nyc (JS/TS), JaCoCo (Java), Jest Coverage (JS/TS) | % statement/branch/function/line được chạy qua | Tìm code chưa được test, không xác minh assertion — đúng vai trò "ranh giới dưới". |
-| **Mutation Testing (Upper Bound)** | StrykerJS, Stryker.NET (JS/TS, C#), PIT (Java), Mutmut, Cosmic Ray (Python), Infection (PHP), Major (Java) | % mutant bị killed (Mutation Score) | Xác minh assertion có đủ mạnh để bắt lỗi logic không — đúng vai trò "ranh giới trên", "người gác cổng". |
+| Nhóm                               | Công cụ                                                                                                    | Đo lường gì                                    | Vai trò theo lý thuyết mục 5                                                                            |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Code Coverage (Lower Bound)**    | Istanbul/nyc (JS/TS), JaCoCo (Java), Jest Coverage (JS/TS), Coverage.py (Python)                           | % statement/branch/function/line được chạy qua | Tìm code chưa được test, không xác minh assertion — đúng vai trò "ranh giới dưới".                      |
+| **Mutation Testing (Upper Bound)** | StrykerJS, Stryker.NET (JS/TS, C#), PIT (Java), Mutmut, Cosmic Ray (Python), Infection (PHP), Major (Java) | % mutant bị killed (Mutation Score)            | Xác minh assertion có đủ mạnh để bắt lỗi logic không — đúng vai trò "ranh giới trên", "người gác cổng". |
 
 **Bằng chứng thực nghiệm của nhóm** (`demo/strykerjs-setup/setup-steps.md`) tái hiện chính xác kịch bản ở mục 4.3 nhưng bằng số liệu thật thay vì ví dụ giả định: bộ test ban đầu cho `Register.jsx` có coverage nhưng chỉ 1 assertion, khiến 27/35 mutant có coverage vẫn `survived` — tức Mutation Score phần covered chỉ 22.86%, trong khi nếu chỉ đo bằng coverage thông thường (Jest Coverage/Istanbul), các dòng code đó vẫn hiển thị "đã covered" và không lộ ra vấn đề gì. Đây là minh chứng trực tiếp cho luận điểm cốt lõi: coverage cao không đảm bảo test có khả năng phát hiện lỗi logic.
 
-Ba công cụ đo coverage (Istanbul/nyc, JaCoCo, Jest Coverage) không có khái niệm "mutant" hay "killed/survived" trong report của chúng — đây chính là ranh giới kỹ thuật cụ thể hoá cho phân biệt "Lower Bound" và "Upper Bound" nêu ở mục 5 bên dưới.
+Bốn công cụ đo coverage (Istanbul/nyc, JaCoCo, Jest Coverage, Coverage.py) không có khái niệm "mutant" hay "killed/survived" trong report của chúng — đây chính là ranh giới kỹ thuật cụ thể hoá cho phân biệt "Lower Bound" và "Upper Bound" nêu ở mục 5 bên dưới. Đáng chú ý, Coverage.py còn cho thấy hai nhóm này không hoàn toàn tách biệt: Mutmut (nhóm Upper Bound) trực tiếp đọc dữ liệu do Coverage.py sinh ra để tối ưu phạm vi mutate (`tool-survey-coveragepy.md`), tức một coverage tool có thể làm nền tảng cho một mutation tool.
 
 ## 6. Ý chính cần ghi nhớ
 
@@ -138,12 +138,10 @@ Ba công cụ đo coverage (Istanbul/nyc, JaCoCo, Jest Coverage) không có khá
   2. Sử dụng Hard/Soft Assertions chặt chẽ để verify từng thuộc tính dữ liệu và side-effects.
   3. Áp dụng Mutation Testing vào các module cốt lõi (như module tính toán tài chính, phân quyền bảo mật) để đảm bảo không một sai sót logic nào có thể lọt qua.
 - **Đánh đổi tài nguyên**: Không nên chạy Mutation Testing trên toàn bộ dự án vì thời gian build sẽ rất lâu. Hãy áp dụng chiến lược Risk-based testing (kiểm thử dựa trên rủi ro) để chỉ chạy Mutation ở các vùng mã nhạy cảm.
-- 10 công cụ đã khảo sát của nhóm chia đúng thành 2 nhóm của lý thuyết này: 3 coverage tool và 7 mutation tool.
+- 11 công cụ đã khảo sát của nhóm chia đúng thành 2 nhóm của lý thuyết này: 4 coverage tool và 7 mutation tool.
 
 ## 7. Tài liệu tham khảo
 
 - [Martin Fowler - Mutation Testing](https://martinfowler.com/bliki/MutationTesting.html)
 - [Google Testing Blog - Code Coverage Best Practices](https://testing.googleblog.com/2020/08/code-coverage-best-practices.html)
 - [IEEE Xplore - An Analysis and Survey of the Development of Mutation Testing](https://ieeexplore.ieee.org/document/629606)
-- `tool-comparison-final.md` — bảng so sánh đầy đủ 10 công cụ theo 2 nhóm coverage/mutation.
-- `demo/strykerjs-setup/setup-steps.md` — số liệu thật minh hoạ ranh giới dưới/trên.

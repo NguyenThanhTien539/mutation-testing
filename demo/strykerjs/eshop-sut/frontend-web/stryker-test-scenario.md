@@ -139,7 +139,7 @@ Các test khác trong bộ (tóm tắt):
 
 ---
 
-## Bước 5 — Re-run Stryker, xác nhận diệt mutant
+## Bước 5 — Chạy lại Stryker, xác nhận diệt mutant
 
 ```
 ------------------|------------------|----------|-----------|------------|----------|
@@ -153,11 +153,11 @@ All files         |  90.83 |   94.29 |       61 |        38 |          6 |      
 Mutation score (Stryker, killed+timeout/total): **20.18% → 90.83%** (+70.65 điểm phần trăm).
 `AuthContext.jsx`: **31.82% → 95.45%**. `Checkout.jsx`: **17.24% → 89.66%**.
 
-Tất cả 10 mutant "Survived" ban đầu (Bước 2) đã bị diệt.
+Tất cả 10 mutant "Survived" ban đầu đã bị diệt.
 
 ## Bước 6 — Lặp lại cho mutant còn sống sót
 
-Vòng lặp mở rộng test đã diệt gần hết nhưng phát sinh thêm mutant "Survived" mới ở những dòng **lần đầu được coverage** (đúng minh chứng cho coverage illusion — xem `coverage-vs-mutation-stryker.md`). Sau nhiều vòng bổ sung assertion (exact body request, phân biệt `&&`/`||`, network-error không có `response`, nhãn nút tạm thời...), còn lại **6 mutant sống sót**, tất cả đều là các biến thể gần-tương đương (near-equivalent) không đáng đánh đổi thêm độ phức tạp test:
+Vòng lặp mở rộng test đã diệt gần hết nhưng phát sinh thêm mutant "Survived" mới ở những dòng **lần đầu được coverage** (đúng minh chứng cho coverage illusion — xem `coverage-vs-mutation-stryker.md`). Sau nhiều vòng bổ sung assertion (exact body request, phân biệt `&&`/`||`, network-error không có `response`, nhãn nút tạm thời...), còn lại **6 mutant sống sót**, tất cả đều là các biến thể gần tương đương không đáng đánh đổi thêm độ phức tạp test:
 
 | File | Dòng | Loại | Ghi chú |
 |---|---|---|---|
@@ -168,17 +168,19 @@ Vòng lặp mở rộng test đã diệt gần hết nhưng phát sinh thêm mut
 | Checkout.jsx | 113 | `onChange` handler, `setCouponError('')` → chuỗi khác | Giá trị reset che khuất bởi các thay đổi state khác cùng lúc trong test hiện có |
 | Checkout.jsx | 118 | `!couponCode.trim()` → `!couponCode` | Input test luôn "sạch" (không khoảng trắng) nên hai biểu thức tương đương quan sát được |
 
-→ Đây là ví dụ thực tế cho thấy mutation testing hiếm khi đạt 100%, và phần còn lại cần được **triage có ý thức** (equivalent/near-equivalent mutant) thay vì cố diệt bằng mọi giá.
+→ Đây là ví dụ thực tế cho thấy mutation testing hiếm khi đạt 100%, và phần còn lại cần được đánh giá và phân loại thay vì cố diệt bằng mọi giá.
 
 ---
 
 ## Bước 7 — Code Coverage trên cùng 2 hàm, cùng test suite ban đầu
 
-Cài `@vitest/coverage-istanbul` và khai báo `test.coverage.provider: 'istanbul'` trong `vite.config.js` (tương đương `jest --coverage` dùng Istanbul), chạy coverage **với đúng bộ test baseline (yếu) của Bước 1**, giới hạn vào 2 file mutate:
+Cài `@vitest/coverage-istanbul` và khai báo `test.coverage.provider: 'istanbul'` trong `vite.config.js`, chạy coverage **với đúng bộ test baseline (yếu) của Bước 1**, giới hạn vào 2 file mutate:
 
 ```
 npx vitest run --coverage --coverage.include='src/context/AuthContext.jsx' --coverage.include='src/pages/Checkout.jsx'
 ```
+
+Khi đó ta có kết quả sau:
 
 ```
 File              | % Stmts | % Branch | % Funcs | % Lines
@@ -192,14 +194,12 @@ All files         |   39.39 |    26.47 |   28.57 |   40.32
 
 Xem chi tiết đầy đủ trong `coverage-vs-mutation-stryker.md`. Tóm tắt:
 
-| Mốc | Line Coverage | Mutation Score (Stryker, killed+timeout/total) | Mutation Score (khắt khe, killed-only/total) |
+| Mốc | Line Coverage | Mutation Score (tính luôn timeout) | Mutation Score (chỉ tính killed) |
 |---|---|---|---|
-| Trước (test hời hợt) | **40.32%** | 20.18% | 3.67% |
-| Sau (test chained) | **91.93%** | 90.83% | 55.96% |
+| Trước integrate | **40.32%** | 20.18% | 3.67% |
+| Sau integrate | **91.93%** | 90.83% | 55.96% |
 
-Ghi chú công thức: Stryker coi mutant "Timeout" (gây vòng lặp vô hạn) là đã bị diệt vì nó chứng tỏ test có phát hiện thay đổi hành vi (dù gián tiếp qua treo tiến trình). Thang "killed-only" khắt khe hơn — chỉ tính mutant bị assertion bắt trực tiếp — nên thấp hơn nhưng vẫn tăng gấp ~15 lần (3.67% → 55.96%), củng cố cùng kết luận.
-
-Bằng chứng "coverage illusion" rõ nhất: ở mốc "Trước", coverage đã là 40% (không phải 0%) — component vẫn render, nhánh `if/else` cơ bản vẫn được duyệt qua nhờ hook mount — nhưng **mutation score chỉ 3.67-20.18%**, vì test không assert bất kỳ giá trị/hành vi cụ thể nào. Coverage đo "code có chạy", mutation testing đo "test có phát hiện được lỗi".
+Bằng chứng "coverage illusion" rõ nhất: ở mốc "Trước", coverage đã là 40% — component vẫn render, nhánh `if/else` cơ bản vẫn được duyệt qua  — nhưng **mutation score chỉ 3.67-20.18%**, vì test không kiểm tra bất kỳ giá trị cụ thể nào. Coverage đo "code có chạy", mutation testing đo "test có phát hiện được lỗi".
 
 ---
 
@@ -207,6 +207,6 @@ Bằng chứng "coverage illusion" rõ nhất: ở mốc "Trước", coverage đ
 
 - Test file: `test/pages/Checkout.test.jsx` (17 test case, bản đầy đủ)
 - Config: `stryker.conf.json` (mutate = AuthContext.jsx + Checkout.jsx)
-- Báo cáo mutation: `strykerjs-report-before.md`, `strykerjs-report-after.md`, `reports/mutation-before/`, `reports/mutation-after/` (HTML + JSON)
-- Báo cáo coverage: `coverage-before/`, `coverage-after/` (HTML, mở `index.html`)
-- Tài liệu tổng hợp: `stryker-test-scenario.md` (file này), `coverage-vs-mutation-stryker.md`, `stryker-demo-script.md`
+- Báo cáo mutation: `strykerjs-report-before.md`, `strykerjs-report-after.md`, `reports/mutation-before/`, `reports/mutation-after/` 
+- Báo cáo coverage: `coverage-before/`, `coverage-after/`
+- Tài liệu tổng hợp: `stryker-test-scenario.md` , `coverage-vs-mutation-stryker.md`, `stryker-demo-script.md`

@@ -7,6 +7,12 @@ File này để **mở song song với terminal khi demo** — mỗi bước có
 > cd eshop-sut/frontend-web
 > ```
 
+> ⚠️ **Luôn dọn sandbox của Stryker trước khi chạy `vitest run` bất kỳ lúc nào trong buổi demo:**
+> ```bash
+> rm -rf .stryker-tmp
+> ```
+> Nếu bỏ qua bước này, Vitest sẽ quét luôn các bản sao test nằm trong `.stryker-tmp/sandbox-*/` từ lần chạy Stryker trước, khiến số lượng test/file hiện ra **gấp nhiều lần con số thật** (ví dụ 12 file / 101 test thay vì 3 file / 29 test) — dễ gây hoang mang ngay trên sân khấu. Mỗi lệnh `stryker run` trong file này đều tự kèm `rm -rf .stryker-tmp` phía trước, nhưng nếu bạn chạy `npx vitest run` một mình (ví dụ để demo lại), hãy nhớ xoá `.stryker-tmp` trước.
+
 ---
 
 ## 0. Mở đầu (nói trước khi gõ lệnh nào)
@@ -45,14 +51,22 @@ cat test/pages/Checkout.test.jsx
 ```
 > "Đây là kiểu test rất phổ biến trong thực tế: chỉ `render()` component rồi kiểm tra vài dòng chữ tĩnh có xuất hiện hay không. Nó chạy được, pass, và nhìn coverage report sẽ thấy xanh khá nhiều — nhưng nó không hề assert bất kỳ hành vi nghiệp vụ nào."
 
-### 2.1 Chạy coverage với bộ test yếu
+### 2.1 Chạy test suite bình thường — xem tỷ lệ pass
+
+```bash
+rm -rf .stryker-tmp
+npx vitest run
+```
+> "Trước tiên, chạy test theo cách thông thường. Kết quả: **pass 100%**. Nếu chỉ nhìn con số này, ai cũng sẽ nghĩ code chạy đúng, yên tâm merge. Đây chính là cái bẫy — **một bộ test yếu vẫn xanh 100% như thường**, vì nó không hề kiểm tra điều gì đủ cụ thể để có thể fail. Pass rate không nói lên được test có *chất lượng* hay không, chỉ nói lên test đó có tự mâu thuẫn với chính nó hay không."
+
+### 2.2 Chạy coverage với bộ test yếu
 
 ```bash
 npx vitest run --coverage --coverage.include='src/context/AuthContext.jsx' --coverage.include='src/pages/Checkout.jsx'
 ```
 > "Chú ý số liệu: Line coverage khoảng **40%**. Nhớ con số này."
 
-### 2.2 Chạy Stryker với bộ test yếu
+### 2.3 Chạy Stryker với bộ test yếu
 
 ```bash
 rm -rf .stryker-tmp
@@ -101,14 +115,22 @@ Có thể lướt nhanh qua 2-3 test khác đáng chú ý:
 
 ## 4. Re-run — chứng minh điểm số tăng vọt
 
-### 4.1 Coverage sau khi có test thật
+### 4.1 Chạy test suite bình thường — pass rate vẫn 100%
+
+```bash
+rm -rf .stryker-tmp
+npx vitest run
+```
+> "Chạy lại test suite bình thường — vẫn **pass 100%**, y hệt như lúc nãy với bộ test yếu. Đây là điều em muốn nhấn mạnh: nhìn vào con số pass rate, hai bộ test này **không phân biệt được** — cả hai đều xanh. Sự khác biệt thật sự chỉ lộ ra khi chạy coverage và mutation testing."
+
+### 4.2 Coverage sau khi có test thật
 
 ```bash
 npx vitest run --coverage --coverage.include='src/context/AuthContext.jsx' --coverage.include='src/pages/Checkout.jsx'
 ```
 > "Line coverage giờ là khoảng **92%**."
 
-### 4.2 Mutation score sau khi có test thật
+### 4.3 Mutation score sau khi có test thật
 
 ```bash
 rm -rf .stryker-tmp
@@ -131,7 +153,7 @@ code coverage-vs-mutation-stryker.md
 > "Đây là bảng tổng kết. Điều quan trọng nhất không phải là hai con số đều tăng — mà là **khoảng cách giữa chúng thu hẹp lại**. Ban đầu coverage 40% nhưng mutation score chỉ 20% — chênh 20 điểm. Sau khi có test thật, coverage 92% và mutation score 91% — chênh chưa đầy 1 điểm. Khi test chỉ *chạy qua* code, hai chỉ số tách xa nhau. Khi test *thật sự kiểm chứng hành vi*, hai chỉ số hội tụ."
 
 Câu chốt (nói chậm, nhấn mạnh):
-> **"Code coverage cho biết code có được thực thi. Mutation testing cho biết test có phát hiện được lỗi hay không. Một dòng code có thể tô xanh 100% mà không có một dòng `expect()` nào thực sự kiểm tra giá trị nó tạo ra."**
+> **"Cả hai bộ test — yếu và mạnh — đều pass 100% khi chạy `vitest run`. Pass rate không phân biệt được chúng. Code coverage cho biết code có được thực thi. Mutation testing cho biết test có phát hiện được lỗi hay không. Một dòng code có thể tô xanh 100%, một bộ test có thể xanh 100%, mà không có một dòng `expect()` nào thực sự kiểm tra giá trị nó tạo ra."**
 
 Nếu còn thời gian, nói thêm về 6 mutant còn sống sót cuối cùng:
 > "Vẫn còn 6 mutant sống sót sau tất cả các vòng lặp bổ sung test — nhưng đây là các biến thể gần-tương đương, ví dụ `.trim()` khi input test không có khoảng trắng thừa nên không quan sát được khác biệt. Mutation testing trong thực tế hiếm khi đạt 100% — quan trọng là biết *tại sao* mutant còn sống, không phải cố diệt bằng mọi giá."
@@ -150,19 +172,23 @@ git status
 
 ## Bảng số liệu tóm tắt (in ra giấy / để trên màn hình phụ)
 
-| | Line Coverage | Mutation Score (Stryker) |
-|---|---:|---:|
-| Trước (test hời hợt) | 40.32% | 20.18% |
-| Sau (test chained) | 91.93% | 90.83% |
+| | Vitest pass rate | Line Coverage | Mutation Score (Stryker) |
+|---|---:|---:|---:|
+| Trước (test hời hợt, 2 test) | 100% (2/2) | 40.32% | 20.18% |
+| Sau (test chained, 17 test) | 100% (17/17) | 91.93% | 90.83% |
+
+> Lưu ý khi trình bày bảng này: cột "Vitest pass rate" **cố tình giống hệt nhau** ở cả hai dòng — đó chính là luận điểm của demo, không phải sai sót.
 
 ## Danh sách lệnh (copy nhanh, không cần đọc lại từng bước)
 
 ```bash
 cd eshop-sut/frontend-web
+rm -rf .stryker-tmp
 
 # --- Baseline ---
 cp test/pages/Checkout.test.jsx test/pages/Checkout.test.jsx.demo-full.bak
 cp test/pages/Checkout.baseline.test.jsx.txt test/pages/Checkout.test.jsx
+npx vitest run
 npx vitest run --coverage --coverage.include='src/context/AuthContext.jsx' --coverage.include='src/pages/Checkout.jsx'
 rm -rf .stryker-tmp && node_modules/.bin/stryker run
 start reports/mutation/mutation.html
@@ -172,6 +198,8 @@ cp test/pages/Checkout.test.jsx.demo-full.bak test/pages/Checkout.test.jsx
 rm test/pages/Checkout.test.jsx.demo-full.bak
 
 # --- Sau ---
+rm -rf .stryker-tmp
+npx vitest run
 npx vitest run --coverage --coverage.include='src/context/AuthContext.jsx' --coverage.include='src/pages/Checkout.jsx'
 rm -rf .stryker-tmp && node_modules/.bin/stryker run
 start reports/mutation/mutation.html

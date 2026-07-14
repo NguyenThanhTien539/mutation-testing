@@ -70,9 +70,9 @@ flowchart TD
 Mutant được tạo ra bằng cách áp dụng `mutation operators` lên code gốc. Một số thay đổi phổ biến:
 
 | Mutation operator   | Ví dụ thay đổi                                     |
-| ------------------- | -------------------------------------------------- | --- | --- |
+| ------------------- | -------------------------------------------------- |
 | Relational operator | `>=` thành `>`                                     |
-| Logical operator    | `&&` thành `                                       |     | `   |
+| Logical operator    | `&&` thành `\|\|`                                  |
 | Boolean value       | `true` thành `false`                               |
 | Return value        | `return value` thành `return null` hoặc `return 0` |
 | Statement mutation  | Xóa một statement hoặc một branch                  |
@@ -307,12 +307,12 @@ Giải thích:
 
 Sau khi chạy mutation testing, tool có thể tạo report như sau:
 
-| Mutant ID | Mutation operator         | Code change                          | Status                | Meaning                                         |
-| --------- | ------------------------- | ------------------------------------ | --------------------- | ----------------------------------------------- | ------ | --------------------------------------------- |
-| M1        | Return value mutation     | Thay login logic bằng `return true`  | Killed                | Negative tests phát hiện invalid login behavior |
-| M2        | Logical operator mutation | Đổi `&&` thành `                     |                       | `                                               | Killed | Tests phát hiện chỉ một field đúng là chưa đủ |
-| M3        | Statement mutation        | Remove `else` branch                 | Killed                | Tests phát hiện missing false path              |
-| M4        | Equivalent mutation       | Thêm `=== true` quanh cùng condition | Survived / Equivalent | Behavior gần như không đổi                      |
+| Mutant ID | Mutation operator         | Code change                          | Status                 | Meaning                                          |
+| --------- | -------------------------- | ------------------------------------- | ---------------------- | ------------------------------------------------- |
+| M1        | Return value mutation     | Thay login logic bằng `return true`  | Killed                 | Negative tests phát hiện invalid login behavior  |
+| M2        | Logical operator mutation | Đổi `&&` thành `\|\|`                | Killed                 | Tests phát hiện chỉ một field đúng là chưa đủ    |
+| M3        | Statement mutation        | Remove `else` branch                 | Killed                 | Tests phát hiện missing false path               |
+| M4        | Equivalent mutation       | Thêm `=== true` quanh cùng condition | Survived / Equivalent  | Behavior gần như không đổi                       |
 
 Summary:
 

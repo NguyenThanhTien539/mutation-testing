@@ -60,20 +60,20 @@ flowchart TD
 
 Theo testRigor, có thể hiểu mutation testing qua ba nhóm lớn:
 
-| Nhóm mutation        | Code change được tạo                              | Ví dụ                                                       | Mục đích kiểm tra                                                        |
-| -------------------- | ------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------ | --------------- | ------------------------------------------------------------ |
-| `Statement mutation` | Xóa, duplicate, hoặc thay đổi thứ tự statement.   | Remove `else`, remove method call, remove `return`.         | Kiểm tra test có phát hiện thiếu hành động hoặc thiếu nhánh xử lý không. |
-| `Value mutation`     | Thay đổi constant, literal, hoặc parameter value. | `2` thành `10`, `true` thành `false`, `"admin"` thành `""`. | Kiểm tra test có assert đúng giá trị cụ thể không.                       |
-| `Decision mutation`  | Thay đổi logical/arithmetic/comparison operators. | `>` thành `>=`, `&&` thành `                                |                                                                          | `, `+`thành`-`. | Kiểm tra test có bắt lỗi ở decision logic và boundary không. |
+| Nhóm mutation        | Code change được tạo                              | Ví dụ                                                              | Mục đích kiểm tra                                                        |
+| -------------------- | ------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `Statement mutation` | Xóa, duplicate, hoặc thay đổi thứ tự statement.   | Remove `else`, remove method call, remove `return`.                | Kiểm tra test có phát hiện thiếu hành động hoặc thiếu nhánh xử lý không. |
+| `Value mutation`     | Thay đổi constant, literal, hoặc parameter value. | `2` thành `10`, `true` thành `false`, `"admin"` thành `""`.        | Kiểm tra test có assert đúng giá trị cụ thể không.                       |
+| `Decision mutation`  | Thay đổi logical/arithmetic/comparison operators. | `>` thành `>=`, `&&` thành `\|\|`, `+` thành `-`.                   | Kiểm tra test có bắt lỗi ở decision logic và boundary không.             |
 
 ### 3.4 Các Mutation Operators phổ biến
 
 | Mutation operator   | Code change được tạo    | Ví dụ original | Ví dụ mutant     | Test cần có                   |
-| ------------------- | ----------------------- | -------------- | ---------------- | ----------------------------- | --- | ------------------ |
+| ------------------- | ----------------------- | -------------- | ---------------- | ------------------------------ |
 | Arithmetic          | Đổi toán tử số học.     | `a + b`        | `a - b`          | Assert exact calculation.     |
 | Relational boundary | Đổi toán tử biên.       | `age >= 18`    | `age > 18`       | Boundary test tại `18`.       |
 | Equality            | Đổi equality operator.  | `a == b`       | `a != b`         | Equal và not equal cases.     |
-| Logical             | Đổi logical operator.   | `A && B`       | `A               |                               | B`  | Combination tests. |
+| Logical             | Đổi logical operator.   | `A && B`       | `A \|\| B`       | Combination tests.            |
 | Boolean literal     | Đổi boolean.            | `true`         | `false`          | Assert boolean output.        |
 | Return value        | Đổi return value.       | `return user`  | `return null`    | Assert returned object/value. |
 | Statement removal   | Xóa statement.          | `sendEmail()`  | Removed          | Verify side effect.           |
@@ -113,11 +113,11 @@ Loại mutation này rất quan trọng vì nó thường phát hiện thiếu `
 
 Mutation tool thay đổi toán tử logic.
 
-| Original code         | Mutant code | Ý nghĩa                                        |
-| --------------------- | ----------- | ---------------------------------------------- | --------------------- | -------------------------------------------- |
-| `isAdmin && isActive` | `isAdmin    |                                                | isActive`             | Kiểm tra test có cover đủ combination không. |
-| `hasToken             |             | isGuest`                                       | `hasToken && isGuest` | Phát hiện lỗi trong permission logic.        |
-| `!isValid`            | `isValid`   | Kiểm tra test có phát hiện logic bị đảo không. |
+| Original code                | Mutant code                  | Ý nghĩa                                        |
+| ----------------------------- | ----------------------------- | ---------------------------------------------- |
+| `isAdmin && isActive`        | `isAdmin \|\| isActive`       | Kiểm tra test có cover đủ combination không.   |
+| `hasToken \|\| isGuest`       | `hasToken && isGuest`         | Phát hiện lỗi trong permission logic.          |
+| `!isValid`                   | `isValid`                     | Kiểm tra test có phát hiện logic bị đảo không. |
 
 Loại mutation này thường chỉ bị killed nếu test suite có đủ combination hoặc decision table cases.
 
@@ -254,11 +254,11 @@ Nếu test suite kill được mutant, điều đó cho thấy test thật sự 
 
 ### 3.18 Cách đọc survived mutants theo loại code change
 
-| Survived mutant type         | Có thể test đang thiếu gì?       | Ví dụ test nên thêm                            |
-| ---------------------------- | -------------------------------- | ---------------------------------------------- | --------------------------------------- | ---------------------------- |
-| `>=` thành `>` survived      | Thiếu boundary test.             | Test tại đúng boundary value.                  |
-| `&&` thành `                 |                                  | ` survived                                     | Thiếu combination/decision table tests. | Test từng tổ hợp true/false. |
-| `return true` survived       | Thiếu negative tests.            | Test invalid input phải return false.          |
+| Survived mutant type              | Có thể test đang thiếu gì?              | Ví dụ test nên thêm                            |
+| ---------------------------------- | ---------------------------------------- | ---------------------------------------------- |
+| `>=` thành `>` survived           | Thiếu boundary test.                    | Test tại đúng boundary value.                  |
+| `&&` thành `\|\|` survived        | Thiếu combination/decision table tests. | Test từng tổ hợp true/false.                   |
+| `return true` survived            | Thiếu negative tests.                   | Test invalid input phải return false.          |
 | Method call removed survived | Thiếu verify side effect.        | Check email sent, DB saved, validation called. |
 | Constant changed survived    | Thiếu assert exact value.        | Check exact discount, tax, fee, total.         |
 | Regex changed survived       | Thiếu invalid format tests.      | Invalid email/phone/password cases.            |
@@ -391,10 +391,10 @@ function calculateFinalPrice(user, total) {
 
 #### Mutants được tạo
 
-| Mutant ID | Mutation operator          | Mutant code           | Expected status nếu test tốt |
-| --------- | -------------------------- | --------------------- | ---------------------------- | ---------------- | ------ |
-| M1        | Logical operator           | `user.isPremium       |                              | total >= 100000` | Killed |
-| M2        | Boundary operator          | `total > 100000`      | Killed                       |
+| Mutant ID | Mutation operator          | Mutant code                              | Expected status nếu test tốt |
+| --------- | ---------------------------- | ------------------------------------------ | ------------------------------ |
+| M1        | Logical operator           | `user.isPremium \|\| total >= 100000`     | Killed                        |
+| M2        | Boundary operator          | `total > 100000`                          | Killed                        |
 | M3        | Constant/value mutation    | `return total * 0.95` | Killed                       |
 | M4        | Boolean condition mutation | `if (true)`           | Killed                       |
 | M5        | Return value mutation      | `return 0`            | Killed                       |
@@ -421,10 +421,10 @@ test("non-premium user below minimum total gets no discount", () => {
 
 #### Vì sao các tests này mạnh?
 
-| Mutant             | Vì sao bị killed?                                 |
-| ------------------ | ------------------------------------------------- | --- | ---------------------------------------------------------- |
-| `&&` thành `       |                                                   | `   | Non-premium user với total đủ lớn vẫn không được discount. |
-| `>=` thành `>`     | Test tại boundary `100000` phát hiện sai khác.    |
+| Mutant                | Vì sao bị killed?                                           |
+| ---------------------- | ------------------------------------------------------------ |
+| `&&` thành `\|\|`      | Non-premium user với total đủ lớn vẫn không được discount.  |
+| `>=` thành `>`         | Test tại boundary `100000` phát hiện sai khác.               |
 | `0.8` thành `0.95` | Test assert exact final price `80000`.            |
 | `if (true)`        | Negative cases phát hiện discount bị áp dụng sai. |
 | `return 0`         | Tất cả tests assert exact output.                 |

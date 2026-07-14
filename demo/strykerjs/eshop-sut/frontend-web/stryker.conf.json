@@ -5,5 +5,5 @@
   "plugins": ["@stryker-mutator/*", "./stryker-markdown-reporter.js"],
   "reporters": ["html", "clear-text", "progress", "json", "markdown"],
   "coverageAnalysis": "perTest",
-  "mutate": ["src/context/CartContext.jsx", "src/pages/Register.jsx"]
+  "mutate": ["src/context/AuthContext.jsx", "src/pages/Checkout.jsx"]
 }

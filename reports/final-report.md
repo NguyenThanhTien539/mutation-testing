@@ -119,11 +119,20 @@ Bảng dưới đây phân tích sự khác biệt cốt lõi giữa hai phươn
 | **Chi phí Thực thi**                 | **Thấp & Nhanh chóng:** Ít tiêu tốn tài nguyên, tích hợp dễ dàng vào các quá trình CI/CD với thời gian phản hồi gần như tức thì.                           | **Cao & Tốn kém:** Yêu cầu sức mạnh tính toán lớn do phải sinh ra $N$ mutants và biên dịch/chạy lại $M$ test cases tương ứng.                                  |
 | **Hạn chế Cốt lõi**                  | **Dễ tạo cảm giác an toàn giả tạo:** Bộ kiểm thử có thể đạt Coverage 100% nhưng hoàn toàn vô dụng nếu thiếu các câu lệnh kiểm chứng (assertions) khắt khe. | **Vấn đề "Đột biến tương đương":** Có thể sinh ra các equivalent mutants không làm thay đổi hành vi chương trình, gây nhiễu điểm số và cần phân tích thủ công. |
 
-## 7. Equivalent Mutants và giới hạn
+## 7. Equivalent Mutants và Các Hạn chế
 
-- **Equivalent mutant**: hành vi giống hệt code gốc dù cú pháp khác (ví dụ `a + b` ↔ `b + a` với số) → không test nào killed được, không phải lỗi của test suite.
-- Nhận diện equivalent mutant là bài toán **không thể tự động hoá tổng quát** (undecidable, tương tự Halting Problem) → vẫn cần rà soát thủ công.
-- Giới hạn khác: **bùng nổ tổ hợp** (project lớn → hàng trăm nghìn mutant), **chi phí thực thi** (N mutant × M test case), **phụ thuộc công cụ theo từng ngôn ngữ**.
+Dù là phương pháp đánh giá mạnh mẽ nhất, Kiểm thử Đột biến (Mutation Testing) vẫn vấp phải những rào cản lớn trong quá trình áp dụng thực tế, đặc biệt là vấn đề về đột biến tương đương và chi phí tài nguyên.
+
+### 7.1. Equivalent Mutants
+
+- **Định nghĩa:** Là những đột biến làm thay đổi cú pháp mã nguồn nhưng hoàn toàn **không làm thay đổi ngữ nghĩa hoặc hành vi** của chương trình. (Ví dụ: Đảo vị trí phép toán `a + b` thành `b + a` đối với số nguyên, hoặc thay đổi điều kiện lặp nhưng không ảnh hưởng đến số lần lặp thực tế).
+- **Hệ quả:** Vì hành vi không đổi, không có bất kỳ kịch bản kiểm thử nào (dù hoàn hảo đến đâu) có thể làm fail đoạn code này. Đột biến sẽ luôn ở trạng thái _Survived_. Đây **không phải là lỗi của test suite**, mà là một "nhiễu loạn" tự nhiên làm giảm tính chính xác của Mutation Score.
+
+### 7.2. Các Hạn chế Kỹ thuật Khác
+
+- **Bùng nổ tổ hợp (Combinatorial Explosion):** Đối với các dự án quy mô vừa và lớn (Enterprise-level), công cụ có thể dễ dàng sinh ra hàng trăm nghìn đột biến từ mã nguồn, tạo ra một khối lượng công việc khổng lồ.
+- **Chi phí thực thi đắt đỏ (High Execution Cost):** Với $N$ đột biến được sinh ra, hệ thống phải biên dịch lại mã nguồn và chạy toàn bộ $M$ kịch bản kiểm thử (hoặc một tập hợp con liên quan). Tài nguyên tính toán và thời gian tiêu tốn là rất lớn so với kiểm thử thông thường.
+- **Sự phụ thuộc vào Công cụ (Tooling Dependency):** Các công cụ Mutation Testing đòi hỏi sự can thiệp sâu vào bytecode/AST (Abstract Syntax Tree) nên phụ thuộc rất chặt chẽ vào ngôn ngữ và phiên bản trình biên dịch (VD: PIT cho Java, Stryker cho JavaScript/C#). Hệ sinh thái công cụ chưa thực sự phong phú và ổn định ở mọi ngôn ngữ như các công cụ đo Code Coverage.
 
 ## 8. Khảo sát công cụ (11 công cụ)
 
@@ -143,54 +152,65 @@ Bảng dưới đây phân tích sự khác biệt cốt lõi giữa hai phươn
 
 ## 9. Phân tích chuyên sâu 4 công cụ được lựa chọn
 
-Trong 11 công cụ khảo sát ở Mục 9, nhóm chọn ra 4 công cụ để phân tích chuyên sâu nguyên lý hoạt động: **StrykerJS** và **Mutmut** (đại diện nhóm Mutation Testing), **Istanbul** và **Coverage.py** (đại diện nhóm đo Test Effectiveness qua Code Coverage). Đây là 2 cặp công cụ cùng vai trò nhưng thuộc 2 hệ sinh thái ngôn ngữ khác nhau (JavaScript/TypeScript và Python), phù hợp để đối chiếu chéo cách mỗi hệ sinh thái giải quyết cùng một bài toán kỹ thuật — đúng với luận điểm đã nêu ở Mục 2 rằng không có công cụ mutation testing/coverage nào dùng chung được cho nhiều ngôn ngữ.
+Trong 11 công cụ khảo sát ở Mục 8, nhóm chọn ra 4 công cụ để phân tích chuyên sâu nguyên lý hoạt động: **StrykerJS** và **Mutmut** (đại diện nhóm Mutation Testing), **Istanbul** và **Coverage.py** (đại diện nhóm đo Test Effectiveness qua Code Coverage). Đây là 2 cặp công cụ cùng vai trò nhưng thuộc 2 hệ sinh thái ngôn ngữ khác nhau (JavaScript/TypeScript và Python), phù hợp để đối chiếu chéo cách mỗi hệ sinh thái giải quyết cùng một bài toán kỹ thuật.
 
-### 9.1. StrykerJS — Mutant Schemata (Mutation Switching)
+### 9.1. StrykerJS và Kỹ thuật Mutant Schemata (Mutation Switching)
 
-Khác với mô hình "cổ điển" là tạo ra một bản sao mã nguồn riêng cho mỗi mutant, StrykerJS **nhúng tất cả mutant vào cùng một file**, mỗi mutant được bọc trong một điều kiện kiểm tra biến toàn cục `global.__stryker__.activeMutant`:
+Thay vì áp dụng mô hình "cổ điển" (tạo ra một bản sao mã nguồn hoặc tệp tin vật lý riêng biệt cho mỗi đột biến), StrykerJS sử dụng kỹ thuật **Mutant Schemata** (hay còn gọi là _Mutation Switching_). Kỹ thuật này **nhúng toàn bộ các đột biến (mutants) vào cùng một tệp mã nguồn duy nhất**. Mỗi đột biến sẽ được cô lập và điều khiển bởi một điều kiện kiểm tra thông qua biến toàn cục (ví dụ: `global.__stryker__.activeMutant`).
+
+**Minh họa cơ chế nội sinh (Instrumentation):**
 
 ```javascript
-// Code gốc
+// Mã nguồn gốc
 function add(a, b) {
   return a + b;
 }
 
-// Sau khi Stryker instrument (rút gọn)
+// Mã nguồn sau khi được Stryker cấy ghép (instrumentation - bản rút gọn)
 function add(a, b) {
   return global.__stryker__.activeMutant === 1
-    ? a - b // mutant #1
-    : a + b; // code gốc
+    ? a - b // Mutant #1: Thay đổi phép toán + thành -
+    : a + b; // Mã nguồn gốc: Thực thi khi không có mutant nào được kích hoạt
 }
 ```
 
-Nhờ kỹ thuật này (gọi là **Mutant Schemata**), bước build/bundle/transpile (webpack, `tsc`...) — vốn thường tốn thời gian hơn cả việc chạy test — chỉ cần thực hiện **một lần duy nhất** cho toàn bộ quá trình, thay vì một lần cho mỗi mutant. Trước khi kiểm tra mutant thật sự, Stryker còn thực hiện một **dry run** để ghi nhận test nào chạm tới dòng code nào (per-test mutant coverage); nhờ dữ liệu này, khi tới lượt một mutant cụ thể, Stryker chỉ chạy các test có liên quan thay vì toàn bộ test suite, và mutant nằm ở dòng không test nào chạm tới được đánh dấu **No Coverage** ngay lập tức. StrykerJS còn hỗ trợ chạy song song nhiều tiến trình test runner và chế độ **incremental** (`--incremental`, `--since`) để chỉ chạy lại mutant ở phần code thay đổi — cơ chế mà nhóm áp dụng thực tế khi giới hạn phạm vi `mutate` trong demo (xem Mục 12).
+Nhờ kiến trúc **Mutant Schemata**, StrykerJS giải quyết triệt để bài toán về hiệu năng và mang lại những tối ưu hóa vượt trội:
 
-### 9.2. Mutmut — sinh mutant tuần tự dựa trên exit code
+- **Tối ưu hóa quá trình Biên dịch (Build/Transpile):** Các công đoạn nặng nề và tốn kém tài nguyên như build, bundle hay transpile (thông qua Webpack, `tsc`...) chỉ cần thực hiện **một lần duy nhất** cho toàn bộ quá trình kiểm thử, thay vì phải lặp lại cho từng mutant.
+- **Chiến lược Chạy thử (Dry Run) & Theo dõi Bao phủ (Per-test Mutant Coverage):** Trước khi tiến hành kiểm thử đột biến thực sự, Stryker thực hiện một pha chạy thử (_dry run_) để lập bản đồ (mapping) xác định chính xác test case nào đi qua dòng code nào.
+- **Kiểm thử Có mục tiêu (Targeted Testing):** Dựa vào tập dữ liệu từ bước _dry run_, khi tới lượt kích hoạt một mutant cụ thể, Stryker chỉ thực thi các test cases có liên quan trực tiếp thay vì phải chạy toàn bộ test suite. Các mutants nằm ở những dòng code không có test nào chạm tới sẽ tự động bị đánh dấu **No Coverage** ngay lập tức để tiết kiệm thời gian.
+- **Thực thi Song song & Tăng dần (Parallel & Incremental Execution):** StrykerJS hỗ trợ xử lý đa tiến trình (parallel test runners) và chế độ kiểm thử tăng dần (thông qua cờ `--incremental`, `--since`). Cơ chế này cho phép hệ thống chỉ chạy lại các mutant trên phần mã nguồn vừa bị thay đổi — đây chính là chiến lược tối ưu hóa mà nhóm đã áp dụng thực tế khi giới hạn phạm vi `mutate` trong phần demo (tham khảo Mục 10).
 
-Mutmut theo triết lý đơn giản hoá tối đa: với mỗi mutant, nó áp trực tiếp thay đổi vào file thực tế (có backup), gọi lệnh test (mặc định `pytest`, nhưng có thể là bất kỳ lệnh nào miễn trả về exit code), rồi đọc exit code để suy ra Killed/Survived. Vì chỉ cần exit code, Mutmut **tương thích với mọi test runner** mà không cần viết plugin riêng — đơn giản và phổ quát hơn StrykerJS, nhưng đổi lại không có cơ chế chọn lọc test cần chạy tinh vi như per-test coverage của Stryker, nên thường chậm hơn trên project lớn vì phải khởi động lại tiến trình Python cho mỗi mutant.
+### 9.2. Mutmut và cơ chế Exit Code-based
 
-Hai cơ chế tối ưu quan trọng của Mutmut:
+Trái ngược với cách tiếp cận phức tạp của StrykerJS, **Mutmut** (công cụ phổ biến trong hệ sinh thái Python) theo đuổi triết lý thiết kế tinh gọn và trực diện:
 
-- **Coverage-guided mutation**: Mutmut có thể đọc dữ liệu đã thu thập sẵn từ Coverage.py; những dòng code chưa từng được test chạy qua sẽ bị loại khỏi việc sinh mutant ngay từ đầu, tránh sinh ra các mutant "chắc chắn survived" một cách vô nghĩa. Đây là ví dụ cụ thể cho việc một công cụ mutation testing tận dụng dữ liệu từ một công cụ coverage riêng biệt.
-- **Cache (`.mutmut-cache`)**: Mutmut ghi nhớ kết quả mutant đã kiểm tra; nếu phần code liên quan không đổi, lần chạy sau sẽ bỏ qua. Nhờ đó, tiến trình `mutmut run` có thể bị ngắt và chạy tiếp bất cứ lúc nào mà không mất kết quả đã có — phù hợp để chạy lặp lại như một thói quen thường nhật thay vì một lần chạy lớn, tốn thời gian.
+- **Cơ chế Thực thi:** Với mỗi đột biến, Mutmut sẽ can thiệp và sửa đổi trực tiếp tệp mã nguồn thực tế (có cơ chế sao lưu tự động - backup). Sau đó, nó kích hoạt trình chạy kiểm thử (test runner - mặc định là `pytest`, nhưng có thể là bất kỳ lệnh nào) và đánh giá trạng thái đột biến (Killed hoặc Survived) hoàn toàn dựa vào mã lỗi trả về (Exit Code).
+- **Ưu điểm (Tính phổ quát):** Việc chỉ phụ thuộc vào Exit Code giúp Mutmut **tương thích với mọi trình chạy kiểm thử** mà không cần phải phát triển các plugin tích hợp riêng lẻ.
+- **Nhược điểm (Hiệu năng):** Đổi lấy sự đơn giản, Mutmut thiếu cơ chế chọn lọc kịch bản kiểm thử tinh vi (per-test mutant coverage) như StrykerJS. Do phải khởi động lại tiến trình Python cho từng đột biến, công cụ này thường hoạt động chậm hơn trên các dự án quy mô lớn.
 
-Mutmut yêu cầu hệ thống hỗ trợ `fork` (Unix-style) nên trên Windows phải chạy qua WSL — một giới hạn nền tảng cụ thể cần lưu ý khi triển khai.
+Để bù đắp hạn chế về tốc độ, Mutmut tích hợp hai cơ chế tối ưu hóa quan trọng:
 
-### 9.3. Istanbul/nyc — Source-level instrumentation
+- **Tối ưu hóa dựa trên Bao phủ mã (Coverage-guided mutation):** Mutmut có khả năng tích hợp và đọc dữ liệu đã thu thập từ công cụ `Coverage.py`. Nó sẽ chủ động loại bỏ việc sinh đột biến ở những dòng mã chưa được kịch bản kiểm thử nào bao phủ. Đây là minh chứng điển hình cho sự cộng sinh giữa công cụ đo lường Coverage truyền thống và Mutation Testing, giúp ngăn chặn việc sinh ra các mutants "chắc chắn Survived" làm lãng phí tài nguyên.
+- **Cơ chế Lưu trữ Bộ đệm (Caching - `.mutmut-cache`):** Mutmut ghi nhớ trạng thái và kết quả của các đột biến đã kiểm tra. Nếu mã nguồn liên quan không thay đổi, lần chạy tiếp theo sẽ tự động bỏ qua. Nhờ vậy, người dùng có thể chủ động dừng tiến trình `mutmut run` và tiếp tục lại bất kỳ lúc nào mà không mất dữ liệu. Tính năng này đặc biệt phù hợp để tích hợp kiểm thử đột biến vào thói quen lập trình hàng ngày (daily routines) thay vì phải chờ đợi một lần chạy nguyên khối tốn kém.
 
-Istanbul đo coverage bằng cách **chèn trực tiếp bộ đếm vào mã nguồn**: nó parse code thành AST (qua `istanbul-lib-instrument` hoặc plugin Babel `babel-plugin-istanbul`), gắn `cov.s[N]++` cho mỗi statement, `cov.f[N]++` cho mỗi hàm, `cov.b[N][0/1]++` cho mỗi nhánh (if/else, ternary, toán tử logic ngắn mạch), rồi sinh lại code đã "instrumented" để chạy thay bản gốc. Khi test chạy, các bộ đếm này tự tăng vào một biến toàn cục (`global.__coverage__` ở Node, `window.__coverage__` trên trình duyệt); CLI `nyc` điều phối việc instrument, thu thập dữ liệu và tổng hợp báo cáo (text, HTML, LCOV, JSON).
+> **Lưu ý về Môi trường Triển khai:** Về mặt kiến trúc hệ điều hành, Mutmut yêu cầu cơ chế tạo tiến trình `fork` (đặc trưng của hệ thống Unix). Do đó, trên môi trường Windows, công cụ này bắt buộc phải được vận hành thông qua Hệ thống con Windows dành cho Linux (WSL).
 
-Vì instrument thẳng trên AST gốc trước khi transform, Istanbul giữ độ chính xác branch coverage cao ngay cả với logic lồng nhau phức tạp — đây là lý do nhiều dự án coi trọng độ chính xác vẫn chọn Istanbul dù chậm hơn các công cụ coverage engine-native mới hơn (như `c8`, dựa trên V8 coverage built-in của Node.js, nhanh hơn nhưng phải suy luận ngược qua source map nên dễ sai lệch với code đã bundle/transpile phức tạp).
+### 9.3. Istanbul/nyc — Kỹ thuật Source-level Instrumentation
 
-### 9.4. Coverage.py — Engine-native instrumentation
+Istanbul thực hiện đo lường tỷ lệ bao phủ mã bằng phương pháp **chèn trực tiếp các bộ đếm (counters) vào mã nguồn**. Cụ thể, công cụ này phân tích mã nguồn thành Cây Cú pháp Trừu tượng (AST - Abstract Syntax Tree) thông qua `istanbul-lib-instrument` hoặc `babel-plugin-istanbul`. Sau đó, nó tự động cấy ghép các biến đếm (như `cov.s[N]++` cho câu lệnh, `cov.f[N]++` cho hàm, và `cov.b[N][0/1]++` cho các nhánh logic như `if/else`, toán tử ba ngôi). Mã nguồn sau khi được "nội sinh" (instrumented) sẽ được biên dịch lại để thay thế bản gốc trong quá trình kiểm thử. Khi các test cases thực thi, các bộ đếm này sẽ tự động cập nhật giá trị vào một đối tượng toàn cục (`global.__coverage__` trên Node.js hoặc `window.__coverage__` trên trình duyệt). Cuối cùng, công cụ CLI `nyc` sẽ đóng vai trò điều phối quá trình nội sinh, thu thập dữ liệu và xuất báo cáo dưới nhiều định dạng (text, HTML, LCOV, JSON).
 
-Ngược lại với Istanbul, Coverage.py **không hề chèn thêm dòng code hay counter nào vào mã nguồn**. Thay vào đó, nó khai thác chính cơ chế theo dõi thực thi có sẵn của interpreter Python — cùng nguyên lý "engine-native instrumentation" như V8 coverage, nhưng áp dụng cho Python. Coverage.py hỗ trợ 3 core khác nhau:
+Nhờ việc can thiệp trực tiếp trên AST gốc trước quá trình chuyển đổi (transformation), Istanbul duy trì độ chính xác cực kỳ cao đối với tỷ lệ bao phủ nhánh (branch coverage), ngay cả khi xử lý các cấu trúc logic lồng nhau phức tạp. Đây là lý do cốt lõi khiến các dự án đặt nặng tính chính xác vẫn ưu tiên sử dụng Istanbul. Mặc dù nó có thể chậm hơn so với các công cụ thế hệ mới áp dụng phương pháp _engine-native_ (như `c8` - sử dụng cơ chế coverage tích hợp sẵn của V8 engine trong Node.js), `c8` lại có nhược điểm là phải ánh xạ ngược thông qua _source map_, dễ dẫn đến sai lệch khi đo lường các mã nguồn đã qua quá trình bundle/transpile phức tạp.
 
-- **`ctrace`** (mặc định): dùng `sys.settrace()` với trace function viết bằng C extension để giảm overhead so với việc gọi callback Python thuần cho mỗi dòng.
-- **`pytrace`**: cùng cơ chế `sys.settrace()` nhưng cài đặt thuần Python, dùng khi không có sẵn bản C-extension phù hợp nền tảng — chậm hơn đáng kể.
-- **`sysmon`** (Python 3.12+): tận dụng API `sys.monitoring` mới, hiệu quả hơn nhiều so với `sys.settrace()` truyền thống vốn được thiết kế ban đầu cho debugger.
+### 9.4. Coverage.py — Kỹ thuật Engine-native Instrumentation
 
-Dữ liệu thu thập được lưu vào file `.coverage` — thực chất là một **cơ sở dữ liệu SQLite**, giúp dễ dàng gộp (`coverage combine`) kết quả từ nhiều tiến trình chạy song song (`pytest-xdist`) hoặc nhiều môi trường (tox). Coverage.py còn hỗ trợ **dynamic context** (gắn nhãn dữ liệu theo tên test đang chạy), cho phép trả lời "dòng code này được test nào chạy qua" chứ không chỉ "có được chạy qua hay không".
+Trái ngược hoàn toàn với phương pháp của Istanbul, Coverage.py **không chèn bất kỳ câu lệnh hay bộ đếm nào vào mã nguồn**. Thay vào đó, công cụ này trực tiếp khai thác cơ chế theo dõi luồng thực thi (execution tracking) được tích hợp sẵn bên trong trình thông dịch (interpreter) của Python. Đây chính là nguyên lý _Engine-native instrumentation_, tương tự như cách V8 coverage hoạt động nhưng được thiết kế chuyên biệt cho hệ sinh thái Python. Coverage.py vận hành dựa trên 3 lõi (cores) theo dõi khác nhau:
+
+- **`ctrace` (Mặc định):** Sử dụng API `sys.settrace()` kết hợp với các hàm theo dõi (trace functions) được viết bằng C extension. Phương pháp này giúp giảm thiểu đáng kể chi phí hiệu năng (overhead) so với việc gọi các hàm callback thuần Python trên từng dòng lệnh.
+- **`pytrace`:** Áp dụng cùng cơ chế `sys.settrace()` nhưng được triển khai hoàn toàn bằng Python thuần. Lõi này thường hoạt động như một phương án dự phòng (fallback) khi hệ thống không hỗ trợ C extension tương ứng, đi kèm với tốc độ thực thi chậm hơn đáng kể.
+- **`sysmon` (Từ Python 3.12+):** Tận dụng tối đa API `sys.monitoring` thế hệ mới. Lõi này mang lại hiệu suất vượt trội so với cơ chế `sys.settrace()` truyền thống (vốn ban đầu được thiết kế chủ yếu cho mục đích gỡ lỗi - debugging).
+
+Toàn bộ dữ liệu thu thập sẽ được lưu trữ vào tệp `.coverage`. Về bản chất, đây là một **cơ sở dữ liệu SQLite**, thiết kế này cho phép hệ thống dễ dàng tổng hợp (`coverage combine`) kết quả kiểm thử từ nhiều tiến trình chạy song song (ví dụ: qua `pytest-xdist`) hoặc từ nhiều môi trường ảo khác nhau (như `tox`). Hơn nữa, Coverage.py còn cung cấp tính năng **Dynamic Context** (Ngữ cảnh Động), tự động gắn nhãn dữ liệu theo tên của từng kịch bản kiểm thử (test case) đang chạy. Nhờ đó, nó không chỉ trả lời được câu hỏi định lượng _"Dòng code này có được thực thi hay không?"_, mà còn giải quyết được bài toán truy vết: _"Dòng code này đã được kích hoạt bởi test case cụ thể nào?"_.
 
 ### 9.5. Đối chiếu chéo
 
@@ -199,8 +219,6 @@ Dữ liệu thu thập được lưu vào file `.coverage` — thực chất là
 | Cùng vai trò   | Mutation testing                                                                                                                               | Đo code coverage                                                                                                                                         |
 | Cách can thiệp | Stryker: nhúng tất cả mutant vào 1 file, switch bằng biến toàn cục. Mutmut: sửa trực tiếp file, chạy tuần tự từng mutant                       | Istanbul: chèn counter vào AST (source-level). Coverage.py: hook vào interpreter qua `sys.settrace`/`sys.monitoring` (engine-native), không sửa mã nguồn |
 | Đánh đổi       | Stryker nhanh hơn nhờ build 1 lần nhưng phức tạp hơn để cài đặt; Mutmut đơn giản, phổ quát (chỉ cần exit code) nhưng chậm hơn trên project lớn | Istanbul chính xác cao nhưng có overhead runtime; Coverage.py "trong suốt" với mã nguồn, overhead phụ thuộc core được chọn                               |
-
-Điểm đáng chú ý nhất khi đối chiếu chéo cả 4 công cụ: **Mutmut đọc trực tiếp dữ liệu do Coverage.py thu thập** để loại bỏ trước các mutant nằm ở vùng code chưa được test chạy qua (coverage-guided mutation). Đây là minh chứng cụ thể, ở cấp độ triển khai thật, cho mối quan hệ lý thuyết giữa hai khái niệm Code Coverage và Mutation Testing đã trình bày ở Mục 6: coverage không thay thế được mutation testing, nhưng là dữ liệu đầu vào hữu ích giúp mutation testing chạy hiệu quả hơn.
 
 ## 10. Kết quả demo
 
@@ -271,22 +289,30 @@ _(cần bổ sung — số liệu và nhận xét sau khi bổ sung test, đối
 
 ## 14. Bảng thuật ngữ
 
-| Thuật ngữ (EN)               | Tiếng Việt                                                  |
-| ---------------------------- | ----------------------------------------------------------- |
-| Mutant                       | Phiên bản code đã bị chèn lỗi nhỏ có chủ đích               |
-| Killed                       | Mutant bị test phát hiện (test fail)                        |
-| Survived                     | Mutant không bị test nào phát hiện (test vẫn pass)          |
-| No Coverage                  | Mutant nằm ở vùng code không test nào chạy qua              |
-| Timeout                      | Mutant khiến chương trình chạy quá lâu/vô hạn               |
-| Equivalent Mutant            | Mutant có hành vi giống hệt code gốc, không thể bị killed   |
-| Mutation Score               | Chỉ số % đo hiệu quả test suite qua tỉ lệ mutant bị killed  |
-| Mutation Operator            | Quy tắc tạo ra một loại thay đổi mutant cụ thể              |
-| Coverage-guided Mutation     | Chỉ sinh mutant ở vùng code đã có test coverage             |
-| Incremental Mutation Testing | Chỉ chạy mutation testing trên phần code thay đổi           |
-| Assertion                    | Câu lệnh xác nhận kết quả thực tế khớp kỳ vọng              |
-| Boundary Value               | Giá trị nằm ngay tại ranh giới điều kiện (ví dụ `age = 18`) |
-| Test Effectiveness           | Mức độ hiệu quả của test suite trong việc phát hiện lỗi     |
-| Quality Gate                 | Ngưỡng chất lượng dùng để chặn/cảnh báo trong CI/CD         |
+| Thuật ngữ (EN)                       | Tiếng Việt                                                                                                                     |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| Mutant                               | Phiên bản code đã bị chèn lỗi nhỏ có chủ đích                                                                                  |
+| Killed                               | Mutant bị test phát hiện (test fail)                                                                                           |
+| Survived                             | Mutant không bị test nào phát hiện (test vẫn pass)                                                                             |
+| No Coverage                          | Mutant nằm ở vùng code không test nào chạy qua                                                                                 |
+| Timeout                              | Mutant khiến chương trình chạy quá lâu/vô hạn                                                                                  |
+| Equivalent Mutant                    | Mutant có hành vi giống hệt code gốc, không thể bị killed                                                                      |
+| Mutation Score                       | Chỉ số % đo hiệu quả test suite qua tỉ lệ mutant bị killed                                                                     |
+| Mutation Operator                    | Quy tắc tạo ra một loại thay đổi mutant cụ thể                                                                                 |
+| Coverage-guided Mutation             | Chỉ sinh mutant ở vùng code đã có test coverage                                                                                |
+| Incremental Mutation Testing         | Chỉ chạy mutation testing trên phần code thay đổi                                                                              |
+| Assertion                            | Câu lệnh xác nhận kết quả thực tế khớp kỳ vọng                                                                                 |
+| Boundary Value                       | Giá trị nằm ngay tại ranh giới điều kiện (ví dụ `age = 18`)                                                                    |
+| Test Effectiveness                   | Mức độ hiệu quả của test suite trong việc phát hiện lỗi                                                                        |
+| Quality Gate                         | Ngưỡng chất lượng dùng để chặn/cảnh báo trong CI/CD                                                                            |
+| Mutant Schemata (Mutation Switching) | Kỹ thuật nhúng toàn bộ mutant vào cùng một file, kích hoạt từng mutant qua biến toàn cục thay vì tạo file riêng cho mỗi mutant |
+| Dry Run                              | Lượt chạy thử test suite trước khi mutation testing thật, dùng để ghi nhận test nào chạm tới dòng code nào                     |
+| Exit Code-based Testing              | Cách đánh giá Killed/Survived chỉ dựa vào mã thoát của lệnh test, không cần plugin riêng cho từng test runner                  |
+| Source-level Instrumentation         | Kỹ thuật đo coverage bằng cách chèn trực tiếp bộ đếm vào mã nguồn (qua AST)                                                    |
+| Engine-native Instrumentation        | Kỹ thuật đo coverage bằng cách khai thác cơ chế theo dõi thực thi có sẵn của runtime/interpreter, không chèn thêm mã nguồn     |
+| Dynamic Context                      | Tính năng gắn nhãn dữ liệu coverage theo tên test case đang chạy, cho biết dòng code được test nào chạy qua                    |
+| Coverage Illusion                    | Hiện tượng coverage đo được cao nhưng test suite không thực sự kiểm chứng hành vi, do thiếu hoặc yếu assertion                 |
+| Combinatorial Explosion              | Sự bùng nổ số lượng mutant khi mutate trên dự án lớn, gây tốn tài nguyên và thời gian thực thi                                 |
 
 ## 15. Tài liệu tham khảo
 
@@ -309,6 +335,11 @@ _(cần bổ sung — số liệu và nhận xét sau khi bổ sung test, đối
 - Istanbul/nyc: https://istanbul.js.org/
 - JaCoCo: https://www.jacoco.org/jacoco/
 - Coverage.py: https://coverage.readthedocs.io/ · pytest-cov: https://pytest-cov.readthedocs.io/
+- StrykerJS — Mutation Switching: https://stryker-mutator.io/blog/announcing-stryker-4-mutation-switching/
+- Stryker — Static mutants (trường hợp không áp dụng được mutation switching): https://stryker-mutator.io/docs/mutation-testing-elements/static-mutants/
+- Mutmut — tài liệu chính thức: https://mutmut.readthedocs.io/
+- Istanbul/nyc — hướng dẫn cơ chế instrumentation: https://github.com/istanbuljs/nyc/blob/main/docs/instrument.md
+- Coverage.py — How coverage.py works (ctrace/pytrace/sysmon): https://coverage.readthedocs.io/en/latest/howitworks.html
 
 **Nguồn khác:**
 

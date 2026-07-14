@@ -128,7 +128,3 @@ Gói phát hành của Major cung cấp sẵn thư mục `example` chứa các v
 ### 3.12 Tài liệu tham khảo
 
 - Thư mục `doc` đi kèm trong gói cài đặt chứa hướng dẫn sử dụng (manual) của phiên bản hiện tại (tệp `major.html`).
-
-## 4. Ghi chú tổng kết
-
-CẦN BỔ SUNG: Thêm ghi chú ngắn về những điều rút ra sau khi nghiên cứu cả hai công cụ.

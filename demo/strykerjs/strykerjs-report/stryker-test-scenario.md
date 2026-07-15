@@ -1,134 +1,212 @@
-# StrykerJS — Kịch bản test & phân tích kết quả (frontend-web)
+# Kịch bản Mutation Testing: Login → Checkout (eshop-sut)
 
-> Tài liệu này rút gọn từ [`setup-steps.md`](./setup-steps.md), chỉ giữ lại phần **kịch bản
-> test / kết quả mong đợi / phân tích / so sánh hiệu quả**. Phần chuẩn bị môi trường xem
-> [`stryker-setup-log.md`](./stryker-setup-log.md). Số liệu trong tài liệu này lấy trực tiếp
-> từ lần chạy thật, đã đối chiếu khớp với
-> `demo/strykerjs/eshop-sut/frontend-web/strykerjs-report.md` và
-> `reports/mutation/mutation.json`.
+Ứng dụng: `eshop-sut/frontend-web` (React + Vite, test runner Vitest, mutation testing StrykerJS 9.6).
+Cặp hàm tuần tự được chọn: **A = `login()`** (`src/context/AuthContext.jsx`) → **B = `handleCheckout()`** (`src/pages/Checkout.jsx`). `handleCheckout` phụ thuộc trực tiếp vào state (`token`, `user`) mà `login()` tạo ra — đúng dạng "cùng một phiên đăng nhập" mà bài toán yêu cầu.
 
-## 1. Hai chức năng được test
+---
 
-| # | Chức năng | File source | Mô tả |
+## Bước 0 — Chọn cặp hàm tuần tự
+
+| | Hàm | File | Vai trò |
 |---|---|---|---|
-| 1 | **Giỏ hàng** | `src/context/CartContext.jsx` | Logic nghiệp vụ thuần: thêm sản phẩm vào giỏ (`addToCart`), tính tổng tiền (`cartTotal`), xoá sản phẩm khỏi giỏ (`removeFromCart`), xoá toàn bộ giỏ (`clearCart`). Không phụ thuộc API/localStorage. |
-| 2 | **Đăng ký tài khoản / validate mật khẩu** | `src/pages/Register.jsx` | `handleSubmit` kiểm tra mật khẩu mạnh bằng `flawedStrongPasswordRegex` (dòng 15) trước khi gọi `axios.post('http://localhost:3000/api/register', ...)` và điều hướng sang `/login`. Regex này **bị cài lỗi cố ý** trong SUT: yêu cầu khoảng trắng `\s` thay vì ký tự đặc biệt, dù thông báo lỗi ghi "ký tự đặc biệt". |
+| A | `login(email, password)` | `src/context/AuthContext.jsx:26-35` | Gọi `POST /api/login`, lưu `token`/`user` vào state + `localStorage`, gắn `Authorization` header mặc định cho axios |
+| B | `handleCheckout()` | `src/pages/Checkout.jsx:40-66` | Đọc `token`/`user` từ `useAuth()` (state do A tạo) để gắn header `Authorization: Bearer <token>` khi gọi `POST /api/checkout`, và rẽ nhánh gọi thêm `POST /api/coupon-usage` nếu có coupon |
 
-Chọn 2 chức năng này vì đại diện cho 2 tình huống đối lập của mutation testing:
-- **CartContext**: code đơn giản, dễ test đầy đủ → dùng để minh hoạ trường hợp lý tưởng.
-- **Register**: có logic validate phức tạp (regex) + một file test viết hời hợt ban đầu → dùng
-  để minh hoạ khoảng cách giữa "test pass/có coverage" và "test thật sự phát hiện được lỗi".
+B **không thể được kiểm thử đúng đắn nếu không có A chạy trước** — nếu test chỉ gọi B một mình (không login), `token` luôn `null`, và nhánh `headers: token ? {...} : {}` chỉ bao giờ chạm nhánh `else`.
 
-## 2. Kết quả mong đợi khi test
+Cấu hình `stryker.conf.json` để chỉ mutate 2 file này:
 
-| Chức năng | Kỳ vọng trước khi chạy Stryker |
-|---|---|
-| CartContext | Test hiện có (3 test case: giỏ hàng rỗng ban đầu, thêm sản phẩm + tính tổng, xoá giỏ) sẽ kill gần hết mutant có coverage. `removeFromCart` **cố tình không được test** → mutant tại đó phải rơi vào nhóm `NoCoverage`, không phải `Survived`. |
-| Register (test ban đầu — 1 test case, thử đúng 1 password `"abc"`) | Test **pass** và **có coverage** (vì `handleSubmit` được gọi), nhưng vì chỉ assert đúng 1 điều ("có thông báo lỗi hiển thị") nên kỳ vọng phần lớn mutant biến đổi trên regex vẫn **Survived** — minh chứng "coverage cao/test pass không đồng nghĩa test mạnh". |
-| Register (test sau khi bổ sung — 9 test case) | Kỳ vọng mutation score tăng đáng kể mà **không sửa một dòng code nào**, vì chỉ thêm/siết assertion. Không kỳ vọng đạt 100% — một số mutant biến đổi ở biên (anchor regex) rất khó kill bằng test case thông thường. |
-
-## 3. Các bước thực hiện test
-
-1. **Baseline**: chạy `npm test` (Vitest) tại `demo/strykerjs/eshop-sut/frontend-web`, xác
-   nhận toàn bộ test pass sạch trước khi đụng tới Stryker.
-   ```
-    RUN  v4.1.10 .../frontend-web
-    Test Files  1 passed (1)
-         Tests  3 passed (3)
-   ```
-2. **Cấu hình phạm vi mutate**: `stryker.conf.json` với `mutate` gồm cả 2 file
-   (`src/context/CartContext.jsx`, `src/pages/Register.jsx`) — xem
-   [`stryker-setup-log.md`](./stryker-setup-log.md#8-tạo-strykerconfjson).
-3. **Chạy Stryker**: đứng đúng thư mục `frontend-web`, chạy
-   `./node_modules/.bin/stryker run`.
-4. **Đọc report**:
-   - Bảng tổng hợp trên terminal (clear-text reporter).
-   - HTML chi tiết từng mutant: `reports/mutation/mutation.html`.
-   - JSON để phân tích số liệu theo mutator: `reports/mutation/mutation.json`.
-   - Markdown tự sinh (nếu dùng custom reporter): `strykerjs-report.md`.
-5. **Lặp lại có mục tiêu**: với `Register.jsx`, sau khi đọc danh sách mutant `Survived`, viết
-   thêm test nhắm đúng từng mutant còn sống, chạy lại Stryker, so sánh số liệu trước/sau (xem
-   mục 5 bên dưới).
-
-## 4. Phân tích kết quả
-
-### 4.1. Bảng tổng hợp cuối cùng (sau khi hoàn thiện test cho cả 2 chức năng)
-
-```
-------------------|------------------|----------|-----------|------------|----------|----------|
-                  | % Mutation score |          |           |            |          |          |
-File              |  total | covered | # killed | # timeout | # survived | # no cov | # errors |
-------------------|--------|---------|----------|-----------|------------|----------|----------|
-All files         |  78.33 |   92.16 |       47 |         0 |          4 |        9 |        0 |
- context          |  85.71 |  100.00 |       12 |         0 |          0 |        2 |        0 |
-  CartContext.jsx  |  85.71 |  100.00 |       12 |         0 |          0 |        2 |        0 |
- pages             |  76.09 |   89.74 |       35 |         0 |          4 |        7 |        0 |
-  Register.jsx     |  76.09 |   89.74 |       35 |         0 |          4 |        7 |        0 |
-------------------|--------|---------|----------|-----------|------------|----------|----------|
+```json
+{
+  "testRunner": "vitest",
+  "coverageAnalysis": "perTest",
+  "mutate": ["src/context/AuthContext.jsx", "src/pages/Checkout.jsx"]
+}
 ```
 
-- **`CartContext.jsx`: 85.71%** (100% trong phần có coverage) — test kill hết mọi mutant mà
-  test đi qua; 2 mutant `NoCoverage` là do `removeFromCart` chưa có test, không phải test yếu.
-- **`Register.jsx`: 76.09%** (89.74% trong phần có coverage) — sau khi bổ sung test có mục
-  tiêu; 4 mutant vẫn sống sót là các trường hợp biên rất khó kill (xem mục 4.3).
+---
 
-### 4.2. Vì sao test ban đầu của Register.jsx yếu (17.39%, 27/46 survived)
+## Bước 1 — Baseline mutation run (test suite "yếu")
 
-Số liệu trích từ lần chạy đầu (chỉ 1 test case `"abc"`), phân theo mutator:
+Trước khi có test chained, ta viết một test **hời hợt** để mô phỏng đúng thực trạng "coverage tồn tại nhưng không kiểm chứng gì":
 
-| Loại mutant (mutator) | Vị trí | Số survived | Vì sao survived — thiếu test case gì |
-|---|---|---|---|
-| `Regex` | dòng 15, `flawedStrongPasswordRegex` | 18 | Test chỉ thử **một** password `"abc"` (rỗng mọi điều kiện). Gần như mọi biến thể mutate của regex vẫn khiến `"abc"` bị từ chối → test vẫn pass dù regex đã sai. Thiếu test theo từng điều kiện riêng lẻ và **thiếu test với password hợp lệ**. |
-| `StringLiteral` | dòng 6-9, `useState('')` các field | 4 | Test không bao giờ assert giá trị khởi tạo của input, nên đổi giá trị mặc định không bị phát hiện. |
-| `ArrowFunction` | dòng 40, 50, 60 — `onChange` của name/email/password | 3 | Test chỉ tương tác với ô password; `onChange` bị vô hiệu hoá vẫn survive vì kết quả hiển thị lỗi giống hệt trường hợp password sai. |
-| `ConditionalExpression` | dòng 17, `if (!regex.test(password))` → `if (true)` | 1 | Test chưa từng thử password hợp lệ, nên ép điều kiện luôn đúng không ảnh hưởng gì. |
-| `LogicalOperator` | dòng 33, `{error && <div>...}` → `{error \|\| <div>...}` | 1 | `&&` và `\|\|` cho kết quả giống nhau khi `error` đang truthy; thiếu test khẳng định **không có** div lỗi khi chưa submit. |
+```jsx
+// test/pages/Checkout.test.jsx (baseline — sau này sẽ bị thay thế)
+describe('Checkout - baseline smoke test', () => {
+  it('renders the checkout page heading', () => {
+    renderCheckout();
+    expect(screen.getByText('Xác Nhận Đơn Hàng')).toBeInTheDocument();
+  });
+  it('renders the checkout confirmation button', () => {
+    renderCheckout();
+    expect(screen.getByText('Xác Nhận Thanh Toán')).toBeInTheDocument();
+  });
+});
+```
 
-### 4.3. Before/after — cải thiện Register.jsx bằng cách viết thêm test (không sửa code)
+Chạy `stryker run` → 109 mutant sinh ra trên 2 file:
 
-| Lần chạy | Số test case (Register) | Mutation score `Register.jsx` | Survived |
-|---|---|---|---|
-| 1 — chỉ 1 test hời hợt | 1 | **17.39%** | 27 |
-| 2 — thêm test theo từng điều kiện regex + password hợp lệ + input name/email | 9 | **60.87%** | 11 |
-| 3 — thêm assertion "không có khối lỗi lúc đầu" + assert đúng payload `axios.post` | 9 (siết assertion) | **76.09%** | 4 |
+| File | Total | Killed | Survived | Timeout | No coverage | Score (killed/total) | Score (Stryker chính thức, killed+timeout/total) |
+|---|---|---|---|---|---|---|---|
+| AuthContext.jsx | 22 | 1 | 3 | 6 | 12 | 4.55% | 31.82% |
+| Checkout.jsx | 87 | 3 | 7 | 12 | 65 | 3.45% | 17.24% |
+| **Tổng** | **109** | **4** | **10** | **18** | **77** | **3.67%** | **20.18%** |
 
-Mutation score tăng từ **17.39% → 76.09%** chỉ bằng cách viết thêm/siết test, không sửa một
-dòng code nào.
+→ **77/109 mutant (71%) hoàn toàn "no coverage"** dù ứng dụng có thể build, chạy, và trang Checkout "hiển thị đúng" khi review bằng mắt.
 
-**4 mutant vẫn sống sót sau cùng:**
+---
 
-| Mutator | Mutant | Vì sao vẫn sống |
+## Bước 2 — Liệt kê mutant sống sót (Survived, không phải NoCoverage)
+
+Đây là các mutant mà test **có chạy qua** dòng code đó nhưng không phát hiện được thay đổi hành vi:
+
+### `AuthContext.jsx`
+| Dòng | Loại | Thay đổi |
 |---|---|---|
-| `Regex` | bỏ anchor `$` cuối regex | Mọi chuỗi test đều "sạch" (không có ký tự thừa sau đoạn hợp lệ) → cần test chuỗi có ký tự thừa **sau**, ví dụ `"Abcdef1 !!!"`. |
-| `Regex` | bỏ anchor `^` đầu regex | Tương tự — cần test chuỗi có ký tự thừa **trước**, ví dụ `"!!!Abcdef1 "`. |
-| `Regex` | đổi `.*[a-z]` (lookahead đầu) thành `.[a-z]` | Khác biệt cực nhỏ giữa "ký tự bất kỳ ngay trước chữ thường" và "ký tự bất kỳ (0 hoặc nhiều) trước chữ thường" — cần input mà chữ thường nằm xa đầu chuỗi. |
-| `StringLiteral` | `navigate('/login')` → `navigate('')` | Test "password hợp lệ" mới assert `axios.post`, chưa assert điều hướng sau khi đăng ký thành công — cần mock `useNavigate` và assert gọi với `'/login'`. |
+| 21 | BlockStatement | thân `if (token)` bị thay bằng `{}` |
+| 24 | ArrayDeclaration | dependency array `[token]` → `[]` |
+| 44 | ObjectLiteral | `value={{ user, token, login, logout }}` → `value={{}}` |
 
-Đây là ví dụ thực tế cho việc **mutation testing không nhất thiết phải đạt 100%** — 3/4 mutant
-còn lại là biến thể regex rất tinh vi ở biên (anchor/quantifier), phù hợp để nói về chi phí/lợi
-ích khi đẩy mutation score lên rất cao.
-
-## 5. So sánh hiệu quả test giữa 2 chức năng
-
-| Tiêu chí | CartContext.jsx (Giỏ hàng) | Register.jsx (Đăng ký) |
+### `Checkout.jsx`
+| Dòng | Loại | Thay đổi |
 |---|---|---|
-| Mutation score (total) | 85.71% | 76.09% |
-| Mutation score (covered) | **100%** | 89.74% |
-| Survived | 0 | 4 |
-| NoCoverage | 2 (`removeFromCart` chưa test) | 7 (nhánh lỗi API `catch`, chưa test) |
-| Loại lỗ hổng minh hoạ | Thiếu **coverage** — dễ phát hiện bằng công cụ đo coverage thông thường (Istanbul/Jest Coverage) | Có **coverage đầy đủ + test pass** nhưng ban đầu **assertion hời hợt** — công cụ đo coverage thuần tuý **không thể phát hiện** loại lỗ hổng này |
-| Cách khắc phục | Thêm test cho `removeFromCart` | Viết test theo từng điều kiện (boundary, equivalence class), không chỉ 1 kịch bản |
+| 68 | ConditionalExpression | `if (success)` → `if (false)` |
+| 121 | StringLiteral | `'Áp dụng'` → `""` |
+| 124 | ConditionalExpression / LogicalOperator | `couponError && (...)` → `{true}` / `{false}` / `couponError \|\| (...)` |
+| 127 | ConditionalExpression | `couponResult && (...)` → `{true}` / `{false}` |
 
-**Kết luận (Test Effectiveness):**
+## Bước 3 — Phân tích nguyên nhân
 
-- `CartContext.jsx` minh hoạ trường hợp **"NoCoverage"**: phần code có test thì mutation score
-  đạt tuyệt đối (100%); phần chưa test lộ rõ ngay dưới dạng `NoCoverage`, dễ phát hiện.
-- `Register.jsx` minh hoạ trường hợp **"Survived"** — loại lỗ hổng nguy hiểm hơn: có test, test
-  pass, có coverage, nhưng vì assertion quá hời hợt (ban đầu 1 test, 1 assertion) nên chỉ kill
-  được 22.86% mutant có coverage. Đây là loại lỗ hổng mà công cụ đo *code coverage* thuần tuý
-  không thể phát hiện, vì coverage chỉ quan tâm dòng code có được chạy qua hay không, không
-  quan tâm assertion có đủ mạnh để bắt lỗi hay không.
-- Cùng một file, chỉ bằng cách viết thêm/siết test (không sửa code), mutation score có thể tăng
-  từ 17.39% lên 76.09% — đây là bằng chứng thực nghiệm rõ ràng nhất cho luận điểm: **code
-  coverage cao (hoặc test pass) không đồng nghĩa test suite có khả năng phát hiện lỗi logic.**
+Test smoke-test baseline chỉ `render()` và kiểm tra 2 đoạn text tĩnh. Nó **không hề**:
+- Gọi `login()` → nên `AuthContext.Provider`'s `value` object không bao giờ bị đọc field nào (`login`/`logout`/`user`/`token` đều không dùng) → mutant `{{}}` sống.
+- Kích hoạt submit checkout → nhánh `if (success)` không bao giờ chạm tới trạng thái `true`.
+- Nhập/áp mã coupon → `couponError`, `couponResult` luôn ở giá trị khởi tạo, không phân biệt được nhánh render có/không có.
 
+---
+
+## Bước 4 — Viết test integration (Login → Checkout thật)
+
+File: `test/pages/Checkout.test.jsx` (bản đầy đủ, 17 test case). Điểm mấu chốt — một `Harness` component nằm **trong cùng cây Provider** với `Checkout`, expose thẳng `useAuth()`/`useCart()` cho test:
+
+```jsx
+function Harness({ apiRef, initiallyVisible }) {
+  const [visible, setVisible] = useState(initiallyVisible);
+  apiRef.current = { auth: useAuth(), cart: useCart(), revealCheckout: () => setVisible(true) };
+  return visible ? <Checkout /> : null;
+}
+```
+
+Test tiêu biểu — **gọi A thật, dùng output của A để lái B**:
+
+```jsx
+it('uses the token issued by login() to authorize the checkout request', async () => {
+  axios.post.mockImplementation((url) => {
+    if (url.endsWith('/api/login')) return Promise.resolve({ data: LOGIN_RESPONSE });
+    return Promise.resolve({ data: { orderId: 1 } });
+  });
+  const { apiRef } = renderCheckout();
+
+  // Bước A: login thật, tạo token thật qua context state.
+  await act(async () => { await apiRef.current.auth.login('a@example.com', 'secret'); });
+
+  // Bước B: checkout dùng chính token đó, không phải giá trị hard-code.
+  act(() => { apiRef.current.cart.addToCart(PRODUCT, 2); });
+  fireEvent.click(screen.getByText('Xác Nhận Thanh Toán'));
+
+  await waitFor(() =>
+    expect(axios.post).toHaveBeenCalledWith(
+      'http://localhost:3000/api/checkout',
+      expect.objectContaining({ items: [{ ...PRODUCT, quantity: 2 }] }),
+      { headers: { Authorization: `Bearer ${LOGIN_RESPONSE.token}` } },
+    ),
+  );
+});
+```
+
+Một lưu ý kỹ thuật quan trọng phát hiện được *nhờ chính việc viết test này*: `Checkout.jsx` dùng `useState(cartTotal)` để khởi tạo `editableTotal` — giá trị này **chỉ được chụp một lần lúc mount**, không phản ứng lại khi giỏ hàng thay đổi sau đó. Vì vậy test coupon phải **seed A (login + addToCart) trước khi mount Checkout** (dùng `revealCheckout()`), giống hệt hành vi thật: người dùng đăng nhập và thêm hàng vào giỏ ở các trang khác trước khi vào `/checkout`.
+
+Các test khác trong bộ (tóm tắt):
+- Checkout không có Authorization header khi chưa login.
+- Trang "Thanh toán thành công!" hiển thị sau khi checkout OK.
+- `setLoading(false)` chạy lại sau lỗi checkout (nút không bị kẹt "Đang xử lý...").
+- Không có banner lỗi coupon khi chưa áp mã nào.
+- `logout()` xoá `Authorization` header mặc định của axios sau khi đã login.
+- Session được khôi phục từ `localStorage` lúc mount (`GET /api/users/me`).
+- Áp coupon hợp lệ → checkout dùng `final_amount` của coupon (không phải tổng giỏ hàng thô) + gọi `coupon-usage`.
+- Áp coupon nhưng **chưa login** (có `coupon_id`, không có `token`) → **không** gọi `coupon-usage` (phân biệt `&&` thật với `||` giả).
+- Lỗi mạng không có `response` object → rơi về thông báo lỗi mặc định (không throw).
+- Nhãn nút chuyển tạm thời "..."/"Đang xử lý..." trong lúc request đang chạy.
+
+---
+
+## Bước 5 — Chạy lại Stryker, xác nhận diệt mutant
+
+```
+------------------|------------------|----------|-----------|------------|----------|
+File              |  total | covered | # killed | # timeout | # survived | # no cov |
+------------------|--------|---------|----------|-----------|------------|----------|
+All files         |  90.83 |   94.29 |       61 |        38 |          6 |        4 |
+ AuthContext.jsx   |  95.45 |  100.00 |       15 |         6 |          0 |        1 |
+ Checkout.jsx      |  89.66 |   92.86 |       46 |        32 |          6 |        3 |
+```
+
+Mutation score (Stryker, killed+timeout/total): **20.18% → 90.83%** (+70.65 điểm phần trăm).
+`AuthContext.jsx`: **31.82% → 95.45%**. `Checkout.jsx`: **17.24% → 89.66%**.
+
+Tất cả 10 mutant "Survived" ban đầu đã bị diệt.
+
+## Bước 6 — Lặp lại cho mutant còn sống sót
+
+Vòng lặp mở rộng test đã diệt gần hết nhưng phát sinh thêm mutant "Survived" mới ở những dòng **lần đầu được coverage** (đúng minh chứng cho coverage illusion — xem `coverage-vs-mutation-stryker.md`). Sau nhiều vòng bổ sung assertion (exact body request, phân biệt `&&`/`||`, network-error không có `response`, nhãn nút tạm thời...), còn lại **6 mutant sống sót**, tất cả đều là các biến thể gần tương đương không đáng đánh đổi thêm độ phức tạp test:
+
+| File | Dòng | Loại | Ghi chú |
+|---|---|---|---|
+| Checkout.jsx | 29 | `couponCode.trim().toUpperCase()` → `couponCode.toUpperCase()` | Input test không có khoảng trắng thừa nên `.trim()` là no-op quan sát được |
+| Checkout.jsx | 35 | `err.response?.data?.error` → `err.response?.data.error` | Chỉ khác khi `response` tồn tại nhưng `response.data` là `null`/`undefined` — chưa có test dựng đúng shape lỗi đó |
+| Checkout.jsx | 63 | tương tự dòng 35, cho nhánh lỗi checkout | như trên |
+| Checkout.jsx | 73 | `onClick={() => navigate('/')}` → `() => undefined` | Nút "Quay lại trang chủ" trên màn hình thành công chưa được click trong test |
+| Checkout.jsx | 113 | `onChange` handler, `setCouponError('')` → chuỗi khác | Giá trị reset che khuất bởi các thay đổi state khác cùng lúc trong test hiện có |
+| Checkout.jsx | 118 | `!couponCode.trim()` → `!couponCode` | Input test luôn "sạch" (không khoảng trắng) nên hai biểu thức tương đương quan sát được |
+
+→ Đây là ví dụ thực tế cho thấy mutation testing hiếm khi đạt 100%, và phần còn lại cần được đánh giá và phân loại thay vì cố diệt bằng mọi giá.
+
+---
+
+## Bước 7 — Code Coverage trên cùng 2 hàm, cùng test suite ban đầu
+
+Cài `@vitest/coverage-istanbul` và khai báo `test.coverage.provider: 'istanbul'` trong `vite.config.js`, chạy coverage **với đúng bộ test baseline (yếu) của Bước 1**, giới hạn vào 2 file mutate:
+
+```
+npx vitest run --coverage --coverage.include='src/context/AuthContext.jsx' --coverage.include='src/pages/Checkout.jsx'
+```
+
+Khi đó ta có kết quả sau:
+
+```
+File              | % Stmts | % Branch | % Funcs | % Lines
+------------------|---------|----------|---------|--------
+AuthContext.jsx   |   50.00 |    50.00 |   42.85 |   47.82
+Checkout.jsx      |   33.33 |    25.00 |   14.28 |   35.89
+All files         |   39.39 |    26.47 |   28.57 |   40.32
+```
+
+## Bước 8 — So sánh Coverage vs Mutation Score
+
+Xem chi tiết đầy đủ trong `coverage-vs-mutation-stryker.md`. Tóm tắt:
+
+| Mốc | Line Coverage | Mutation Score (tính luôn timeout) | Mutation Score (chỉ tính killed) |
+|---|---|---|---|
+| Trước integrate | **40.32%** | 20.18% | 3.67% |
+| Sau integrate | **91.93%** | 90.83% | 55.96% |
+
+Bằng chứng "coverage illusion" rõ nhất: ở mốc "Trước", coverage đã là 40% — component vẫn render, nhánh `if/else` cơ bản vẫn được duyệt qua  — nhưng **mutation score chỉ 3.67-20.18%**, vì test không kiểm tra bất kỳ giá trị cụ thể nào. Coverage đo "code có chạy", mutation testing đo "test có phát hiện được lỗi".
+
+---
+
+## Bước 9 — Tệp bằng chứng
+
+- Test file: `test/pages/Checkout.test.jsx` (17 test case, bản đầy đủ)
+- Config: `stryker.conf.json` (mutate = AuthContext.jsx + Checkout.jsx)
+- Báo cáo mutation: `strykerjs-report-before.md`, `strykerjs-report-after.md`, `reports/mutation-before/`, `reports/mutation-after/` 
+- Báo cáo coverage: `coverage-before/`, `coverage-after/`
+- Tài liệu tổng hợp: `stryker-test-scenario.md` , `coverage-vs-mutation-stryker.md`, `stryker-demo-script.md`

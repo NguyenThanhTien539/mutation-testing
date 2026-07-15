@@ -232,6 +232,27 @@ Nhóm thực hiện demo tương quan giữa Code Coverage và Mutation Score tr
 - **Công cụ**: coverage đo bằng `@vitest/coverage-istanbul` (`vitest run --coverage`, provider `istanbul` — cùng nền tảng Istanbul/nyc mà `jest --coverage` sử dụng); mutation testing bằng StrykerJS 9.6 (`vitest` test runner, `coverageAnalysis: perTest`).
 - **Link demo video**: [video demo](https://youtu.be/0g1r6k5n3xM)
 
+#### Kịch bản test (chuỗi Login → Checkout)
+
+Nhóm chọn một **cặp hàm tuần tự** — hàm B phụ thuộc trực tiếp vào state do hàm A tạo ra — để mô phỏng đúng một luồng nghiệp vụ thật thay vì test hàm đơn lẻ:
+
+| | Hàm | File | Vai trò |
+| --- | --- | --- | --- |
+| A | `login(email, password)` | `src/context/AuthContext.jsx:26-35` | Gọi `POST /api/login`, lưu `token`/`user` vào state + `localStorage`, gắn header `Authorization` mặc định cho axios |
+| B | `handleCheckout()` | `src/pages/Checkout.jsx:40-66` | Đọc `token`/`user` từ `useAuth()` (state do A tạo) để gắn `Authorization: Bearer <token>` khi gọi `POST /api/checkout` |
+
+B không thể được kiểm thử đúng đắn nếu không có A chạy trước: nếu test chỉ gọi B một mình (không login), `token` luôn `null` và nhánh `headers: token ? {...} : {}` chỉ bao giờ chạm nhánh `else`.
+
+**Bước 1 — Test baseline (yếu):** trước khi có test chained, nhóm viết một test yếu để mô phỏng đúng thực trạng "coverage tồn tại nhưng không kiểm chứng gì" — chỉ `render()` rồi kiểm tra 2 đoạn text tĩnh, không gọi `login()`, không submit checkout, không thao tác coupon. Kết quả: 109 mutant sinh ra trên 2 file, chỉ 4 mutant Killed, 77 mutant hoàn toàn No Coverage (71%).
+
+**Bước 2 — Mutant sống sót ở baseline:** trong số mutant có coverage nhưng vẫn Survived đều có trường hợp một số giá trị của biến sai - chứng minh test "chạy qua" dòng code nhưng không hề đọc hay xác nhận giá trị bên trong.
+
+**Bước 3 — Test tích hợp:** nhóm viết lại test cho Checkout với 17 test case, đảm bảo đã integrate với Login.
+
+Các test case còn lại trong bộ bao phủ thêm: checkout không có `Authorization` header khi chưa login; trang "Thanh toán thành công!" hiển thị đúng sau khi checkout OK; `setLoading(false)` chạy lại sau lỗi (nút không kẹt "Đang xử lý..."); phân biệt `&&` thật với `||` giả khi áp coupon lúc chưa login; lỗi mạng không có `response` object rơi về thông báo mặc định; `logout()` xoá header `Authorization` mặc định của axios; session được khôi phục từ `localStorage` lúc mount.
+
+**Bước 4 — Kết quả:** sau khi chạy lại Stryker, toàn bộ 10 mutant Survived ban đầu đều bị diệt; số liệu chi tiết ở bảng dưới. Vòng lặp bổ sung test tiếp tục phát hiện thêm vài mutant Survived mới ở những dòng *lần đầu được coverage* — đúng minh chứng cho hiện tượng coverage illusion.
+
 #### Bảng số liệu
 
 | Chỉ số                                                 | Trước integrate | Sau integrate |      Δ |

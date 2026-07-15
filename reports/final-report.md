@@ -230,7 +230,7 @@ Nhóm thực hiện demo tương quan giữa Code Coverage và Mutation Score tr
 
 - **Phạm vi**: `src/context/AuthContext.jsx` + `src/pages/Checkout.jsx` (luồng Login → Checkout)
 - **Công cụ**: coverage đo bằng `@vitest/coverage-istanbul` (`vitest run --coverage`, provider `istanbul` — cùng nền tảng Istanbul/nyc mà `jest --coverage` sử dụng); mutation testing bằng StrykerJS 9.6 (`vitest` test runner, `coverageAnalysis: perTest`).
-- **Link demo video**: [video demo](https://youtu.be/0g1r6k5n3xM)
+- **Link demo video**: [video demo](https://youtu.be/K_FPvT8-3xc)
 
 #### Kịch bản test (chuỗi Login → Checkout)
 

@@ -284,31 +284,81 @@ Sau khi thay bằng bộ test "chained" gồm 17 test case (gọi thật hàm `l
 
 ### 10.2. Mutmut + Coverage.py
 
-- **Repository**: _(cần bổ sung)_
-- **File kết quả chi tiết**: _(cần bổ sung)_
-- **Phạm vi**: _(cần bổ sung — module Python nào được chọn để demo)_
-- **Công cụ**: coverage đo bằng Coverage.py (qua `pytest-cov` hoặc `coverage run`); mutation testing bằng Mutmut (coverage-guided, đọc dữ liệu từ `.coverage`)
-- **Link demo video**: _(cần bổ sung)_
+- **Repository**: [simple-python-website](https://github.com/darumor/simple-python-website.git)
+- **Phạm vi**: `datastore`
+- **Công cụ**: Coverage qua `coverage.py` và mutation testing từ Mutmut.
+- **Link demo video**: [video demo](https://youtu.be/6e3kXjw97Mk)
+
+#### Kịch bản test (chuỗi User Lifecycle → Data Management)
+
+Nhóm chọn một **cặp hàm tuần tự** — hàm B phụ thuộc trực tiếp vào state/database được khởi tạo bởi hàm A — để mô phỏng một luồng nghiệp vụ thực tế:
+
+| Hàm | File | Vai trò |
+| :--- | :--- | :--- |
+| A | `create_user(...)` | Tạo user, băm mật khẩu và lưu vào DB `users`. |
+| B | `get_all_things(...)` | Đọc dữ liệu từ bảng `things` sau khi đã xác thực quyền truy cập của user (A). |
+
+**Lý do chọn:** Hàm B (truy xuất dữ liệu) thường yêu cầu ngữ cảnh hệ thống (user đã tồn tại, DB đã migrate). Nếu chỉ test `get_all_things` đơn lẻ, môi trường thiếu dữ liệu hoặc cấu hình sai sẽ khiến test chạy sai hướng (false negative).
+
+#### Các bước thực hiện (Refactoring sang Test Tích hợp)
+
+**Bước 1 — Test baseline (yếu):**
+Trước khi tối ưu, các test cũ (như `test_login.py`) chỉ kiểm tra việc tạo file DB và chạy migration, không thao tác nghiệp vụ, dẫn đến "ảo tưởng coverage" — code được chạy qua nhưng logic xử lý dữ liệu thực tế không được kiểm chứng.
+
+**Bước 2 — Chiến lược test chuỗi:**
+Xây dựng bộ test tích hợp (`test_full_suite.py`) với các kịch bản thực tế:
+
+* **Tích hợp xác thực:** Kiểm tra `create_user` và `check_login` cùng lúc, đảm bảo ID trả về hợp lệ để dùng cho các bước tiếp theo.
+* **Kiểm chứng dữ liệu:** Sau khi `migrate_db`, thực hiện chèn dữ liệu thủ công vào bảng `things` rồi gọi `get_all_things` để xác nhận số lượng và nội dung khớp hoàn toàn.
+* **Import dữ liệu thực tế:** Sử dụng `Store.import_test_data` kết hợp với `test_import_data.py` để kiểm tra khả năng nạp dữ liệu từ file JSON vào bảng `things`.
+
+### Kết quả dự kiến (Kết hợp kỹ thuật Mutation Testing)
+
+Sau khi áp dụng tư duy từ `format.txt`, bộ test cần đảm bảo các trường hợp sau để diệt các "mutant" (đột biến mã nguồn):
+
+| Test Case | Mục tiêu kiểm chứng |
+| :--- | :--- |
+| **Login thất bại** | Đảm bảo `check_login` trả về `-1` khi sai mật khẩu. |
+| **Phân quyền** | Kiểm chứng `check_admin` trả về `False` với user thường. |
+| **Data Integrity** | Xác nhận `get_all_things` trả về chính xác số lượng item sau khi import từ JSON. |
+| **Cleanup** | Đảm bảo `tearDown` xóa sạch file `.db` sau mỗi test, tránh dữ liệu rác làm sai lệch kết quả mutation. |
+
+> **Lưu ý:** Việc đặt `db.row_factory = sqlite3.Row` trong mỗi test là then chốt để đảm bảo việc truy xuất bằng key (vd: `user['firstname']`) không bị lỗi, giúp test thực sự "đọc" được nội dung thay vì chỉ chạy qua dòng code.
 
 #### Bảng số liệu
 
-| Chỉ số                                     | Trước integrate |   Sau integrate |               Δ |
-| ------------------------------------------ | --------------: | --------------: | --------------: |
-| Statement coverage                         | _(cần bổ sung)_ | _(cần bổ sung)_ | _(cần bổ sung)_ |
-| Branch coverage                            | _(cần bổ sung)_ | _(cần bổ sung)_ | _(cần bổ sung)_ |
-| Mutation score (killed + timeout / total)  | _(cần bổ sung)_ | _(cần bổ sung)_ | _(cần bổ sung)_ |
-| Mutant Survived                            | _(cần bổ sung)_ | _(cần bổ sung)_ | _(cần bổ sung)_ |
-| Mutant No Coverage (chưa có test chạy qua) | _(cần bổ sung)_ | _(cần bổ sung)_ | _(cần bổ sung)_ |
+| Chỉ số | Trước integrate | Sau integrate | Δ |
+|---|---:|---:|---:|
+| **Average coverage** | **61%** | **88%** | **+27%** |
+| `connection` coverage | 77% | 77% | - |
+| `store` coverage | 91% | 91% | - |
+| `things` coverage | 0% | 100% | +100% |
+| `users` coverage | 18% | 89% | +71% |
+| Missed Lines Count | 55 | 17 | -38 |
+| Mutation score (killed-only/total) | 46.08% | 93.95% | +47.87% |
+| Mutants Killed | 94 | 202 | +108 |
+| Mutants Total | 204 | 215 | +11 |
 
 #### Trước integrate
 
-_(cần bổ sung — ví dụ cụ thể về dòng/nhánh code được coverage ghi nhận là "chạy qua" nhưng mutant tương ứng vẫn Survived)_
+Tương quan: Coverage trung bình 61% nhưng mutation score chỉ đạt 46.08%.
+
+Tập test demo ban đầu mang tính chất "khởi tạo" (bootstrap), tập trung vào các luồng tích cực đơn giản của `connection` và `store`. Tuy nhiên, các phần cốt lõi xử lý logic dữ liệu trong `users` và `things` bị bỏ ngỏ hoặc chỉ được thực thi một phần nhỏ:
+
+* **Lỗ hổng "Coverage giả tạo":** Các hàm trong `users` có coverage 18% nhưng mutation score rất thấp. Ví dụ: các dòng khởi tạo kết nối database được thực thi (nằm trong `coverage`), nhưng các mutant thay đổi toán tử logic hoặc hằng số trả về vẫn "sống sót" vì các test case thiếu `assert` kiểm tra giá trị đầu ra.
+* **Điểm mù nghiêm trọng:** Module `things` có coverage 0%, đồng nghĩa với việc toàn bộ logic nghiệp vụ tại đây nằm ngoài tầm kiểm soát của test, tạo ra một vùng trống lớn mà coverage truyền thống không thể cảnh báo mức độ rủi ro thực tế.
 
 #### Sau integrate
 
-_(cần bổ sung — số liệu và nhận xét sau khi bổ sung test, đối chiếu mức hội tụ giữa coverage và mutation score)_
+Tương quan: Coverage 88% và mutation score 93.95%.
 
-## 14. Bảng thuật ngữ
+Sau khi bổ sung class test chuyên biệt để phủ kín logic của `users` và `things`, bức tranh thay đổi rõ rệt:
+
+* **Sự hội tụ:** Khoảng cách giữa Coverage (88%) và Mutation Score (93.95%) trở nên rất hẹp. Việc tập trung kiểm thử vào các hàm xử lý dữ liệu phức tạp giúp các `assert` bám sát vào hành vi thay vì chỉ "chạy cho qua" code.
+* **Chất lượng test:** Số lượng mutant bị tiêu diệt tăng vọt (+108) cho thấy các test mới không chỉ đơn thuần bao phủ các dòng code (tăng coverage) mà thực sự có khả năng phát hiện lỗi.
+* **Bài học:** Việc đạt được 100% coverage ở module `things` và cải thiện 71% coverage ở `users` trực tiếp dẫn đến việc tăng mạnh độ tin cậy của hệ thống. Những mutant còn sót lại (khoảng 6%) chủ yếu nằm ở các trường hợp cạnh tranh (edge cases) hoặc các thuộc tính không ảnh hưởng trực tiếp đến kết quả thực thi, khẳng định rằng khi đã có độ bao phủ cao, mutation testing trở thành công cụ quan trọng để tinh chỉnh những lỗi logic tinh vi nhất trong hệ thống.
+
+## 11. Bảng thuật ngữ
 
 | Thuật ngữ (EN)                       | Tiếng Việt                                                                                                                     |
 | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -335,7 +385,7 @@ _(cần bổ sung — số liệu và nhận xét sau khi bổ sung test, đối
 | Coverage Illusion                    | Hiện tượng coverage đo được cao nhưng test suite không thực sự kiểm chứng hành vi, do thiếu hoặc yếu assertion                 |
 | Combinatorial Explosion              | Sự bùng nổ số lượng mutant khi mutate trên dự án lớn, gây tốn tài nguyên và thời gian thực thi                                 |
 
-## 15. Tài liệu tham khảo
+## 12. Tài liệu tham khảo
 
 **Sách và bài báo khoa học:**
 

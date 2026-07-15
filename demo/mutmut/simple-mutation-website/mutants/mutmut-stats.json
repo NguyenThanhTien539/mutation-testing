@@ -1,0 +1,72 @@
+{
+    "tests_by_mangled_function_name": {
+        "datastore.store.x\u01c1Store\u01c1execute_migration": [
+            "tests_mutation_integrated/test_import_data.py::TestImportData::test_import_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_get_all_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.things.x_get_all_things": [
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_get_all_things"
+        ],
+        "datastore.store.x\u01c1Store\u01c1check_schema_version": [
+            "tests_mutation_integrated/test_import_data.py::TestImportData::test_import_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_get_all_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.connection.x\u01c1Connection\u01c1__exit__": [
+            "tests_mutation_integrated/test_import_data.py::TestImportData::test_import_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_get_all_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.connection.x\u01c1Connection\u01c1create_connection": [
+            "tests_mutation_integrated/test_import_data.py::TestImportData::test_import_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_get_all_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.connection.x\u01c1Connection\u01c1__init__": [
+            "tests_mutation_integrated/test_import_data.py::TestImportData::test_import_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_get_all_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.connection.x\u01c1Connection\u01c1__enter__": [
+            "tests_mutation_integrated/test_import_data.py::TestImportData::test_import_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_get_all_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.store.x\u01c1Store\u01c1migrate_db": [
+            "tests_mutation_integrated/test_import_data.py::TestImportData::test_import_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_get_all_things",
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.users.x_user_by_username": [
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.users.x_create_user": [
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.users.x_check_login": [
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.users.x_user_id_by_username": [
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.users.x_get_user_by_id": [
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.users.x_check_admin": [
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.users.x_calculate_password_hash": [
+            "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle"
+        ],
+        "datastore.store.x\u01c1Store\u01c1import_test_data": [
+            "tests_mutation_integrated/test_import_data.py::TestImportData::test_import_things"
+        ]
+    },
+    "duration_by_test": {
+        "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_get_all_things": 0.5167600239947205,
+        "tests_mutation_integrated/test_full_suite.py::TestFullSuite::test_user_lifecycle": 0.5343021609951393,
+        "tests_mutation_integrated/test_import_data.py::TestImportData::test_import_things": 0.5104251479933737
+    },
+    "stats_time": 0.6322513000000001
+}

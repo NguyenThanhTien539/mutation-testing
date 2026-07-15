@@ -1,0 +1,4 @@
+[tool.mutmut]
+source_paths = ["datastore/connection.py", "datastore/store.py", "datastore/users.py", "datastore/things.py"]
+pytest_add_cli_args_test_selection = ["tests_mutation_integrated/"]
+also_copy = ["tests_mutation_integrated/", "data/"]

@@ -4,11 +4,11 @@
 
 | MSSV     | Họ và tên         | Đóng góp (%) |
 | -------- | ----------------- | ------------ |
-| 23127539 | Nguyễn Thanh Tiến |              |
-| 23127296 | Nguyễn Thành Luân |              |
-| 23127404 | Lê Tuấn Lộc       |              |
-| 23127061 | Trương Lý Khải    |              |
-| 23127330 | Ngô An Bình       |              |
+| 23127539 | Nguyễn Thanh Tiến |    22        |
+| 23127296 | Nguyễn Thành Luân |    22        |
+| 23127404 | Lê Tuấn Lộc       |    12        |
+| 23127061 | Trương Lý Khải    |    22        |
+| 23127330 | Ngô An Bình       |    22        |
 
 **GitHub Repository**: [mutation-testing & test effectiveness](https://github.com/NguyenThanhTien539/mutation-testing)
 
